@@ -1,0 +1,45 @@
+
+.sub-main {
+    margin: 4%;
+    padding-top: 2%;
+    border: ridge;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    padding-bottom: 2%;
+    padding-left: 2%;
+}
+
+.logo {
+    padding-right: 2%;
+    width: 12%;
+    height: 60px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border: solid;
+    // margin: 0% 2% 0% 2%;
+    padding: 3% 0px 3% 0px;
+}
+.sub-container1{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.sub-container2{
+    width: 50%;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 1% 2% 3% 2%;
+    align-items: center;
+    background-color: rgb(230, 105, 105);
+    
+}

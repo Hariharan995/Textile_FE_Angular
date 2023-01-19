@@ -1,0 +1,35 @@
+<div class="main">
+    <div class="sub-main">
+        <div>
+            <div class="title">
+                <img class="logo"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReZPCdszo1EtUvfm6VWcuRSdgFo_cnN8inXg&usqp=CAU" />
+                <p> My SHOP</p>
+            </div>
+            <div class="container">
+                <div class="sub-container1">
+                    <img class="images"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReZPCdszo1EtUvfm6VWcuRSdgFo_cnN8inXg&usqp=CAU" />
+                </div>
+                <div class="sub-container2">
+                    <p>My Shop Management</p>
+                    <mat-tab-group (selectedTabChange)="tabClick($event)">
+                        <mat-tab label="Login"> <app-login-form  #loginFormCmpnt
+                                (onSubmit)="onSubmitLoginForm($event)"></app-login-form></mat-tab>
+                        <mat-tab label="Register"> <app-registeration-form #registrationFormCmpnt
+                                (onSubmit)="onSubmitRegisterForm($event)"></app-registeration-form></mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <p> Copyright ©2022 Shop Private Limited. All rights reserved.</p>
+            <ul class="social-media">
+                <i class="fa fa-google" style="padding-left: 10px;"></i>
+                <i class="fa fa-facebook" style="padding-left: 10px;"></i>
+                <i class="fa fa-twitter" style="padding-left: 10px;"></i>
+                <i class="fa fa-linkedin" style="padding-left: 10px;"></i>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<form [formGroup]="loginForm">
+    <div fxLayout="column" fxLayoutAlign="center center">
+        <div fxFlex="100%">
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>User Name</mat-label>
+                <input matInput formControlName="username" name="username" required minlength="10">
+                <mat-error *ngIf="loginForm.controls['username'].hasError('required')">This field is
+                    required</mat-error>
+            </mat-form-field>
+        </div>
+        <div fxFlex="100%">
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="password" name="password" [type]="showPassword ? 'text' : 'password'"
+                    required pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{6,}$">
+                <mat-icon matSuffix (click)="togglePasswordVisibility()">
+                    {{showPassword?'visibility_off':'visibility'}}
+                </mat-icon>
+                <mat-error *ngIf="loginForm.value.password">Password must be a combination of lower-case, upper-case,
+                    numbers and at least 8 characters long</mat-error>
+            </mat-form-field>
+        </div>
+        <div fxFlex="100%">
+            <button mat-stroked-button color="primary" type="submit" (click)="submit()"
+                [disabled]="!loginForm.valid">Continue<mat-icon>chevron_right</mat-icon></button>
+        </div>
+    </div>
+</form>
