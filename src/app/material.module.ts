@@ -6,6 +6,7 @@ import { PortalModule } from '@angular/cdk/portal';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
@@ -61,6 +62,7 @@ const materialModules = [
     MatToolbarModule,
     MatFormFieldModule,
     MatButtonToggleModule,
+    MatSlideToggleModule,
     MatTreeModule,
     OverlayModule,
     PortalModule,
@@ -72,7 +74,12 @@ const materialModules = [
     FormsModule,
     ReactiveFormsModule,
     ToastrModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
 ];
 @NgModule({
     imports: [

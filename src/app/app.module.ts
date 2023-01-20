@@ -6,6 +6,7 @@ import { MaterialModule } from './material.module';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,9 +17,8 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule,
-    ToastrModule.forRoot()
-
+    ToastrModule.forRoot(),
+    SharedModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],

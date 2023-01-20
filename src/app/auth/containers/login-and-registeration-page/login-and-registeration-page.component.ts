@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
-import { NotificationService } from 'src/app/services/notification.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { UserTypes } from 'src/app/models';
 import { NotificationType } from 'src/app/utils/notification-messages';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
@@ -34,10 +34,11 @@ export class LoginAndRegisterationPageComponent {
           message: res.message,
           type: NotificationType.success
         })
-        localStorage.setItem('auth', JSON.stringify(res.token))
-        localStorage.setItem('userId', JSON.stringify(res.data._id))
+        let userDetails = res.data
+        userDetails.token = res.token
+        localStorage.setItem('auth', JSON.stringify(userDetails))
         if (res.data.userRole.includes(UserTypes.ADMIN)) {
-          this.router.navigate(['/admin/user']);
+          this.router.navigate(['/admin/user-list']);
         }
         else {
           this.router.navigate(['/sales']);

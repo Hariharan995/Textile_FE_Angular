@@ -1,21 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SharedRoutingModule } from './shared-routing.module';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { MaterialModule } from '../material.module';
+import { AdminModule } from '../admin/admin.module';
+import { RouterModule } from '@angular/router';
+import { PaginatorComponent } from './components/paginator/paginator.component';
 
 
 @NgModule({
   declarations: [
-    SidebarComponent,
     HeaderComponent,
-    FooterComponent
+    PaginatorComponent
   ],
   imports: [
     CommonModule,
-    SharedRoutingModule
-  ]
+    MaterialModule,
+    RouterModule
+  ],
+  exports: [HeaderComponent, PaginatorComponent]
 })
-export class SharedModule { }
+export class SharedModule {
+  public static forRoot() {
+    return { ngModule: SharedModule };
+  }
+}

@@ -2,16 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
-import { UsersListPageComponent } from './containers/users-list-page/users-list-page.component';
+import { SharedModule } from '../shared/shared.module';
+import { MaterialModule } from '../material.module';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { AdminComponent } from './admin.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
 
 
 @NgModule({
   declarations: [
-    UsersListPageComponent
+    UserListComponent,
+    AdminComponent,
+    ProductListComponent
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule, 
+    MaterialModule,  
+    SharedModule 
   ]
 })
 export class AdminModule { }

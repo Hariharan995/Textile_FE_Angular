@@ -6,6 +6,7 @@ import { LoginAndRegisterationPageComponent } from './containers/login-and-regis
 import { RegisterationFormComponent } from './components/registeration-form/registeration-form.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { MaterialModule } from '../material.module';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { MaterialModule } from '../material.module';
     CommonModule,
     AuthRoutingModule,
     MaterialModule,
+    SharedModule
   ]
 })
 export class AuthModule { }
