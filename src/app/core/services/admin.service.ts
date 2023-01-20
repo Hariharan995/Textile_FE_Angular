@@ -16,8 +16,19 @@ export class AdminService {
     headers_object = new HttpHeaders().set("Authorization", "Bearer " + this.token);
 
     params = new HttpParams();
+   
     getAllUsers(request: any) {
         let url = this.apiUrl + '/getAllUsers';
+        return this.http.post(url, request, {headers: this.headers_object});
+    }
+    
+    getAllProducts(request: any) {
+        let url = this.apiUrl + '/getAllProducts';
+        return this.http.post(url, request, {headers: this.headers_object});
+    }
+
+    getAllSales(request: any) {
+        let url = this.apiUrl + '/getAllSales';
         return this.http.post(url, request, {headers: this.headers_object});
     }
 }

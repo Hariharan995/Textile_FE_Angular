@@ -7,13 +7,15 @@ import { MaterialModule } from '../material.module';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { AdminComponent } from './admin.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
+import { SaleListComponent } from './components/sale-list/sale-list.component';
 
 
 @NgModule({
   declarations: [
     UserListComponent,
     AdminComponent,
-    ProductListComponent
+    ProductListComponent,
+    SaleListComponent
   ],
   imports: [
     CommonModule,
