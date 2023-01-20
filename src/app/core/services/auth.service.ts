@@ -25,10 +25,8 @@ export class AuthService {
     return this.http.post(url, formData);
   }
 
-  async logOut(userId: any) {
-    let url = this.apiUrl + '/logout';    
-    localStorage.clear();
-    this.router.navigate(['/login'])
+  logOut(userId: any) {
+    let url = this.apiUrl + '/logout';
     return this.http.post(url, userId)
   }
 }

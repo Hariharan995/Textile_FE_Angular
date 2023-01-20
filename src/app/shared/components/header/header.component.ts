@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { NotificationType } from 'src/app/utils/notification-messages';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -11,16 +12,29 @@ import { environment } from 'src/environments/environment';
 })
 export class HeaderComponent {
   auth = JSON.parse(localStorage.getItem('auth') || "no data");
-  apiUrl = environment.apiUrl;
-  product: boolean = false;
-
-  defalultProfileImage = 'assets/img/profile-avatar.jpg';
-  constructor(private authService: AuthService, public router: Router, public route: Router, public activatedRoute: ActivatedRoute,) { }
-
-  ngOnInit(): void {
-  }
+  
+  constructor(private authService: AuthService, public router: Router, public route: Router, public activatedRoute: ActivatedRoute, private notificationService: NotificationService) { }
 
   logOut() {
-    this.authService.logOut({ userId: this.auth._id });
+    let request = { token: this.auth.token }
+    this.authService.logOut(request).subscribe(
+      (res: any) => {
+        this.notificationService.sendMessage({
+          message: res.message,
+          type: NotificationType.success
+        })
+        localStorage.clear();
+        this.router.navigate(['']);
+      },
+      (err: any) => {
+        this.notificationService.sendMessage({
+          message: err.error.message,
+          type: NotificationType.error
+        })
+      }
+    );
+  }
+
+  ngOnInit() {
   }
 }

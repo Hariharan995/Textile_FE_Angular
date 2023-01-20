@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 import { AdminService } from 'src/app/core/services/admin.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { NotificationType } from 'src/app/utils/notification-messages';
@@ -9,23 +11,29 @@ import { NotificationType } from 'src/app/utils/notification-messages';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
-  page = 1
-  limit = 10
-  collectionSize = 0
+  collectionSize = 0;
+  pageSize = 10;
+  pageIndex = 0;
+  pageSizeOptions = [10, 25, 50, 100];
+  showPageSizeOptions = true;
+  showFirstLastButtons = true;
+
   userList = []
   userDetails = ["_id", "name", "mobile", "userRole", "userStatus"]
 
-  constructor(private adminSerice: AdminService, private notificationService: NotificationService) {
+  constructor(private adminSerice: AdminService, private notificationService: NotificationService, private router: Router) {
   }
 
-  // Page Change
-  onPageChange(currentPage: number) {
-    this.page = currentPage;
-    let request = {
-      page: currentPage,
-      limit: this.limit,
-    };
-    this.getUserList(request);
+  pageEvent!: PageEvent;
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.collectionSize = e.length;
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+    this.getUserList({
+      page: this.pageIndex + 1,
+      limit: this.pageSize
+    })
   }
 
   getUserList(request: any) {
@@ -35,6 +43,10 @@ export class UserListComponent implements OnInit {
         this.collectionSize = res.count
       },
       (err: any) => {
+        if(err.statusCode === 401)
+        {
+          this.router.navigate(['/login']);
+        }
         this.notificationService.sendMessage({
           message: err.error.message,
           type: NotificationType.error
@@ -45,8 +57,8 @@ export class UserListComponent implements OnInit {
 
   ngOnInit() {
     this.getUserList({
-      page: this.page,
-      limit: this.limit
+      page: this.pageIndex + 1,
+      limit: this.pageSize
     })
   }
 }

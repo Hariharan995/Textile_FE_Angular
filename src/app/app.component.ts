@@ -6,12 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  constructor()
+  {
+
+  }
   isToken = false
   title = 'textile';
-
-  ngOnInit() {
-    let auth = localStorage.getItem('auth')
-    let authtoken = auth ? JSON.parse(auth) : null;
-    this.isToken = authtoken?.token ? true : false
+  auth = localStorage.getItem('auth')
+  authtoken = this.auth ? JSON.parse(this.auth) : null;
+  ngOnInit() {    
+    this.isToken = this.authtoken?.token ? true : false
   }
 }

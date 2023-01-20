@@ -30,7 +30,10 @@
         <tr mat-row *matRowDef="let row; columns: userDetails;"></tr>
     </table>
 
-    <app-paginator [collectionSize]="collectionSize" (onPageChange)="onPageChange($event)"> </app-paginator>
+    <mat-paginator #paginator (page)="handlePageEvent($event)" [length]="collectionSize"
+        [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+        [pageIndex]="pageIndex" aria-label="Select page">
+    </mat-paginator>
 </div>
 <div *ngIf="!collectionSize">
     <div class="no-data">

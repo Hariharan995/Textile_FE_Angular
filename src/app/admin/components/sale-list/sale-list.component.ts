@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { AdminService } from 'src/app/core/services/admin.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { NotificationType } from 'src/app/utils/notification-messages';
@@ -10,23 +11,29 @@ import { NotificationType } from 'src/app/utils/notification-messages';
 })
 export class SaleListComponent {
 
-  page = 1
-  limit = 10
-  collectionSize = 0
+  collectionSize = 0;
+  pageSize = 10;
+  pageIndex = 0;
+  pageSizeOptions = [10, 25, 50, 100];
+  showPageSizeOptions = true;
+  showFirstLastButtons = true;
+
   saleList = []
-  saleDetails = ["_id", "orderNo", "itemsCount", "buyerMobile", "price"]
+  saleDetails = ["_id", "name", "mobile", "userRole", "userStatus"]
 
   constructor(private adminSerice: AdminService, private notificationService: NotificationService) {
   }
 
-  // Page Change
-  onPageChange(currentPage: number) {
-    this.page = currentPage;
-    let request = {
-      page: currentPage,
-      limit: this.limit,
-    };
-    this.getSaleList(request);
+  pageEvent!: PageEvent;
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.collectionSize = e.length;
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+    this.getSaleList({
+      page: this.pageIndex + 1,
+      limit: this.pageSize
+    })
   }
 
   getSaleList(request: any) {
@@ -46,8 +53,8 @@ export class SaleListComponent {
 
   ngOnInit() {
     this.getSaleList({
-      page: this.page,
-      limit: this.limit
+      page: this.pageIndex + 1,
+      limit: this.pageSize
     })
   }
 }

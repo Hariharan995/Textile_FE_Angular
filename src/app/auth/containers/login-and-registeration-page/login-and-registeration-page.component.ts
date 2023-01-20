@@ -70,6 +70,7 @@ export class LoginAndRegisterationPageComponent {
       }
     );
   }
+  
   tabClick(tab: any) {
     if (tab.index === 0) {
       this.registrationFormCmpnt.registerForm.reset();

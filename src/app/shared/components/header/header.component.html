@@ -1,6 +1,5 @@
 <mat-sidenav #sidenav mode="push" class="app-sidenav">
   <mat-toolbar color="primary">
-    <!--future svg to go here-->
     <span class="toolbar-filler"></span>
     <button mat-icon-button (click)="sidenav.toggle()" class="mat-icon-button sidenav-toggle-button"
       [hidden]="!sidenav.opened">
@@ -33,4 +32,3 @@
   <span class="toolbar-filler"></span>
   <button id="button-logout" mat-button (click)="logOut()">Log Out</button>
 </mat-toolbar>
-<!-- <router-outlet></router-outlet> -->
