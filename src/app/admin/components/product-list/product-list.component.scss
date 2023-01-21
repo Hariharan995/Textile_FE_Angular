@@ -4,3 +4,18 @@
     align-items: center;
     margin-top: 20px;
 }
+
+.act-btn{
+    display: flex;
+    gap: 10px;
+    .edit-btn{
+      height: 30px;
+      background: #4caf54c2;
+      color: #FFFF;
+    }
+    .delete-btn{
+      height: 30px;
+      color: #FFFF;
+      background: #ff00008a;
+    }
+  }

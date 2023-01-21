@@ -1,12 +1,25 @@
 <div *ngIf="collectionSize">
     <table mat-table [dataSource]="productList" class="mat-elevation-z8">
 
-        <ng-container matColumnDef="_id">
-            <th mat-header-cell *matHeaderCellDef>No.</th>
-            <td mat-cell *matCellDef="let element">{{element._id}}</td>
+        <ng-container *ngFor="let column of productDetails; let i = index" [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef><span>{{column}}</span></th>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="column !='Action' && column !='ProductImage'"> 
+                    {{element[column]}}
+                </span>
+                <span *ngIf="column =='ProductImage'"> 
+                    <img  class="images" src="{{element[column]}}"/>
+                </span>
+                <span *ngIf="column =='Action'">
+                   <div class="act-btn">
+                    <button mat-stroked-button class="edit-btn" (click)="edit()">edit</button>
+                    <button mat-stroked-button class="delete-btn" (click)="delete()">delete</button>
+                   </div> 
+                </span>
+            </td>
         </ng-container>
 
-        <ng-container matColumnDef="name">
+        <!-- <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Name</th>
             <td mat-cell *matCellDef="let element">{{element.name}}</td>
         </ng-container>
@@ -24,7 +37,7 @@
         <ng-container matColumnDef="userStatus">
             <th mat-header-cell *matHeaderCellDef>UserStatus</th>
             <td mat-cell *matCellDef="let element">{{element.userStatus}}</td>
-        </ng-container>
+        </ng-container> -->
 
         <tr mat-header-row *matHeaderRowDef="productDetails"></tr>
         <tr mat-row *matRowDef="let row; columns: productDetails;"></tr>
@@ -37,6 +50,6 @@
 </div>
 <div *ngIf="!collectionSize">
     <div class="no-data">
-        <p style="font-size: 25px">No Products</p>
+        <p style="font-size: 25px">No Users</p>
     </div>
 </div>

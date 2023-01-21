@@ -20,15 +20,15 @@ export class UserListComponent implements OnInit {
   showPageSizeOptions = true;
   showFirstLastButtons = true;
 
-  userList:any  = [];
-  userDetails = ["Id", "Name", "Mobile", "UserRole", "UserStatus","Action"]
+  userList: any = [];
+  userDetails = ["Id", "Name", "Mobile", "UserRole", "UserStatus", "Action"]
 
   constructor(private adminSerice: AdminService, private notificationService: NotificationService, private router: Router,
     public dialog: MatDialog,
-    ) {
+  ) {
   }
 
-  
+
 
   pageEvent!: PageEvent;
   handlePageEvent(e: PageEvent) {
@@ -46,20 +46,19 @@ export class UserListComponent implements OnInit {
     this.adminSerice.getAllUsers(request).subscribe(
       (res: any) => {
         // this.userList = res.data;
-        res.data.map((ele:any,i:any)=>{
-          let tempUserList:any= [];
-           tempUserList.Id = ele._id;
-           tempUserList.Name = ele.name;
-           tempUserList.Mobile = ele.mobile;
-           tempUserList.UserRole = ele.userRole;
-           tempUserList.UserStatus = ele.userStatus;
-           this.userList.push(tempUserList)
+        res.data.map((ele: any, i: any) => {
+          let tempUserList: any = [];
+          tempUserList.Id = ele._id;
+          tempUserList.Name = ele.name;
+          tempUserList.Mobile = ele.mobile;
+          tempUserList.UserRole = ele.userRole;
+          tempUserList.UserStatus = ele.userStatus;
+          this.userList.push(tempUserList)
         })
         this.collectionSize = res.count;
       },
       (err: any) => {
-        if(err.statusCode === 401)
-        {
+        if (err.statusCode === 401) {
           this.router.navigate(['/login']);
         }
         this.notificationService.sendMessage({
@@ -78,35 +77,35 @@ export class UserListComponent implements OnInit {
   }
 
 
-  reject(){
+  reject() {
     const dialogRef = this.dialog.open(DialogComponent, {
-      width:'600px',
-      height:'200px',
-      data:{
-        content:'Are you sure want to reject this user?',
-        btnValue:'Yes Reject'
+      width: '600px',
+      height: '200px',
+      data: {
+        content: 'Are you sure want to reject this user?',
+        btnValue: 'Yes Reject'
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result){     
-        }
+      if (result) {
+      }
     });
   }
 
-  approve(){
+  approve() {
     const dialogRef = this.dialog.open(DialogComponent, {
-      width:'600px',
-      height:'200px',
-      data:{
-        content:'Are you sure want to approve this user?',
-        btnValue:'Yes Approve'
+      width: '600px',
+      height: '200px',
+      data: {
+        content: 'Are you sure want to approve this user?',
+        btnValue: 'Yes Approve'
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result){     
-        }
+      if (result) {
+      }
     });
   }
 
