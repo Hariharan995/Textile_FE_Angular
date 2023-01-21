@@ -36,6 +36,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 const materialModules = [
     CdkTreeModule,
@@ -80,6 +81,8 @@ const materialModules = [
     MatToolbarModule,
     MatIconModule,
     MatListModule,
+    MatDialogModule,
+
 ];
 @NgModule({
     imports: [

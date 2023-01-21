@@ -3,7 +3,16 @@
 
         <ng-container *ngFor="let column of userDetails; let i = index" [matColumnDef]="column">
             <th mat-header-cell *matHeaderCellDef><span>{{column}}</span></th>
-            <td mat-cell *matCellDef="let element">{{element[column]}}
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="column !='Action'"> 
+                    {{element[column]}}
+                </span>
+                <span *ngIf="column =='Action'">
+                   <div class="act-btn">
+                    <button mat-stroked-button class="approve-btn" (click)="approve()">approve</button>
+                    <button mat-stroked-button class="reject-btn" (click)="reject()">reject</button>
+                   </div> 
+                </span>
             </td>
         </ng-container>
 

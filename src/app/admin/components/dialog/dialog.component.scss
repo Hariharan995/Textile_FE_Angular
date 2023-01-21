@@ -1,0 +1,63 @@
+
+
+
+.delete-container{
+    .dialog-header{
+        border-bottom: 1px solid #ff000022;
+        display:flex;
+        justify-content: space-between;
+        padding: 12px 20px;
+        h2{
+          margin: 0;
+          color: #333;
+          font-family: cursive;
+        }
+        button{
+          width: 30px;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      .action{
+        margin: 30px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        button{
+          width: 120px;
+        }
+        .cancel-btn{
+            margin-right: 15px;
+        }
+        .danger-btn{
+          background-color: #D13147;
+          color: #fff;
+        }
+      }
+}
+::ng-deep{
+    .mat-dialog-container{
+        &:has(.delete-container){
+            height: fit-content;
+            padding: 0;
+            box-shadow: 2px 4px 20px rgb(255 0 0 / 10%);
+        }
+    }
+    .cdk-overlay-backdrop{
+      opacity: 0.4 !important;
+    }
+  }
+
+  .close-button{
+     .close-icon{
+        overflow: visible !important;
+    }
+  }
+
+  .appr-btn{
+    background: #4CAF50;
+    white-space: nowrap;
+  }

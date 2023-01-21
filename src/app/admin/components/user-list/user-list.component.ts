@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/core/services/admin.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { NotificationType } from 'src/app/utils/notification-messages';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-user-list',
@@ -19,10 +21,14 @@ export class UserListComponent implements OnInit {
   showFirstLastButtons = true;
 
   userList:any  = [];
-  userDetails = ["Id", "Name", "Mobile", "UserRole", "UserStatus"]
+  userDetails = ["Id", "Name", "Mobile", "UserRole", "UserStatus","Action"]
 
-  constructor(private adminSerice: AdminService, private notificationService: NotificationService, private router: Router) {
+  constructor(private adminSerice: AdminService, private notificationService: NotificationService, private router: Router,
+    public dialog: MatDialog,
+    ) {
   }
+
+  
 
   pageEvent!: PageEvent;
   handlePageEvent(e: PageEvent) {
@@ -70,4 +76,39 @@ export class UserListComponent implements OnInit {
       limit: this.pageSize
     })
   }
+
+
+  reject(){
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width:'600px',
+      height:'200px',
+      data:{
+        content:'Are you sure want to reject this user?',
+        btnValue:'Yes Reject'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){     
+        }
+    });
+  }
+
+  approve(){
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width:'600px',
+      height:'200px',
+      data:{
+        content:'Are you sure want to approve this user?',
+        btnValue:'Yes Approve'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){     
+        }
+    });
+  }
+
+
 }

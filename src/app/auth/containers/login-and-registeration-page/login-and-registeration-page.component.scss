@@ -2,7 +2,9 @@
 .sub-main {
     margin: 4%;
     background: #FCFBFD;
-    box-shadow: rgb(38 57 77) 11px 20px 30px -9px;
+    box-shadow: rgb(38 57 77 / 20%) 11px 20px 30px -9px;
+    border-radius: 15px;
+    overflow: hidden;
     // padding-top: 2%;
     // border: ridge;
     // height: 80vh;
@@ -41,7 +43,9 @@
     flex-direction: column;
     justify-content: center;
     width: 50%;
-    background-image: url(https://img.freepik.com/free-vector/hand-drawn-flower-collection_23-2148927483.jpg?w=740&t=st=1674284824~exp=1674285424~hmac=0a3e824…);
+    background-size: 100% 100%;
+    // background-image: url(https://wallpaperaccess.com/full/5927911.gif);
+    background-image: url(https://i.pinimg.com/originals/b8/2f/28/b82f28a7e9c8fcb3868d3d94652c107c.gif);
 }
 .sub-container2{
     width: 50%;
@@ -62,8 +66,16 @@
 .footer {
     display: flex;
     justify-content: space-between;
-    padding: 1% 2% 3% 2%;
+    padding: 2%;
     align-items: center;
-    background-color: rgb(230, 105, 105);
+    background: #ECECEC;
+    p{
+        font-size: 16px;
+    }
+    ul{
+        i{
+            font-size: 18px;
+        }
+    }
     
 }

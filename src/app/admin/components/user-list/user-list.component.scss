@@ -9,6 +9,20 @@ table {
   margin-top: 20px;
 }
 
+.act-btn{
+  display: flex;
+  gap: 10px;
+  .approve-btn{
+    height: 30px;
+    background: #4caf54c2;
+    color: #FFFF;
+  }
+  .reject-btn{
+    height: 30px;
+    color: #FFFF;
+    background: #ff00008a;
+  }
+}
 
  ::ng-deep.mat-mdc-paginator{
    .mat-mdc-paginator-outer-container{
