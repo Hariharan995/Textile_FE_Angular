@@ -18,8 +18,8 @@ export class UserListComponent implements OnInit {
   showPageSizeOptions = true;
   showFirstLastButtons = true;
 
-  userList = []
-  userDetails = ["_id", "name", "mobile", "userRole", "userStatus"]
+  userList:any  = [];
+  userDetails = ["Id", "Name", "Mobile", "UserRole", "UserStatus"]
 
   constructor(private adminSerice: AdminService, private notificationService: NotificationService, private router: Router) {
   }
@@ -39,8 +39,17 @@ export class UserListComponent implements OnInit {
   getUserList(request: any) {
     this.adminSerice.getAllUsers(request).subscribe(
       (res: any) => {
-        this.userList = res.data
-        this.collectionSize = res.count
+        // this.userList = res.data;
+        res.data.map((ele:any,i:any)=>{
+          let tempUserList:any= [];
+           tempUserList.Id = ele._id;
+           tempUserList.Name = ele.name;
+           tempUserList.Mobile = ele.mobile;
+           tempUserList.UserRole = ele.userRole;
+           tempUserList.UserStatus = ele.userStatus;
+           this.userList.push(tempUserList)
+        })
+        this.collectionSize = res.count;
       },
       (err: any) => {
         if(err.statusCode === 401)

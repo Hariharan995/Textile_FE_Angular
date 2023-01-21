@@ -9,11 +9,14 @@ import { environment } from 'src/environments/environment';
 export class AdminService {
 
     apiUrl = environment.apiUrl;
+    isToken = false;
 
     constructor(private http: HttpClient, private router: Router) { }
-    auth = JSON.parse(localStorage.getItem('auth') || "no data")
-    token = this.auth.token
-    headers_object = new HttpHeaders().set("Authorization", "Bearer " + this.token);
+    auth = localStorage.getItem('auth')
+    authtoken = this.auth ? JSON.parse(this.auth) : null;
+    // auth = JSON.parse(localStorage.getItem('auth') || "no data")
+    // token = this.auth.token
+    headers_object = {"Authorization":"Bearer " + this.authtoken?.token}
 
     params = new HttpParams();
    

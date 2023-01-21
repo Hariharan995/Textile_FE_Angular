@@ -1,8 +1,14 @@
 
 .sub-main {
     margin: 4%;
-    padding-top: 2%;
-    border: ridge;
+    background: #FCFBFD;
+    box-shadow: rgb(38 57 77) 11px 20px 30px -9px;
+    // padding-top: 2%;
+    // border: ridge;
+    // height: 80vh;
+    .box-lay{
+        height: 71vh;
+    }
 }
 
 .title {
@@ -20,19 +26,37 @@
 
 .container {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    border: solid;
+    // flex-direction: row;
+    // justify-content: space-around;
+    // border: solid;
     // margin: 0% 2% 0% 2%;
-    padding: 3% 0px 3% 0px;
+    // padding: 3% 0px 3% 0px;
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+    height: 100%;
 }
 .sub-container1{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 50%;
+    background-image: url(https://img.freepik.com/free-vector/hand-drawn-flower-collection_23-2148927483.jpg?w=740&t=st=1674284824~exp=1674285424~hmac=0a3e824…);
 }
 .sub-container2{
     width: 50%;
+    box-shadow: rgb(204 219 232) 3px 3px 6px 0px inset, rgb(255 255 255 / 50%) -3px -3px 6px 1px inset;
+    ::ng-deep.mat-mdc-tab-group{
+        .mat-mdc-tab-body-wrapper{
+            margin: 20px;
+            padding-top: 10px;
+            .mat-mdc-tab-body{
+                .mat-mdc-tab-body-content{
+                    overflow: hidden;
+                }
+            }
+        }
+    }
 }
 
 .footer {

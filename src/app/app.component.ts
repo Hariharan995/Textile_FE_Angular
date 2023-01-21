@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from './core/services/admin.service';
 
 @Component({
   selector: 'app-root',
@@ -6,15 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor()
+  constructor(public adminService: AdminService,)
   {
 
   }
-  isToken = false
   title = 'textile';
   auth = localStorage.getItem('auth')
   authtoken = this.auth ? JSON.parse(this.auth) : null;
   ngOnInit() {    
-    this.isToken = this.authtoken?.token ? true : false
+    this.adminService.isToken = this.authtoken?.token ? true : false
   }
 }

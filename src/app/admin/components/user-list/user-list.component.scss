@@ -8,3 +8,28 @@ table {
   align-items: center;
   margin-top: 20px;
 }
+
+
+ ::ng-deep.mat-mdc-paginator{
+   .mat-mdc-paginator-outer-container{
+      .mat-mdc-paginator-container{
+        .mat-mdc-paginator-page-size{
+          position: absolute;
+          left: 40%;
+          .mat-mdc-form-field-flex {
+            height: 30px;
+            .mat-mdc-form-field-infix {
+              padding-top: 1px !important;
+            }
+          }
+        }
+        .mat-mdc-paginator-range-actions{
+          .mat-mdc-paginator-range-label{
+            position: absolute;
+            left: 2%;
+          }
+        }
+      }
+   }
+
+}

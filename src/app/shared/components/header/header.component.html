@@ -1,34 +1,37 @@
-<mat-sidenav #sidenav mode="push" class="app-sidenav">
-  <mat-toolbar color="primary">
-    <span class="toolbar-filler"></span>
+
+<div class="header-con">
+  <mat-sidenav #sidenav mode="push" class="app-sidenav">
+    <mat-toolbar color="primary" class="header">
+      <span class="toolbar-filler"></span>
+      <button mat-icon-button (click)="sidenav.toggle()" class="mat-icon-button sidenav-toggle-button"
+        [hidden]="!sidenav.opened">
+        <mat-icon aria-label="Menu" class="material-icons">close</mat-icon>
+      </button>
+    </mat-toolbar>
+    <mat-nav-list class="menu-list">
+      <a mat-list-item class="sidenav-link" [routerLink]="['/admin/product-list']" (click)="sidenav.toggle()">
+        <mat-icon mat-list-icon>shopify</mat-icon>
+        <span class="title" mat-line>Product List</span>
+      </a>
+      <a mat-list-item class="sidenav-link" [routerLink]="['/admin/sale-list']" (click)="sidenav.toggle()">
+        <mat-icon mat-list-icon>business_center</mat-icon>
+        <span class="title" mat-line>Sale List</span>
+      </a>
+      <a mat-list-item class="sidenav-link" [routerLink]="['/admin/user-list']" (click)="sidenav.toggle()">
+        <mat-icon mat-list-icon>account_box</mat-icon>
+        <span class="title" mat-line>User List</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-toolbar id="appToolbar" color="primary" class="app-toolbar">
     <button mat-icon-button (click)="sidenav.toggle()" class="mat-icon-button sidenav-toggle-button"
-      [hidden]="!sidenav.opened">
-      <mat-icon aria-label="Menu" class="material-icons">close</mat-icon>
+      [hidden]="sidenav.opened">
+      <mat-icon aria-label="Menu" class="material-icons">menu</mat-icon>
     </button>
+    <h1 class="component-title">
+      <p class="title-link">Textile Shop</p>
+    </h1>
+    <span class="toolbar-filler"></span>
+    <button id="button-logout" class="lgt-btn" mat-button (click)="logOut()">Log Out</button>
   </mat-toolbar>
-  <mat-nav-list>
-    <a mat-list-item class="sidenav-link" [routerLink]="['/admin/product-list']" (click)="sidenav.toggle()">
-      <mat-icon mat-list-icon>shopify</mat-icon>
-      <span class="title" mat-line>Product List</span>
-    </a>
-    <a mat-list-item class="sidenav-link" [routerLink]="['/admin/sale-list']" (click)="sidenav.toggle()">
-      <mat-icon mat-list-icon>business_center</mat-icon>
-      <span class="title" mat-line>Sale List</span>
-    </a>
-    <a mat-list-item class="sidenav-link" [routerLink]="['/admin/user-list']" (click)="sidenav.toggle()">
-      <mat-icon mat-list-icon>account_box</mat-icon>
-      <span class="title" mat-line>User List</span>
-    </a>
-  </mat-nav-list>
-</mat-sidenav>
-<mat-toolbar id="appToolbar" color="primary">
-  <button mat-icon-button (click)="sidenav.toggle()" class="mat-icon-button sidenav-toggle-button"
-    [hidden]="sidenav.opened">
-    <mat-icon aria-label="Menu" class="material-icons">menu</mat-icon>
-  </button>
-  <h1 class="component-title">
-    <a class="title-link">My Shop</a>
-  </h1>
-  <span class="toolbar-filler"></span>
-  <button id="button-logout" mat-button (click)="logOut()">Log Out</button>
-</mat-toolbar>
+</div>

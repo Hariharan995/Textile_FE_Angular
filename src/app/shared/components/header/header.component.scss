@@ -1,3 +1,27 @@
 .toolbar-filler {
     flex: 1 1 auto
 }
+
+.header-con{
+  .app-sidenav{
+    width: 18%;
+    .menu-list{
+        .title{
+            margin-left: 10px;
+        }
+    }
+  }
+  .app-toolbar{
+    ::ng-deep.component-title{
+        margin: 0 !important;
+        .title-link{
+            margin: 0;
+            font-size: 22px;
+        }
+    }
+    .lgt-btn{
+        background: azure;
+        color: #707070;
+    }
+  }
+}

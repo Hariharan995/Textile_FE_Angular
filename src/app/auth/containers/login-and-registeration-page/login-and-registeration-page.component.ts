@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdminService } from 'src/app/core/services/admin.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { UserTypes } from 'src/app/models';
@@ -23,6 +24,7 @@ export class LoginAndRegisterationPageComponent {
     private route: ActivatedRoute,
     private authService: AuthService,
     private router: Router,
+    public adminService:AdminService,
     private notificationService: NotificationService
   ) {
   }
@@ -36,7 +38,8 @@ export class LoginAndRegisterationPageComponent {
         })
         let userDetails = res.data
         userDetails.token = res.token
-        localStorage.setItem('auth', JSON.stringify(userDetails))
+        localStorage.setItem('auth', JSON.stringify(userDetails));
+        this.adminService.isToken = true;
         if (res.data.userRole.includes(UserTypes.ADMIN)) {
           this.router.navigate(['/admin/user-list']);
         }

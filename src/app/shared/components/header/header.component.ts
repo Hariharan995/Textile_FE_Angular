@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AdminService } from 'src/app/core/services/admin.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { NotificationType } from 'src/app/utils/notification-messages';
@@ -13,7 +14,9 @@ import { environment } from 'src/environments/environment';
 export class HeaderComponent {
   auth = JSON.parse(localStorage.getItem('auth') || "no data");
   
-  constructor(private authService: AuthService, public router: Router, public route: Router, public activatedRoute: ActivatedRoute, private notificationService: NotificationService) { }
+  constructor(private authService: AuthService,
+     public adminService:AdminService,
+     public router: Router, public route: Router, public activatedRoute: ActivatedRoute, private notificationService: NotificationService) { }
 
   logOut() {
     let request = { token: this.auth.token }
@@ -24,6 +27,7 @@ export class HeaderComponent {
           type: NotificationType.success
         })
         localStorage.clear();
+        this.adminService.isToken = false;
         this.router.navigate(['']);
       },
       (err: any) => {

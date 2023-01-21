@@ -1,12 +1,13 @@
 <div *ngIf="collectionSize">
     <table mat-table [dataSource]="userList" class="mat-elevation-z8">
 
-        <ng-container matColumnDef="_id">
-            <th mat-header-cell *matHeaderCellDef>No.</th>
-            <td mat-cell *matCellDef="let element">{{element._id}}</td>
+        <ng-container *ngFor="let column of userDetails; let i = index" [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef><span>{{column}}</span></th>
+            <td mat-cell *matCellDef="let element">{{element[column]}}
+            </td>
         </ng-container>
 
-        <ng-container matColumnDef="name">
+        <!-- <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Name</th>
             <td mat-cell *matCellDef="let element">{{element.name}}</td>
         </ng-container>
@@ -24,7 +25,7 @@
         <ng-container matColumnDef="userStatus">
             <th mat-header-cell *matHeaderCellDef>UserStatus</th>
             <td mat-cell *matCellDef="let element">{{element.userStatus}}</td>
-        </ng-container>
+        </ng-container> -->
 
         <tr mat-header-row *matHeaderRowDef="userDetails"></tr>
         <tr mat-row *matRowDef="let row; columns: userDetails;"></tr>
