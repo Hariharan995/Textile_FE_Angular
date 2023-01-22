@@ -89,6 +89,25 @@ export class UserListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        let request = {
+          userId: '',
+          userStatus: 'REJECTED'
+        }
+        this.adminSerice.userApproval(request).subscribe(
+          (res: any) => {
+            this.notificationService.sendMessage({
+              message: res.message,
+              type: NotificationType.success
+            })
+          },
+          (err: any) => {
+            this.notificationService.sendMessage({
+              message: err.error.message,
+              type: NotificationType.error
+            })
+          }
+        );
+  
       }
     });
   }
@@ -105,6 +124,25 @@ export class UserListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        let request = {
+          userId: '',
+          userStatus: 'APPROVED'
+        }
+        this.adminSerice.userApproval(request).subscribe(
+          (res: any) => {
+            this.notificationService.sendMessage({
+              message: res.message,
+              type: NotificationType.success
+            })
+          },
+          (err: any) => {
+            this.notificationService.sendMessage({
+              message: err.error.message,
+              type: NotificationType.error
+            })
+          }
+        );
+  
       }
     });
   }

@@ -1,4 +1,3 @@
-
 <div class="header-con">
   <mat-sidenav #sidenav mode="push" class="app-sidenav">
     <mat-toolbar color="primary" class="header">
@@ -9,7 +8,12 @@
       </button>
     </mat-toolbar>
     <mat-nav-list class="menu-list">
-      <a mat-list-item class="sidenav-link" [routerLink]="['/admin/product-list']" (click)="sidenav.toggle()">
+      <!-- <a mat-list-item class="sidenav-link"  [routerLink]="['/admin/product-list']" (click)="sidenav.toggle()">
+        <mat-icon mat-list-icon>shopify</mat-icon>
+        <span class="title" mat-line>Dashboard</span>
+      </a> -->
+      <a mat-list-item class="sidenav-link" *ngIf="userRole =='ADMIN'" [routerLink]="['/admin/product-list']"
+        (click)="sidenav.toggle()">
         <mat-icon mat-list-icon>shopify</mat-icon>
         <span class="title" mat-line>Product List</span>
       </a>
@@ -17,9 +21,15 @@
         <mat-icon mat-list-icon>business_center</mat-icon>
         <span class="title" mat-line>Sale List</span>
       </a>
-      <a mat-list-item class="sidenav-link" [routerLink]="['/admin/user-list']" (click)="sidenav.toggle()">
+      <a mat-list-item class="sidenav-link" *ngIf="userRole =='ADMIN'" [routerLink]="['/admin/user-list']"
+        (click)="sidenav.toggle()">
         <mat-icon mat-list-icon>account_box</mat-icon>
         <span class="title" mat-line>User List</span>
+      </a>
+      <a mat-list-item class="sidenav-link" *ngIf="userRole =='SELLER'" [routerLink]="['/seller/bill']"
+        (click)="sidenav.toggle()">
+        <mat-icon mat-list-icon>shopping_cart</mat-icon>
+        <span class="title" mat-line>Billing</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
@@ -32,6 +42,7 @@
       <p class="title-link">Textile Shop</p>
     </h1>
     <span class="toolbar-filler"></span>
+    <button id="button-logout" class="lgt-btn" mat-button>Hi {{auth.name}}</button>
     <button id="button-logout" class="lgt-btn" mat-button (click)="logOut()">Log Out</button>
   </mat-toolbar>
 </div>

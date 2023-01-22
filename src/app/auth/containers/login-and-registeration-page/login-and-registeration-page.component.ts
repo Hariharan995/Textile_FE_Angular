@@ -44,7 +44,7 @@ export class LoginAndRegisterationPageComponent {
           this.router.navigate(['/admin/user-list']);
         }
         else {
-          this.router.navigate(['/sales']);
+          this.router.navigate(['/seller/bill']);
         }
       },
       (err: any) => {

@@ -9,7 +9,7 @@
   }
   
   :root {
-    --primary-clr: #023e8a;
+    --primary-clr: #c7590f;
     --primary-clr-dull: rgba(2, 62, 138, 0.1);
     --success-clr: #008000;
     --danger-clr: #c71f37;
@@ -97,7 +97,7 @@
     -webkit-transition: all 0.25s ease;
     transition: all 0.25s ease;
     color: #fff;
-    background-color: var(--primary-clr);
+    background-color: #c7590f;
     border: 1px solid var(--primary-clr);
   }
   
@@ -171,8 +171,8 @@
     max-width: 150px;
     -webkit-transition: all 0.25s ease;
     transition: all 0.25s ease;
-    color: #fff;
-    background-color: var(--primary-clr);
+    color: rgb(255, 255, 255);
+    background-color: #c7590f;
     border: 1px solid var(--primary-clr);
   }
   

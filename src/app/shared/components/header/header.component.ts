@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 })
 export class HeaderComponent {
   auth = JSON.parse(localStorage.getItem('auth') || "no data");
-  
+  userRole = this.auth.userRole[0]
   constructor(private authService: AuthService,
      public adminService:AdminService,
      public router: Router, public route: Router, public activatedRoute: ActivatedRoute, private notificationService: NotificationService) { }

@@ -13,6 +13,11 @@ const routes: Routes = [
     canLoad: [AdminGuard],
     loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
   },
+  {
+    path: 'seller',
+   // canLoad: [AdminGuard],
+    loadChildren: () => import('./seller/seller.module').then((m) => m.SellerModule),
+  },
   // {
   //   path: 'seller',
   //   canLoad: [SellerGuard],

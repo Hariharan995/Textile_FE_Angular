@@ -1,156 +1,47 @@
 <div class="payment-cart">
     <div class="cart-container">
         <div class="cart-items">
-            <div class="card">
-                <div class="img">
-                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                        alt="">
-                </div>
-                <div class="item-details">
-                    <h2>Title</h2>
-                    <p class="brand">Brand</p>
-                    <p class="price">$123 <span>$1234</span></p>
-                </div>
-                <div class="quantity-con">
-                    <div class="quantity">
-                        <button class="add">-</button>
-                        <p>1</p>
-                        <button class="sub">+</button>
+            <div *ngFor="let cart of cartList; index as i">
+                <div class="card">
+                    <div class="img">
+                        <img src="{{cart.productDetails.productImage}}" alt="">
                     </div>
-                    <button class="remove">remove</button>
-                </div>
-            </div>
-            <div class="card">
-                <div class="img">
-                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                        alt="">
-                </div>
-                <div class="item-details">
-                    <h2>Title</h2>
-                    <p class="brand">Brand</p>
-                    <p class="price">$123 <span>$1234</span></p>
-                </div>
-                <div class="quantity-con">
-                    <div class="quantity">
-                        <button class="add">-</button>
-                        <p>1</p>
-                        <button class="sub">+</button>
+                    <div class="item-details">
+                        <h2>{{cart?.productDetails.productName}}</h2>
+                        <p class="brand" *ngIf="cart.productDetails.brandName">{{cart.brandName}}</p>
+                        <p class="price">${{cart.productDetails.price}} <span
+                                *ngIf="(cart.productDetails.price)<(cart.productDetails.mrp)">${{cart.productDetails.mrp}}</span>
+                        </p>
                     </div>
-                    <button class="remove">remove</button>
-                </div>
-            </div>
-            <div class="card">
-                <div class="img">
-                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                        alt="">
-                </div>
-                <div class="item-details">
-                    <h2>Title</h2>
-                    <p class="brand">Brand</p>
-                    <p class="price">$123 <span>$1234</span></p>
-                </div>
-                <div class="quantity-con">
-                    <div class="quantity">
-                        <button class="add">-</button>
-                        <p>1</p>
-                        <button class="sub">+</button>
+                    <div class="quantity-con">
+                        <div class="quantity">
+                            <button class="sub" (click)="quantityChanges('DECREASE', cart.productDetails.barcodeId)"
+                                [disabled]="cart.quantity==1">-</button>
+                            <p>{{cart.quantity}}</p>
+                            <button class="add"
+                                (click)="quantityChanges('INCREASE', cart.productDetails.barcodeId)">+</button>
+                        </div>
+                        <button class="remove" (click)="deleteSingleCart(cart._id)">remove</button>
                     </div>
-                    <button class="remove">remove</button>
-                </div>
-            </div>
-            <div class="card">
-                <div class="img">
-                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                        alt="">
-                </div>
-                <div class="item-details">
-                    <h2>Title</h2>
-                    <p class="brand">Brand</p>
-                    <p class="price">$123 <span>$1234</span></p>
-                </div>
-                <div class="quantity-con">
-                    <div class="quantity">
-                        <button class="add">-</button>
-                        <p>1</p>
-                        <button class="sub">+</button>
-                    </div>
-                    <button class="remove">remove</button>
-                </div>
-            </div>
-            <div class="card">
-                <div class="img">
-                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                        alt="">
-                </div>
-                <div class="item-details">
-                    <h2>Title</h2>
-                    <p class="brand">Brand</p>
-                    <p class="price">$123 <span>$1234</span></p>
-                </div>
-                <div class="quantity-con">
-                    <div class="quantity">
-                        <button class="add">-</button>
-                        <p>1</p>
-                        <button class="sub">+</button>
-                    </div>
-                    <button class="remove">remove</button>
-                </div>
-            </div>
-            <div class="card">
-                <div class="img">
-                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                        alt="">
-                </div>
-                <div class="item-details">
-                    <h2>Title</h2>
-                    <p class="brand">Brand</p>
-                    <p class="price">$123 <span>$1234</span></p>
-                </div>
-                <div class="quantity-con">
-                    <div class="quantity">
-                        <button class="add">-</button>
-                        <p>1</p>
-                        <button class="sub">+</button>
-                    </div>
-                    <button class="remove">remove</button>
-                </div>
-            </div>
-            <div class="card">
-                <div class="img">
-                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                        alt="">
-                </div>
-                <div class="item-details">
-                    <h2>Title</h2>
-                    <p class="brand">Brand</p>
-                    <p class="price">$123 <span>$1234</span></p>
-                </div>
-                <div class="quantity-con">
-                    <div class="quantity">
-                        <button class="add">-</button>
-                        <p>1</p>
-                        <button class="sub">+</button>
-                    </div>
-                    <button class="remove">remove</button>
                 </div>
             </div>
         </div>
         <div class="item-entry-payment">
             <div class="manual-entry">
                 <div class="input-wrap">
-                    <input type="text">
+                    <input type="text" (keyup)="onKey($event)" value="" placeholder="BarCode Number">
                     <button class="verify">Verify</button>
                 </div>
-                <button class="submit">Submit</button>
+                <button class="submit" (click)="addtoCart()">Add to cart</button>
             </div>
             <div class="payment-card">
                 <div class="item">
                     <span>Sub-Total</span>
-                    <h6>$1234</h6>
+                    <h6>${{subTotal}}</h6>
                 </div>
                 <div class="item">
                     <span>Grand-Total</span>
-                    <h6>$1234</h6>
+                    <h6>${{totalAmount}}</h6>
                 </div>
                 <div class="sub-btn">
                     <button class="submit-btn">Submit</button>

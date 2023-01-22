@@ -1,43 +1,46 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-export class AdminService {
+export class CartService {
 
-    apiUrl = environment.apiUrl;
+  apiUrl = environment.apiUrl;
     isToken = false;
 
     constructor(private http: HttpClient, private router: Router) { }
     auth = localStorage.getItem('auth')
     authtoken = this.auth ? JSON.parse(this.auth) : null;
-    // auth = JSON.parse(localStorage.getItem('auth') || "no data")
-    // token = this.auth.token
+
     headers_object = {"Authorization":"Bearer " + this.authtoken?.token}
 
     params = new HttpParams();
    
-    getAllUsers(request: any) {
-        let url = this.apiUrl + '/getAllUsers';
+    getAllCarts(request: any) {
+        let url = this.apiUrl + '/getAllCarts';
         return this.http.post(url, request, {headers: this.headers_object});
     }
     
-    getAllProducts(request: any) {
-        let url = this.apiUrl + '/getAllProducts';
+    addToCart(request: any) {
+        let url = this.apiUrl + '/addToCart';
         return this.http.post(url, request, {headers: this.headers_object});
     }
 
-    getAllSales(request: any) {
-        let url = this.apiUrl + '/getAllSales';
+    deleteSingleCart(request: any) {
+        let url = this.apiUrl + '/deleteSingleCart';
         return this.http.post(url, request, {headers: this.headers_object});
     }
 
-    userApproval(request: any) {
-        let url = this.apiUrl + '/userApproval';
+    deleteAllCart(request: any) {
+        let url = this.apiUrl + '/delelteAllCart';
+        return this.http.post(url, request, {headers: this.headers_object});
+    }
+
+    orderPlaced(request: any) {
+        let url = this.apiUrl + '/orderPlaced';
         return this.http.post(url, request, {headers: this.headers_object});
     }
 }
-

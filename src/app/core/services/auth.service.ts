@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   registerUser(formData: FormData) {
-    let url = this.apiUrl + '/signUp';
+    let url = this.apiUrl + '/register';
     return this.http.post(url, formData);
   }
 
