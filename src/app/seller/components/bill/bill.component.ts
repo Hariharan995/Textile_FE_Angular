@@ -18,7 +18,7 @@ export class BillComponent implements OnInit {
   totalAmount = 0
   auth = localStorage.getItem('auth')
   user = this.auth ? JSON.parse(this.auth) : null;
-  barcodeId = ''
+  barcodeId: any = ''
 
   constructor(private cartService: CartService, private notificationService: NotificationService, public router: Router) {
   }

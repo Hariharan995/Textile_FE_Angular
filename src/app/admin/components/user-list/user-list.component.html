@@ -29,7 +29,7 @@
     </mat-form-field>
     <mat-form-field appearance="outline">
         <mat-label>Search</mat-label>
-        <input matInput placeholder="Ex. Name, Mobile" (input)="filter()">
+        <input matInput [(ngModel)]="search" name="search" placeholder="Ex. Name, Mobile" (input)="filter()">
     </mat-form-field>
     <table mat-table [dataSource]="userList" class="mat-elevation-z8">
         <ng-container *ngFor="let column of userDetails; let i = index" [matColumnDef]="column">

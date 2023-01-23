@@ -6,8 +6,7 @@
                 <input matInput formControlName="username" name="username" required minlength="10">
                 <!-- <mat-error *ngIf="loginForm.controls['username'].hasError('required')">This field is
                     required</mat-error> -->
-                <mat-error *ngIf="loginForm.value.username">This field is
-                    required</mat-error>
+                <mat-error *ngIf="loginForm.value.username">Username is must be needed</mat-error>
             </mat-form-field>
         </div>
         <div fxFlex="100%" class="inpt">
@@ -18,8 +17,7 @@
                 <mat-icon matSuffix (click)="togglePasswordVisibility()">
                     {{showPassword?'visibility':'visibility_off'}}
                 </mat-icon>
-                <mat-error *ngIf="loginForm.value.password">Password must be a lower-case, upper-case,
-                    numbers and at least 8 characters long</mat-error>
+                <mat-error *ngIf="loginForm.value.password">Password must be a valid pattern</mat-error>
             </mat-form-field>
         </div>
         <div fxFlex="100%" class="inpt">

@@ -29,7 +29,7 @@
         <div class="item-entry-payment">
             <div class="manual-entry">
                 <div class="input-wrap">
-                    <input type="text" (keyup)="onKey($event)" value="" placeholder="BarCode Number">
+                    <input type="text" [value]="barcodeId" (keyup)="onKey($event)" placeholder="BarCode Number">
                     <button class="verify">Verify</button>
                 </div>
                 <button class="submit" (click)="addtoCart()">Add to cart</button>
