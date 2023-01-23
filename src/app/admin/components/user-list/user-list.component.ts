@@ -56,6 +56,7 @@ export class UserListComponent implements OnInit {
       (res: any) => {
         res.data.map((ele: any, i: any) => {
           let tempUserList: any = [];
+          tempUserList.Id = ele._id;
           tempUserList['Created Date'] = ele.createdAt;
           tempUserList.Name = ele.name;
           tempUserList.Mobile = ele.mobile;
@@ -115,20 +116,21 @@ export class UserListComponent implements OnInit {
     }
   }
 
-  reject() {
+  reject(userId: any) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '600px',
       height: '200px',
       data: {
         content: 'Are you sure want to reject this user?',
-        btnValue: 'Yes Reject'
+        btnValue: 'Yes Reject',
+        userId: userId
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result.status) {
         let request = {
-          userId: '',
+          userId: result.userId,
           userStatus: 'REJECTED'
         }
         this.adminSerice.userApproval(request).subscribe(
@@ -136,6 +138,10 @@ export class UserListComponent implements OnInit {
             this.notificationService.sendMessage({
               message: res.message,
               type: NotificationType.success
+            })
+            this.getUserList({
+              page: this.pageIndex + 1,
+              limit: this.pageSize
             })
           },
           (err: any) => {
@@ -145,25 +151,25 @@ export class UserListComponent implements OnInit {
             })
           }
         );
-
       }
     });
   }
 
-  approve() {
+  approve(userId: any) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '600px',
       height: '200px',
       data: {
         content: 'Are you sure want to approve this user?',
-        btnValue: 'Yes Approve'
+        btnValue: 'Yes Approve',
+        userId: userId
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result.status) {
         let request = {
-          userId: '',
+          userId: result.userId,
           userStatus: 'APPROVED'
         }
         this.adminSerice.userApproval(request).subscribe(
@@ -171,6 +177,10 @@ export class UserListComponent implements OnInit {
             this.notificationService.sendMessage({
               message: res.message,
               type: NotificationType.success
+            });
+            this.getUserList({
+              page: this.pageIndex + 1,
+              limit: this.pageSize
             })
           },
           (err: any) => {

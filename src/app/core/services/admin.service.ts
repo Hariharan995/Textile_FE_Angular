@@ -39,5 +39,25 @@ export class AdminService {
         let url = this.apiUrl + '/userApproval';
         return this.http.post(url, request, {headers: this.headers_object});
     }
+
+    addProduct(request: any) {
+        let url = this.apiUrl + '/addProduct';
+        return this.http.post(url, request, {headers: this.headers_object});
+    }
+
+    updateProduct(request: any) {
+        let url = this.apiUrl + '/updateProduct';
+        return this.http.post(url, request, {headers: this.headers_object});
+    }
+    
+    deleteProduct(request: any) {
+        let url = this.apiUrl + '/deleteProduct';
+        return this.http.post(url, request, {headers: this.headers_object});
+    }
+
+    getProductById(request: any) {
+        let url = this.apiUrl + '/getProductById';
+        return this.http.post(url, request, {headers: this.headers_object});
+    }
 }
 

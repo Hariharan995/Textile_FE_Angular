@@ -30,7 +30,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="date-search-filter">
             <!-- <mat-label>Search</mat-label> -->
-            <input matInput placeholder="Search.." (input)="filter()">
+            <input matInput type="text" [value]="search" placeholder="Search.." (input)="filter()">
         </mat-form-field>
     </div>
     <table mat-table [dataSource]="userList" class="mat-elevation-z8">
@@ -46,9 +46,9 @@
                 <span *ngIf="column =='Action'">
                     <div class="act-btn">
                         <div *ngIf="element['UserStatus']!=='APPROVED'"><button mat-stroked-button class="approve-btn"
-                                (click)="approve()">approve</button></div>
+                                (click)="approve(element['Id'])">approve</button></div>
                         <div *ngIf="element['UserStatus']!=='REJECTED'">
-                            <button mat-stroked-button class="reject-btn" (click)="reject()">reject</button>
+                            <button mat-stroked-button class="reject-btn" (click)="reject(element['Id'])">reject</button>
                         </div>
                     </div>
                 </span>

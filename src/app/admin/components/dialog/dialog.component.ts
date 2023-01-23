@@ -12,21 +12,24 @@ export class DialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any    ) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
   }
 
-  delete(){
-    this.dialogRef.close(true);
+  delete() {
+    if (this.data.btnValue == 'Yes Reject')
+      this.dialogRef.close({ status: true, userId: this.data.userId });
+    else
+      this.dialogRef.close({ status: true, productId: this.data.productId });
   }
 
-  cancel(){
-    this.dialogRef.close(false);
+  cancel() {
+    this.dialogRef.close({ status: false });
   }
 
-  approve(){
-    
+  approve() {
+    this.dialogRef.close({ status: true, userId: this.data.userId });
   }
 
 }

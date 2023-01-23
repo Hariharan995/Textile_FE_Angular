@@ -14,7 +14,8 @@ import { DialogComponent } from '../dialog/dialog.component';
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit {
-
+  auth = localStorage.getItem('auth')
+  user = this.auth ? JSON.parse(this.auth) : null;
   collectionSize = 0;
   pageSize = 10;
   pageIndex = 0;
@@ -87,6 +88,7 @@ export class ProductListComponent implements OnInit {
           tempUserList.MRP = ele.mrp;
           tempUserList.Price = ele.price;
           tempUserList.Quantity = ele.quantity;
+          tempUserList.BarcodeId = ele.barcodeId;
           this.productList.push(tempUserList)
         })
         this.collectionSize = res.count
@@ -106,45 +108,90 @@ export class ProductListComponent implements OnInit {
       limit: this.pageSize
     })
   }
-  
-  delete() {
+
+  delete(productId: any) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '600px',
       height: '200px',
       data: {
-        content: 'Are you sure want to delete this user?',
-        btnValue: 'Yes Delete'
+        content: 'Are you sure want to delete this product?',
+        btnValue: 'Yes Delete',
+        productId: productId
       }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      if (result.status) {
       }
     });
   }
 
-  edit() {
+  edit(product: any) {
     const dialogRef = this.dialog.open(AddProductDialogComponent, {
       width: '700px',
       height: '450px',
       data: {
-        content:'Edit Product',
-        btnValue:'Edit Product'
+        content: 'Edit Product',
+        btnValue: 'Edit Product',
+        productDetails: product
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.status) {
+        result.data.sellerId = this.user._id
+        this.adminSerice.updateProduct(result.data).subscribe(
+          (res: any) => {
+            this.notificationService.sendMessage({
+              message: res.message,
+              type: NotificationType.success
+            })
+            this.getProductList({
+              page: this.pageIndex + 1,
+              limit: this.pageSize
+            })
+          },
+          (err: any) => {
+            this.notificationService.sendMessage({
+              message: err.error.message,
+              type: NotificationType.error
+            })
+          }
+        );
       }
     });
   }
 
-  addProduct(){
-    
+  addProduct() {
     const dialogRef = this.dialog.open(AddProductDialogComponent, {
       width: '700px',
       height: '450px',
-      data:{
-        content:'Add New Product',
-        btnValue:'Add Product'
+      data: {
+        content: 'Add New Product',
+        btnValue: 'Add Product'
       }
     });
-
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.status) {
+        result.data.sellerId = this.user._id
+        this.adminSerice.addProduct(result.data).subscribe(
+          (res: any) => {
+            this.notificationService.sendMessage({
+              message: res.message,
+              type: NotificationType.success
+            })
+            this.getProductList({
+              page: this.pageIndex + 1,
+              limit: this.pageSize
+            })
+          },
+          (err: any) => {
+            this.notificationService.sendMessage({
+              message: err.error.message,
+              type: NotificationType.error
+            })
+          }
+        );
+      }
+    });
   }
 
 }

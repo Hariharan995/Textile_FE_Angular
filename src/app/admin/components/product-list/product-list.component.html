@@ -18,7 +18,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="date-search-filter">
             <!-- <mat-label>Search</mat-label> -->
-            <input matInput placeholder="Search.." (input)="filter()">
+            <input matInput type="text" [(ngModel)]="search" placeholder="Search.." (input)="filter()">
         </mat-form-field>
        </div>
 
@@ -38,8 +38,8 @@
                     </span>
                     <span *ngIf="column =='Action'">
                         <div class="act-btn">
-                            <button mat-stroked-button class="edit-btn" (click)="edit()">edit</button>
-                            <button mat-stroked-button class="delete-btn" (click)="delete()">delete</button>
+                            <button mat-stroked-button class="edit-btn" (click)="edit(element)">edit</button>
+                            <button mat-stroked-button class="delete-btn" (click)="delete(element['Id'])">delete</button>
                         </div>
                     </span>
                 </td>
@@ -56,7 +56,7 @@
     </div>
     <div *ngIf="!collectionSize">
         <div class="no-data">
-            <p style="font-size: 25px">No Users</p>
+            <p style="font-size: 25px">No Products</p>
         </div>
     </div>
 </div>

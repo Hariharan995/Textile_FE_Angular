@@ -1,5 +1,3 @@
-
-
 <div class="addProduct-container">
     <div class="dialog-header">
         <h2>{{this.data.content}}</h2>
@@ -7,59 +5,88 @@
             <mat-icon class="close-icon" color="warn">close</mat-icon>
         </button>
     </div>
- <div class="action">
-    <div class="addproductForm">
-        <form>
-            <div class="image-field">
+    <div class="action">
+        <div class="addproductForm">
+            <form [formGroup]="productForm">
+                <div class="image-field">
                     <label class="image-upload-container btn btn-bwm">
                         <span>Select Image</span>
-                        <input #imageInput
-                            type="file"
-                            accept="image/*"
-
-                            >
+                        <input #imageInput formControlName="productImage" name="productImage" required type="file"
+                            accept="image/*">
                     </label>
-            </div> 
+                </div>
 
-            <div class="addinpt-field">
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Product Name</mat-label>
-                    <input matInput placeholder="Product Name">
-                </mat-form-field>
+                <div class="addinpt-field">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Product Name</mat-label>
+                        <input matInput formControlName="productName" name="productName" required
+                            placeholder="Product Name">
+                    </mat-form-field>
 
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Description</mat-label>
-                    <input matInput placeholder="Description">
-                </mat-form-field>
-            </div>
-            <div class="addinpt-field">
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Brand</mat-label>
-                    <input matInput placeholder="Brand">
-                </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Description</mat-label>
+                        <input matInput formControlName="description" name="description" placeholder="Description">
+                    </mat-form-field>
+                </div>
+                <div class="addinpt-field">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Brand</mat-label>
+                        <input matInput formControlName="brand" name="brand" placeholder="Brand">
+                    </mat-form-field>
+                    <!-- <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Gender</mat-label>
+                        <input matInput formControlName="gender" name="gender" placeholder="Gender">
+                    </mat-form-field> -->
+                    <mat-form-field appearance="outline" class="date-search-filter">
+                        <mat-select formControlName="gender" name="gender" placeholder = "Gender">
+                            <mat-option *ngFor="let gender of genderList" [value]="gender">
+                                {{gender}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="addinpt-field">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>MRP</mat-label>
+                        <input matInput formControlName="mrp" (keypress)="numberOnly($event)" name="mrp" required
+                            placeholder="MRP">
+                    </mat-form-field>
 
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Gender</mat-label>
-                    <input matInput placeholder="Gender">
-                </mat-form-field>
-            </div>
-            <div class="addinpt-field">
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Tax</mat-label>
-                    <input matInput placeholder="Tax">
-                </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Price</mat-label>
+                        <input matInput formControlName="price" (keypress)="numberOnly($event)" name="price" required
+                            placeholder="Price">
+                    </mat-form-field>
+                </div>
+                <div class="addinpt-field">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Tax</mat-label>
+                        <input matInput formControlName="tax" (keypress)="numberOnly($event)" name="tax"
+                            placeholder="Tax">
+                    </mat-form-field>
 
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Quantity</mat-label>
-                    <input matInput placeholder="Quantityss">
-                </mat-form-field>
-            </div>
-        </form>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Quantity</mat-label>
+                        <input matInput formControlName="quantity" name="quantity" required placeholder="Quantity">
+                    </mat-form-field>
+                </div>
+                <div class="addinpt-field">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>BarcodeId</mat-label>
+                        <input matInput formControlName="barcodeId" (keypress)="numberOnly($event)" name="barcodeId"
+                            placeholder="BarcodeId" minlength="10">
+                    </mat-form-field>
+
+                    <!-- <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Quantity</mat-label>
+                        <input matInput placeholder="Quantityss">
+                    </mat-form-field> -->
+                </div>
+            </form>
+        </div>
+        <div class="btn-field">
+            <button mat-stroked-button class="cancel-btn" (click)="cancel()">No</button>
+            <button mat-stroked-button (click)="addProduct()" [disabled]="!productForm.valid" class="addProduct-btn">{{this.data.btnValue}}</button>
+        </div>
     </div>
-    <div class="btn-field">
-        <button mat-stroked-button class="cancel-btn" (click)="cancel()">No</button>
-        <button mat-stroked-button (click)="addProduct()"
-        class="addProduct-btn">{{this.data.btnValue}}</button>
-    </div>
- </div>
 </div>
