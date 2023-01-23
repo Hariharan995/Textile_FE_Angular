@@ -19,7 +19,7 @@ export class AddProductDialogComponent implements OnInit {
     mrp: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required]),
     quantity: new FormControl('', [Validators.required]),
-    tax: new FormControl(''),
+    taxPercent: new FormControl(''),
   });
   genderList = ['MALE', "FEMALE", "CHILD"]
   constructor(
@@ -36,7 +36,7 @@ export class AddProductDialogComponent implements OnInit {
       this.productForm.controls['mrp'].patchValue(this.data.productDetails.MRP);
       this.productForm.controls['price'].patchValue(this.data.productDetails.Price);
       this.productForm.controls['quantity'].patchValue(this.data.productDetails.Quantity);
-      this.productForm.controls['tax'].patchValue(this.data.productDetails.Tax);
+      this.productForm.controls['taxPercent'].patchValue(this.data.productDetails.TaxPercent);
       this.productForm.controls['gender'].patchValue(this.data.productDetails.Gender);
     }
   }
@@ -53,9 +53,12 @@ export class AddProductDialogComponent implements OnInit {
         mrp: this.productForm.controls['mrp'].value,
         price: this.productForm.controls['price'].value,
         quantity: this.productForm.controls['quantity'].value,
-        tax: this.productForm.controls['tax'].value,
+        taxPercent: this.productForm.controls['taxPercent'].value,
       };
-      this.dialogRef.close({ status: true, data: request});
+      // if (this.data.content == 'Edit Product') {
+      //   request.productId = this.data.productDetails.Id 
+      // }
+      this.dialogRef.close({ status: true, data: request });
     }
   }
 

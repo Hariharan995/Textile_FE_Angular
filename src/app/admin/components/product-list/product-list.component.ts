@@ -89,6 +89,10 @@ export class ProductListComponent implements OnInit {
           tempUserList.Price = ele.price;
           tempUserList.Quantity = ele.quantity;
           tempUserList.BarcodeId = ele.barcodeId;
+          tempUserList.Gender = ele.gender;
+          tempUserList.TaxPercent = ele.taxPercent;
+          tempUserList.Brand = ele.brand;
+          tempUserList.Description = ele.description;
           this.productList.push(tempUserList)
         })
         this.collectionSize = res.count
@@ -121,6 +125,24 @@ export class ProductListComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result.status) {
+        this.adminSerice.deleteProduct({ productId: result.productId }).subscribe(
+          (res: any) => {
+            this.notificationService.sendMessage({
+              message: res.message,
+              type: NotificationType.success
+            })
+            this.getProductList({
+              page: this.pageIndex + 1,
+              limit: this.pageSize
+            })
+          },
+          (err: any) => {
+            this.notificationService.sendMessage({
+              message: err.error.message,
+              type: NotificationType.error
+            })
+          }
+        );
       }
     });
   }
