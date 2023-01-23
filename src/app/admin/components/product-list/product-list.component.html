@@ -1,55 +1,62 @@
-<div *ngIf="collectionSize">
-    <mat-form-field appearance="outline">
-        <mat-label>Created Date</mat-label>
-        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-            <input matStartDate formControlName="start" placeholder="Start date" (dateChange)="filter()">
-            <input matEndDate formControlName="end" placeholder="End date" (dateChange)="filter()">
-        </mat-date-range-input>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
+<div class="product-con">
+    <div class="add-product">
+        <button mat-raised-button (click)="addProduct()" class="add-prd-btn">Add Product</button>
+    </div>
+    <div *ngIf="collectionSize">
+       <div class="filter-con">
+        <mat-form-field appearance="outline" class="date-search-filter">
+            <!-- <mat-label>Created Date</mat-label> -->
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                <input matStartDate formControlName="start" placeholder="Start date" (dateChange)="filter()">
+                <input matEndDate formControlName="end" placeholder="End date" (dateChange)="filter()">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
 
-        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-        <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>Search</mat-label>
-        <input matInput placeholder="Ex. ProductName, MRP, price" (input)="filter()">
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="addProduct()">Add Product</button>
-    <table mat-table [dataSource]="productList" class="mat-elevation-z8">
+            <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="date-search-filter">
+            <!-- <mat-label>Search</mat-label> -->
+            <input matInput placeholder="Search.." (input)="filter()">
+        </mat-form-field>
+       </div>
 
-        <ng-container *ngFor="let column of productDetails; let i = index" [matColumnDef]="column">
-            <th mat-header-cell *matHeaderCellDef><span>{{column}}</span></th>
-            <td mat-cell *matCellDef="let element">
-                <span *ngIf="column =='Created Date'">
-                    {{element[column] | date:"MM/dd/yyyy"}}
-                </span>
-                <span *ngIf="column !='Action' && column !='ProductImage' && column !='Created Date'">
-                    {{element[column]}}
-                </span>
-                <span *ngIf="column =='ProductImage'">
-                    <img class="images" src="{{element[column]}}" />
-                </span>
-                <span *ngIf="column =='Action'">
-                    <div class="act-btn">
-                        <button mat-stroked-button class="edit-btn" (click)="edit()">edit</button>
-                        <button mat-stroked-button class="delete-btn" (click)="delete()">delete</button>
-                    </div>
-                </span>
-            </td>
-        </ng-container>
-        
-        <tr mat-header-row *matHeaderRowDef="productDetails"></tr>
-        <tr mat-row *matRowDef="let row; columns: productDetails;"></tr>
-    </table>
+        <table mat-table [dataSource]="productList" class="mat-elevation-z8">
 
-    <mat-paginator #paginator (page)="handlePageEvent($event)" [length]="collectionSize"
-        [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
-        [pageIndex]="pageIndex" aria-label="Select page">
-    </mat-paginator>
-</div>
-<div *ngIf="!collectionSize">
-    <div class="no-data">
-        <p style="font-size: 25px">No Users</p>
+            <ng-container *ngFor="let column of productDetails; let i = index" [matColumnDef]="column">
+                <th mat-header-cell *matHeaderCellDef><span>{{column}}</span></th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="column =='Created Date'">
+                        {{element[column] | date:"MM/dd/yyyy"}}
+                    </span>
+                    <span *ngIf="column !='Action' && column !='ProductImage' && column !='Created Date'">
+                        {{element[column]}}
+                    </span>
+                    <span *ngIf="column =='ProductImage'" class="prod-image">
+                        <img class="images" src="{{element[column]}}" />
+                    </span>
+                    <span *ngIf="column =='Action'">
+                        <div class="act-btn">
+                            <button mat-stroked-button class="edit-btn" (click)="edit()">edit</button>
+                            <button mat-stroked-button class="delete-btn" (click)="delete()">delete</button>
+                        </div>
+                    </span>
+                </td>
+            </ng-container>
+            
+            <tr mat-header-row *matHeaderRowDef="productDetails"></tr>
+            <tr mat-row *matRowDef="let row; columns: productDetails;"></tr>
+        </table>
+
+        <mat-paginator #paginator (page)="handlePageEvent($event)" [length]="collectionSize"
+            [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+            [pageIndex]="pageIndex" aria-label="Select page">
+        </mat-paginator>
+    </div>
+    <div *ngIf="!collectionSize">
+        <div class="no-data">
+            <p style="font-size: 25px">No Users</p>
+        </div>
     </div>
 </div>

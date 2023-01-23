@@ -1,36 +1,38 @@
 <div *ngIf="collectionSize">
-    <mat-form-field appearance="outline">
-        <mat-label>Created Date</mat-label>
-        <mat-date-range-input [formGroup]="range" [rangePicker]="picker" >
-          <input matStartDate formControlName="start" placeholder="Start date" (dateChange)="filter()">
-          <input matEndDate formControlName="end" placeholder="End date" (dateChange)="filter()">
-        </mat-date-range-input>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-      
-        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-        <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
-      </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>UserRole</mat-label>
-        <mat-select [(ngModel)]="userRole" name="userRole" (selectionChange)="filter()">
-            <mat-option *ngFor="let role of userRoleList" [value]="role">
-                {{role}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>UserStatus</mat-label>
-        <mat-select [(ngModel)]="userStatus" name="userStatus" (selectionChange)="filter()">
-            <mat-option *ngFor="let status of userStatusList" [value]="status">
-                {{status}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>Search</mat-label>
-        <input matInput [(ngModel)]="search" name="search" placeholder="Ex. Name, Mobile" (input)="filter()">
-    </mat-form-field>
+    <div class="filter-con">
+        <mat-form-field appearance="outline" class="date-search-filter">
+            <!-- <mat-label>Created Date</mat-label> -->
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker" >
+            <input matStartDate formControlName="start" placeholder="Start date" (dateChange)="filter()">
+            <input matEndDate formControlName="end" placeholder="End date" (dateChange)="filter()">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        
+            <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="date-search-filter">
+            <!-- <mat-label>UserRole</mat-label> -->
+            <mat-select [(ngModel)]="userRole" name="userRole" placeholder = "UserRole" (selectionChange)="filter()">
+                <mat-option *ngFor="let role of userRoleList" [value]="role">
+                    {{role}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="date-search-filter">
+            <!-- <mat-label>UserStatus</mat-label> -->
+            <mat-select [(ngModel)]="userStatus" name="userStatus" placeholder = "UserStatus" (selectionChange)="filter()">
+                <mat-option *ngFor="let status of userStatusList" [value]="status">
+                    {{status}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="date-search-filter">
+            <!-- <mat-label>Search</mat-label> -->
+            <input matInput placeholder="Search.." (input)="filter()">
+        </mat-form-field>
+    </div>
     <table mat-table [dataSource]="userList" class="mat-elevation-z8">
         <ng-container *ngFor="let column of userDetails; let i = index" [matColumnDef]="column">
             <th mat-header-cell *matHeaderCellDef><span>{{column}}</span></th>

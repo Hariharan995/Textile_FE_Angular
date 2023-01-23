@@ -31,3 +31,19 @@
   background: azure;
   color: #707070;
 }
+
+.active{
+  span{
+    color : #82AAE3 !important;
+  }
+  mat-icon {
+    color : #82AAE3 !important;
+  }
+}
+
+.profile-title{
+  margin: 0px 15px 0px 0px;
+  .title-link{
+    margin: 0;
+   }
+}

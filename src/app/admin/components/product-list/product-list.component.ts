@@ -5,6 +5,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { AdminService } from 'src/app/core/services/admin.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { NotificationType } from 'src/app/utils/notification-messages';
+import { AddProductDialogComponent } from '../add-product-dialog/add-product-dialog.component';
 import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
@@ -105,16 +106,14 @@ export class ProductListComponent implements OnInit {
       limit: this.pageSize
     })
   }
-  addProduct() {
-
-  }
+  
   delete() {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '600px',
       height: '200px',
       data: {
-        content: 'Are you sure want to reject this user?',
-        btnValue: 'Yes Reject'
+        content: 'Are you sure want to delete this user?',
+        btnValue: 'Yes Delete'
       }
     });
 
@@ -125,13 +124,27 @@ export class ProductListComponent implements OnInit {
   }
 
   edit() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '600px',
-      height: '200px',
+    const dialogRef = this.dialog.open(AddProductDialogComponent, {
+      width: '700px',
+      height: '450px',
       data: {
-        content: 'Are you sure want to approve this user?',
-        btnValue: 'Yes Approve'
+        content:'Edit Product',
+        btnValue:'Edit Product'
       }
     });
   }
+
+  addProduct(){
+    
+    const dialogRef = this.dialog.open(AddProductDialogComponent, {
+      width: '700px',
+      height: '450px',
+      data:{
+        content:'Add New Product',
+        btnValue:'Add Product'
+      }
+    });
+
+  }
+
 }

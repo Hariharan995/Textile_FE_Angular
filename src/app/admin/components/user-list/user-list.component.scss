@@ -47,3 +47,20 @@ table {
    }
 
 }
+
+.filter-con{
+  margin-bottom: 15px;
+ ::ng-deep.date-search-filter{
+  height: 35px;
+  margin-right: 10px;
+   .mat-mdc-text-field-wrapper{
+    height: 35px;
+    .mat-mdc-form-field-flex {
+      height: 35px;
+      .mat-mdc-form-field-infix {
+         margin-top: -10px !important;
+      }
+    }
+   }
+ }
+}

@@ -1,3 +1,19 @@
+
+
+.add-product{
+   float: right;
+   margin-bottom: 5px;
+   .add-prd-btn{
+    color: #4CAF50;
+   }
+}
+.prod-image{
+  .images{
+    padding: 5px;
+    border-radius: 20px;
+  }
+}
+
 .no-data{
     display: flex;
     flex-direction: column;
@@ -6,7 +22,7 @@
 }
 .images{
   width: 100px;
-    height: 100px;
+  height: 100px;
 }
 
 .act-btn{
@@ -45,3 +61,19 @@
        }
     } 
  }
+ .filter-con{
+  margin-bottom: 15px;
+ ::ng-deep.date-search-filter{
+  height: 35px;
+  margin-right: 10px;
+   .mat-mdc-text-field-wrapper{
+    height: 35px;
+    .mat-mdc-form-field-flex {
+      height: 35px;
+      .mat-mdc-form-field-infix {
+         margin-top: -10px !important;
+      }
+    }
+   }
+ }
+}

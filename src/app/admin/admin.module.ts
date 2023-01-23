@@ -9,6 +9,7 @@ import { AdminComponent } from './admin.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { SaleListComponent } from './components/sale-list/sale-list.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { AddProductDialogComponent } from './components/add-product-dialog/add-product-dialog.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
     AdminComponent,
     ProductListComponent,
     SaleListComponent,
-    DialogComponent
+    DialogComponent,
+    AddProductDialogComponent
   ],
   imports: [
     CommonModule,

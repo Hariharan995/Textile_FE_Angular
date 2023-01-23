@@ -1,0 +1,65 @@
+
+
+<div class="addProduct-container">
+    <div class="dialog-header">
+        <h2>{{this.data.content}}</h2>
+        <button mat-icon-button class="close-button" (click)="cancel()">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+    </div>
+ <div class="action">
+    <div class="addproductForm">
+        <form>
+            <div class="image-field">
+                    <label class="image-upload-container btn btn-bwm">
+                        <span>Select Image</span>
+                        <input #imageInput
+                            type="file"
+                            accept="image/*"
+
+                            >
+                    </label>
+            </div> 
+
+            <div class="addinpt-field">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Product Name</mat-label>
+                    <input matInput placeholder="Product Name">
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <input matInput placeholder="Description">
+                </mat-form-field>
+            </div>
+            <div class="addinpt-field">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Brand</mat-label>
+                    <input matInput placeholder="Brand">
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Gender</mat-label>
+                    <input matInput placeholder="Gender">
+                </mat-form-field>
+            </div>
+            <div class="addinpt-field">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Tax</mat-label>
+                    <input matInput placeholder="Tax">
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Quantity</mat-label>
+                    <input matInput placeholder="Quantityss">
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+    <div class="btn-field">
+        <button mat-stroked-button class="cancel-btn" (click)="cancel()">No</button>
+        <button mat-stroked-button (click)="addProduct()"
+        class="addProduct-btn">{{this.data.btnValue}}</button>
+    </div>
+ </div>
+</div>
