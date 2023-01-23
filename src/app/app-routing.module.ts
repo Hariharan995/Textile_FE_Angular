@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    canLoad: [AdminGuard],
+   // canLoad: [AdminGuard],
     loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
   },
   {

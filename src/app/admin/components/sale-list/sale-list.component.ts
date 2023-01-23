@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { AdminService } from 'src/app/core/services/admin.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
@@ -20,7 +21,11 @@ export class SaleListComponent {
 
   saleList = []
   saleDetails = ["_id", "name", "mobile", "userRole", "userStatus"]
-
+  search = ""
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  })
   constructor(private adminSerice: AdminService, private notificationService: NotificationService) {
   }
 
@@ -36,6 +41,34 @@ export class SaleListComponent {
     })
   }
 
+  filter() {
+    if (this.search || this.range.controls['start'].value || this.range.controls['end'].value) {
+      let startDate = ''
+      let endDate = ''
+      if (this.range.controls['start'].value) {
+        let date = this.range.controls['start'].value;
+        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+        startDate = date.getFullYear() + '-' + month + '-' + day;
+      }
+      if (this.range.controls['end'].value) {
+        let date = this.range.controls['end'].value;
+        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+        endDate = date.getFullYear() + '-' + month + '-' + day;
+      }
+      let request = {
+        filterObj: {
+          searchValue: this.search ? this.search : '',
+          startDate: this.range.controls['start'].value ? startDate : '',
+          endDate: this.range.controls['end'].value ? endDate : ''
+        },
+        page: this.pageIndex + 1,
+        limit: this.pageSize
+      }
+      this.getSaleList(request)
+    }
+  }
   getSaleList(request: any) {
     this.adminSerice.getAllSales(request).subscribe(
       (res: any) => {

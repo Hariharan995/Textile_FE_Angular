@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { AdminService } from 'src/app/core/services/admin.service';
@@ -21,8 +22,12 @@ export class ProductListComponent implements OnInit {
   showFirstLastButtons = true;
 
   productList: any = []
-  productDetails = ["Id", "ProductImage", "ProductName", "MRP", "Price", "Quantity", "Action"]
-
+  productDetails = ["Created Date", "ProductImage", "ProductName", "MRP", "Price", "Quantity", "Action"]
+  search = ""
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  })
   constructor(private adminSerice: AdminService, private notificationService: NotificationService, public dialog: MatDialog,) {
   }
 
@@ -38,13 +43,44 @@ export class ProductListComponent implements OnInit {
     })
   }
 
+  filter() {
+    if (this.search || this.range.controls['start'].value || this.range.controls['end'].value) {
+      let startDate = ''
+      let endDate = ''
+      if (this.range.controls['start'].value) {
+        let date = this.range.controls['start'].value;
+        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+        startDate = date.getFullYear() + '-' + month + '-' + day;
+      }
+      if (this.range.controls['end'].value) {
+        let date = this.range.controls['end'].value;
+        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+        endDate = date.getFullYear() + '-' + month + '-' + day;
+      }
+      let request = {
+        filterObj: {
+          searchValue: this.search ? this.search : '',
+          startDate: this.range.controls['start'].value ? startDate : '',
+          endDate: this.range.controls['end'].value ? endDate : ''
+        },
+        page: this.pageIndex + 1,
+        limit: this.pageSize
+      }
+      this.getProductList(request)
+    }
+  }
+
   getProductList(request: any) {
+    this.productList = []
     this.adminSerice.getAllProducts(request).subscribe(
       (res: any) => {
         // this.productList = res.data
         res.data.map((ele: any, i: any) => {
           let tempUserList: any = [];
           tempUserList.Id = ele._id;
+          tempUserList['Created Date'] = ele.createdAt;
           tempUserList.ProductImage = ele.productImage;
           tempUserList.ProductName = ele.productName;
           tempUserList.MRP = ele.mrp;
@@ -69,7 +105,9 @@ export class ProductListComponent implements OnInit {
       limit: this.pageSize
     })
   }
+  addProduct() {
 
+  }
   delete() {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '600px',

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
@@ -21,14 +22,21 @@ export class UserListComponent implements OnInit {
   showFirstLastButtons = true;
 
   userList: any = [];
-  userDetails = ["Id", "Name", "Mobile", "UserRole", "UserStatus", "Action"]
+  userDetails = ["Created Date", "Name", "Mobile", "UserRole", "UserStatus", "Action"]
+  userRole = ""
+  userRoleList = ["ADMIN", "SELLER"]
+  search = ""
+  userStatus = ""
+  userStatusList = ["UNAPPROVED", "APPROVED", "REJECTED"]
 
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  })
   constructor(private adminSerice: AdminService, private notificationService: NotificationService, private router: Router,
     public dialog: MatDialog,
   ) {
   }
-
-
 
   pageEvent!: PageEvent;
   handlePageEvent(e: PageEvent) {
@@ -43,12 +51,12 @@ export class UserListComponent implements OnInit {
   }
 
   getUserList(request: any) {
+    this.userList = []
     this.adminSerice.getAllUsers(request).subscribe(
       (res: any) => {
-        // this.userList = res.data;
         res.data.map((ele: any, i: any) => {
           let tempUserList: any = [];
-          tempUserList.Id = ele._id;
+          tempUserList['Created Date'] = ele.createdAt;
           tempUserList.Name = ele.name;
           tempUserList.Mobile = ele.mobile;
           tempUserList.UserRole = ele.userRole;
@@ -76,6 +84,36 @@ export class UserListComponent implements OnInit {
     })
   }
 
+  filter() {
+    if (this.userRole || this.userStatus || this.search || this.range.controls['start'].value || this.range.controls['end'].value) {
+      let startDate = ''
+      let endDate = ''
+      if (this.range.controls['start'].value) {
+        let date = this.range.controls['start'].value;
+        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+        startDate = date.getFullYear() + '-' + month + '-' + day;
+      }
+      if (this.range.controls['end'].value) {
+        let date = this.range.controls['end'].value;
+        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+        endDate = date.getFullYear() + '-' + month + '-' + day;
+      }
+      let request = {
+        filterObj: {
+          searchValue: this.search ? this.search : '',
+          userStatus: this.userStatus ? this.userStatus : '',
+          userRole: this.userRole ? this.userRole : '',
+          startDate: this.range.controls['start'].value ? startDate : '',
+          endDate: this.range.controls['end'].value ? endDate : ''
+        },
+        page: this.pageIndex + 1,
+        limit: this.pageSize
+      }
+      this.getUserList(request)
+    }
+  }
 
   reject() {
     const dialogRef = this.dialog.open(DialogComponent, {
@@ -107,7 +145,7 @@ export class UserListComponent implements OnInit {
             })
           }
         );
-  
+
       }
     });
   }
@@ -142,7 +180,7 @@ export class UserListComponent implements OnInit {
             })
           }
         );
-  
+
       }
     });
   }
