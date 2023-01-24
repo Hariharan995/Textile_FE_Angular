@@ -8,7 +8,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
   styleUrls: ['./add-product-dialog.component.scss']
 })
 export class AddProductDialogComponent implements OnInit {
-
+  msg = '';
+  url: any;
   productForm = new FormGroup({
     productName: new FormControl('', [Validators.required]),
     productImage: new FormControl('', [Validators.required]),
@@ -28,8 +29,9 @@ export class AddProductDialogComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data.productDetails) {
+      this.url = this.data.productDetails.ProductImage
       this.productForm.controls['productName'].patchValue(this.data.productDetails.ProductName);
-      this.productForm.controls['productImage'].patchValue(this.data.productDetails.PoductName);
+      this.productForm.controls['productImage'].patchValue(this.data.productDetails.ProductImage);
       this.productForm.controls['barcodeId'].patchValue(this.data.productDetails.BarcodeId);
       this.productForm.controls['description'].patchValue(this.data.productDetails.Description);
       this.productForm.controls['brand'].patchValue(this.data.productDetails.Brand);
@@ -73,5 +75,26 @@ export class AddProductDialogComponent implements OnInit {
     }
     return true;
   }
+  selectFile(event: any) {
+    this.url = ''
+    if (!event.target.files[0] || event.target.files[0].length == 0) {
+      this.msg = 'You must select an image';
+      return;
+    }
+    var mimeType = event.target.files[0].type;
 
+    if (mimeType.match(/image\/*/) == null) {
+      this.msg = "Only images are supported";
+      return;
+    }
+
+    var reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+
+    reader.onload = (_event) => {
+      this.msg = ""; reader.result
+      this.url = reader.result;
+      this.productForm.controls['productImage'].patchValue(this.url);
+    }
+  }
 }

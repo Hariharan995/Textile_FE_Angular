@@ -10,9 +10,11 @@
             <form [formGroup]="productForm">
                 <div class="image-field">
                     <label class="image-upload-container btn btn-bwm">
-                        <span>Select Image</span>
-                        <input #imageInput formControlName="productImage" name="productImage" required type="file"
-                            accept="image/*">
+                        <div>
+                            <img class="images" [src]="url" *ngIf="url">
+                            <input class="imgSelect" #imageInput required type="file" title="" (change)="selectFile($event)" accept="image/*">
+                        </div>
+                        <div [innerHtml]='msg' *ngIf="msg" style="color: red;"></div>
                     </label>
                 </div>
 
@@ -38,7 +40,7 @@
                         <input matInput formControlName="gender" name="gender" placeholder="Gender">
                     </mat-form-field> -->
                     <mat-form-field appearance="outline" class="date-search-filter">
-                        <mat-select formControlName="gender" name="gender" placeholder = "Gender">
+                        <mat-select formControlName="gender" name="gender" placeholder="Gender">
                             <mat-option *ngFor="let gender of genderList" [value]="gender">
                                 {{gender}}
                             </mat-option>
@@ -86,7 +88,8 @@
         </div>
         <div class="btn-field">
             <button mat-stroked-button class="cancel-btn" (click)="cancel()">No</button>
-            <button mat-stroked-button (click)="addProduct()" [disabled]="!productForm.valid" class="addProduct-btn">{{this.data.btnValue}}</button>
+            <button mat-stroked-button (click)="addProduct()" [disabled]="!productForm.valid"
+                class="addProduct-btn">{{this.data.btnValue}}</button>
         </div>
     </div>
 </div>

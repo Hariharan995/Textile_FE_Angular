@@ -1,77 +1,94 @@
+.images {
+  width: 100px;
+  height: 100px;
+}
 
+.addProduct-container {
+  .dialog-header {
+    border-bottom: 1px solid #ff000022;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 20px;
 
+    h2 {
+      margin: 0;
+      color: #333;
+      font-family: cursive;
+    }
 
-.addProduct-container{
-    .dialog-header{
-        border-bottom: 1px solid #ff000022;
-        display:flex;
-        justify-content: space-between;
-        padding: 12px 20px;
-        h2{
-          margin: 0;
-          color: #333;
-          font-family: cursive;
-        }
-        button{
-          width: 30px;
-          height: 30px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+    button {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .action {
+    margin: 25px;
+
+    .addproductForm {
+      .addinpt-field {
+        display: flex;
+        gap: 30px;
+
+        .mat-mdc-form-field {
+          width: 50%;
         }
       }
-      .action{
-        margin: 25px;
-          .addproductForm{
-            .addinpt-field{
-                display: flex;
-                gap: 30px;
-                .mat-mdc-form-field{
-                    width: 50%;
-                }
-            }
-            .image-field{
-                border: 1px solid grey;
-                border-radius: 5px;
-                margin-bottom: 15px;
-            }
-          }
 
-        button{
-          width: 120px;
-        }
-        .cancel-btn{
-            margin-right: 15px;
-        }
-        .danger-btn{
-          background-color: #D13147;
-          color: #fff;
-        }
+      .image-field {
+        border: 1px solid grey;
+        border-radius: 5px;
+        margin-bottom: 15px;
       }
-}
-.btn-field{
-    text-align: right;
-}
-::ng-deep{
-    .mat-dialog-container{
-        &:has(.addProduct-container){
-            height: fit-content;
-            padding: 0;
-            box-shadow: 2px 4px 20px rgb(255 0 0 / 10%);
-        }
     }
-    .cdk-overlay-backdrop{
-      opacity: 0.4 !important;
+
+    button {
+      width: 120px;
+    }
+
+    .cancel-btn {
+      margin-right: 15px;
+    }
+
+    .danger-btn {
+      background-color: #D13147;
+      color: #fff;
+    }
+  }
+}
+
+.btn-field {
+  text-align: right;
+}
+
+::ng-deep {
+  .mat-dialog-container {
+    &:has(.addProduct-container) {
+      height: fit-content;
+      padding: 0;
+      box-shadow: 2px 4px 20px rgb(255 0 0 / 10%);
     }
   }
 
-  .close-button{
-     .close-icon{
-        overflow: visible !important;
-    }
+  .cdk-overlay-backdrop {
+    opacity: 0.4 !important;
   }
+}
 
-  .addProduct-btn{
-    background: #4CAF50;
-    white-space: nowrap;
+.close-button {
+  .close-icon {
+    overflow: visible !important;
   }
+}
+
+.addProduct-btn {
+  background: #4CAF50;
+  white-space: nowrap;
+}
+imgSelect {
+  width: 100px;
+  overflow:hidden;
+}

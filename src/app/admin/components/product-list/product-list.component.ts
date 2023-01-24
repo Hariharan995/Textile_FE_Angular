@@ -147,8 +147,8 @@ export class ProductListComponent implements OnInit {
 
   edit(product: any) {
     const dialogRef = this.dialog.open(AddProductDialogComponent, {
-      width: '700px',
-      height: '600px',
+      width: '800px',
+      height: '700px',
       data: {
         content: 'Edit Product',
         btnValue: 'Edit Product',
@@ -171,7 +171,7 @@ export class ProductListComponent implements OnInit {
           },
           (err: any) => {
             this.notificationService.sendMessage({
-              message: err.error.message,
+              message: err,
               type: NotificationType.error
             })
           }
@@ -182,8 +182,8 @@ export class ProductListComponent implements OnInit {
 
   addProduct() {
     const dialogRef = this.dialog.open(AddProductDialogComponent, {
-      width: '700px',
-      height: '600px',
+      width: '800px',
+      height: '700px',
       data: {
         content: 'Add New Product',
         btnValue: 'Add Product'
@@ -205,7 +205,7 @@ export class ProductListComponent implements OnInit {
           },
           (err: any) => {
             this.notificationService.sendMessage({
-              message: err.error.message,
+              message: err,
               type: NotificationType.error
             })
           }
