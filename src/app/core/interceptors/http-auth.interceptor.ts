@@ -15,13 +15,13 @@ import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class HttpAuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    let auth = JSON.parse(localStorage.getItem('auth') || "no data");
+    let auth = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;
     let token = auth ? auth.token : null;
 
     if (token != null) {
@@ -29,7 +29,6 @@ export class HttpAuthInterceptor implements HttpInterceptor {
         .handle(this.authorize(req, token))
         .pipe(catchError(this.handleError));
     }
-
     return next.handle(req).pipe(catchError(this.handleError));
   }
 
@@ -49,7 +48,6 @@ export class HttpAuthInterceptor implements HttpInterceptor {
     if (error.error.message) {
       return throwError(error.error.message);
     }
-
     return throwError('Something went wrong');
   }
 }

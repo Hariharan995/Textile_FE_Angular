@@ -30,9 +30,9 @@
             <div class="manual-entry">
                 <div class="input-wrap">
                     <input type="text" [value]="barcodeId" (keyup)="onKey($event)" placeholder="BarCode Number">
-                    <button class="verify">Verify</button>
+                    <!-- <button class="verify">Verify</button> -->
                 </div>
-                <button class="submit" (click)="addtoCart()">Add to cart</button>
+                <button class="submit" [disabled]="barcodeId.length<10" (click)="addtoCart()">Add to cart</button>
             </div>
             <div class="payment-card">
                 <div class="item">
@@ -44,7 +44,7 @@
                     <h6>${{totalAmount}}</h6>
                 </div>
                 <div class="sub-btn">
-                    <button class="submit-btn">Submit</button>
+                    <button class="submit-btn" [disabled]="cartCount==0" (click)="orderPlace()">Pay</button>
                 </div>
             </div>
         </div>

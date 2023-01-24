@@ -14,8 +14,7 @@ import { DialogComponent } from '../dialog/dialog.component';
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit {
-  auth = localStorage.getItem('auth')
-  user = this.auth ? JSON.parse(this.auth) : null;
+  user = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;
   collectionSize = 0;
   pageSize = 10;
   pageIndex = 0;
@@ -45,55 +44,54 @@ export class ProductListComponent implements OnInit {
     })
   }
 
-  filter() {
-    if (this.search || this.range.controls['start'].value || this.range.controls['end'].value) {
-      let startDate = ''
-      let endDate = ''
-      if (this.range.controls['start'].value) {
-        let date = this.range.controls['start'].value;
-        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
-        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
-        startDate = date.getFullYear() + '-' + month + '-' + day;
-      }
-      if (this.range.controls['end'].value) {
-        let date = this.range.controls['end'].value;
-        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
-        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
-        endDate = date.getFullYear() + '-' + month + '-' + day;
-      }
-      let request = {
-        filterObj: {
-          searchValue: this.search ? this.search : '',
-          startDate: this.range.controls['start'].value ? startDate : '',
-          endDate: this.range.controls['end'].value ? endDate : ''
-        },
-        page: this.pageIndex + 1,
-        limit: this.pageSize
-      }
-      this.getProductList(request)
+  filter(type: any) {
+    let startDate = ''
+    let endDate = ''
+    this.pageIndex = type == "FILTER" ? 0 : this.pageIndex
+    this.pageSize = type == "FILTER" ? 10 : this.pageSize
+    if (this.range.controls['start'].value) {
+      let date = this.range.controls['start'].value;
+      const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+      const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+      startDate = date.getFullYear() + '-' + month + '-' + day;
     }
+    if (this.range.controls['end'].value) {
+      let date = this.range.controls['end'].value;
+      const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+      const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+      endDate = date.getFullYear() + '-' + month + '-' + day;
+    }
+    let request = {
+      filterObj: {
+        searchValue: this.search ? this.search : '',
+        startDate: this.range.controls['start'].value ? startDate : '',
+        endDate: this.range.controls['end'].value ? endDate : ''
+      },
+      page: this.pageIndex + 1,
+      limit: this.pageSize
+    }
+    this.getProductList(request)
   }
 
   getProductList(request: any) {
-    this.productList = []
     this.adminSerice.getAllProducts(request).subscribe(
       (res: any) => {
-        // this.productList = res.data
+        this.productList = []
         res.data.map((ele: any, i: any) => {
-          let tempUserList: any = [];
-          tempUserList.Id = ele._id;
-          tempUserList['Created Date'] = ele.createdAt;
-          tempUserList.ProductImage = ele.productImage;
-          tempUserList.ProductName = ele.productName;
-          tempUserList.MRP = ele.mrp;
-          tempUserList.Price = ele.price;
-          tempUserList.Quantity = ele.quantity;
-          tempUserList.BarcodeId = ele.barcodeId;
-          tempUserList.Gender = ele.gender;
-          tempUserList.TaxPercent = ele.taxPercent;
-          tempUserList.Brand = ele.brand;
-          tempUserList.Description = ele.description;
-          this.productList.push(tempUserList)
+          this.productList[i] = [];
+          this.productList[i].Id = ele._id;
+          this.productList[i]['Created Date'] = ele.createdAt;
+          this.productList[i].ProductImage = ele.productImage;
+          this.productList[i].ProductName = ele.productName;
+          this.productList[i].MRP = ele.mrp;
+          this.productList[i].Price = ele.price;
+          this.productList[i].Quantity = ele.quantity;
+          this.productList[i].BarcodeId = ele.barcodeId;
+          this.productList[i].Gender = ele.gender;
+          this.productList[i].TaxPercent = ele.taxPercent;
+          this.productList[i].Brand = ele.brand;
+          this.productList[i].Description = ele.description;
+          // this.productList.push(tempUserList)
         })
         this.collectionSize = res.count
       },
@@ -150,7 +148,7 @@ export class ProductListComponent implements OnInit {
   edit(product: any) {
     const dialogRef = this.dialog.open(AddProductDialogComponent, {
       width: '700px',
-      height: '450px',
+      height: '600px',
       data: {
         content: 'Edit Product',
         btnValue: 'Edit Product',
@@ -185,7 +183,7 @@ export class ProductListComponent implements OnInit {
   addProduct() {
     const dialogRef = this.dialog.open(AddProductDialogComponent, {
       width: '700px',
-      height: '450px',
+      height: '600px',
       data: {
         content: 'Add New Product',
         btnValue: 'Add Product'

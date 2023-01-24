@@ -12,14 +12,14 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  auth = JSON.parse(localStorage.getItem('auth') || "no data");
-  userRole = this.auth.userRole[0]
+  auth = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;
+  userRole =this.auth? this.auth.userRole[0]: null
   constructor(private authService: AuthService,
      public adminService:AdminService,
      public router: Router, public route: Router, public activatedRoute: ActivatedRoute, private notificationService: NotificationService) { }
 
   logOut() {
-    let request = { token: this.auth.token }
+    let request = { token: this.auth?.token }
     this.authService.logOut(request).subscribe(
       (res: any) => {
         this.notificationService.sendMessage({

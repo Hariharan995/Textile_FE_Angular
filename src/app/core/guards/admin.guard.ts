@@ -40,14 +40,13 @@ export class AdminGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   protected isAdmin(): boolean {
-    // let auth = JSON.parse(sessionStorage.getItem('auth'));
-    // let role = auth ? auth.role : null;
-
-    let auth = JSON.parse(localStorage.getItem('auth') || "no data");
+    let auth = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;
     let userRole = auth ? auth.userRole[0] : null;
 
     switch (userRole) {
       case UserTypes.ADMIN:
+        return true;
+      case UserTypes.SELLER:
         return true;
       default:
         this.router.navigate(['/login']);

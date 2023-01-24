@@ -19,8 +19,8 @@ export class SaleListComponent {
   showPageSizeOptions = true;
   showFirstLastButtons = true;
 
-  saleList = []
-  saleDetails = ["_id", "name", "mobile", "userRole", "userStatus"]
+  saleList: any = []
+  saleDetails = ["Created Date", "OrderNo", "Seller Name", "Items", "MRP Amount", "Price Amount", "SubTotal", "Total Amount", "Action"]
   search = ""
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -41,38 +41,51 @@ export class SaleListComponent {
     })
   }
 
-  filter() {
-    if (this.search || this.range.controls['start'].value || this.range.controls['end'].value) {
-      let startDate = ''
-      let endDate = ''
-      if (this.range.controls['start'].value) {
-        let date = this.range.controls['start'].value;
-        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
-        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
-        startDate = date.getFullYear() + '-' + month + '-' + day;
-      }
-      if (this.range.controls['end'].value) {
-        let date = this.range.controls['end'].value;
-        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
-        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
-        endDate = date.getFullYear() + '-' + month + '-' + day;
-      }
-      let request = {
-        filterObj: {
-          searchValue: this.search ? this.search : '',
-          startDate: this.range.controls['start'].value ? startDate : '',
-          endDate: this.range.controls['end'].value ? endDate : ''
-        },
-        page: this.pageIndex + 1,
-        limit: this.pageSize
-      }
-      this.getSaleList(request)
+  filter(type: any) {
+    let startDate = ''
+    let endDate = ''
+    this.pageIndex = type == "FILTER" ? 0 : this.pageIndex
+    this.pageSize = type == "FILTER" ? 10 : this.pageSize
+    if (this.range.controls['start'].value) {
+      let date = this.range.controls['start'].value;
+      const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+      const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+      startDate = date.getFullYear() + '-' + month + '-' + day;
     }
+    if (this.range.controls['end'].value) {
+      let date = this.range.controls['end'].value;
+      const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+      const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+      endDate = date.getFullYear() + '-' + month + '-' + day;
+    }
+    let request = {
+      filterObj: {
+        searchValue: this.search ? this.search : '',
+        startDate: this.range.controls['start'].value ? startDate : '',
+        endDate: this.range.controls['end'].value ? endDate : ''
+      },
+      page: this.pageIndex + 1,
+      limit: this.pageSize
+    }
+    this.getSaleList(request)
   }
   getSaleList(request: any) {
     this.adminSerice.getAllSales(request).subscribe(
       (res: any) => {
-        this.saleList = res.data
+        this.saleList = []
+        res.data.map((ele: any, i: any) => {
+          this.saleList[i] = [];
+          this.saleList[i].Id = ele._id;
+          this.saleList[i]['Created Date'] = ele.createdAt;
+          this.saleList[i].OrderNo = ele.orderNo;
+          this.saleList[i]['Seller Name'] = ele.sellerDetails.name;
+          this.saleList[i].Items = ele.itemCount;
+          this.saleList[i]['MRP Amount'] = ele.mrpTotal;
+          this.saleList[i]['Price Amount'] = ele.priceTotal;
+          this.saleList[i]['SubTotal'] = ele.subTotal;
+          this.saleList[i]['Total Amount'] = ele.totalAmount;
+          this.saleList[i].ProductList = ele.productList;
+        })
         this.collectionSize = res.count
       },
       (err: any) => {

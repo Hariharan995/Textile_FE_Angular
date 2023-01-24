@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/core/services/admin.service';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -13,7 +13,7 @@ import { RegisterationFormComponent } from '../../components/registeration-form/
   templateUrl: './login-and-registeration-page.component.html',
   styleUrls: ['./login-and-registeration-page.component.scss']
 })
-export class LoginAndRegisterationPageComponent {
+export class LoginAndRegisterationPageComponent implements OnInit {
   @ViewChild('loginFormCmpnt')
   loginFormCmpnt!: LoginFormComponent;
 
@@ -24,9 +24,19 @@ export class LoginAndRegisterationPageComponent {
     private route: ActivatedRoute,
     private authService: AuthService,
     private router: Router,
-    public adminService:AdminService,
+    public adminService: AdminService,
     private notificationService: NotificationService
   ) {
+  }
+
+  ngOnInit() {
+    let auth = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;
+    if (auth && auth.userRole[0] == 'ADMIN') {
+      this.router.navigate(['/admin/user-list']);
+    }
+    else if (auth && auth.userRole[0] == 'SELLER') {
+      this.router.navigate(['/seller/bill']);
+    }
   }
 
   onSubmitLoginForm(loginCredentials: any) {
@@ -73,7 +83,7 @@ export class LoginAndRegisterationPageComponent {
       }
     );
   }
-  
+
   tabClick(tab: any) {
     if (tab.index === 0) {
       this.registrationFormCmpnt.registerForm.reset();

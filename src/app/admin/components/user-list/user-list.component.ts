@@ -24,10 +24,10 @@ export class UserListComponent implements OnInit {
   userList: any = [];
   userDetails = ["Created Date", "Name", "Mobile", "UserRole", "UserStatus", "Action"]
   userRole = ""
-  userRoleList = ["ADMIN", "SELLER"]
+  userRoleList = ["ALL", "ADMIN", "SELLER"]
   search = ""
   userStatus = ""
-  userStatusList = ["UNAPPROVED", "APPROVED", "REJECTED"]
+  userStatusList = ["ALL", "UNAPPROVED", "APPROVED", "REJECTED"]
 
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -44,6 +44,10 @@ export class UserListComponent implements OnInit {
     this.collectionSize = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
+    this.filter("PAGINATION")
+  }
+
+  ngOnInit() {
     this.getUserList({
       page: this.pageIndex + 1,
       limit: this.pageSize
@@ -51,18 +55,17 @@ export class UserListComponent implements OnInit {
   }
 
   getUserList(request: any) {
-    this.userList = []
     this.adminSerice.getAllUsers(request).subscribe(
       (res: any) => {
+        this.userList = []
         res.data.map((ele: any, i: any) => {
-          let tempUserList: any = [];
-          tempUserList.Id = ele._id;
-          tempUserList['Created Date'] = ele.createdAt;
-          tempUserList.Name = ele.name;
-          tempUserList.Mobile = ele.mobile;
-          tempUserList.UserRole = ele.userRole;
-          tempUserList.UserStatus = ele.userStatus;
-          this.userList.push(tempUserList)
+          this.userList[i] = [];
+          this.userList[i].Id = ele._id;
+          this.userList[i]['Created Date'] = ele.createdAt;
+          this.userList[i].Name = ele.name;
+          this.userList[i].Mobile = ele.mobile;
+          this.userList[i].UserRole = ele.userRole;
+          this.userList[i].UserStatus = ele.userStatus;
         })
         this.collectionSize = res.count;
       },
@@ -77,43 +80,35 @@ export class UserListComponent implements OnInit {
       }
     );
   }
-
-  ngOnInit() {
-    this.getUserList({
+  filter(type: any) {
+    let startDate = ''
+    let endDate = ''
+    this.pageIndex = type == "FILTER" ? 0 : this.pageIndex
+    this.pageSize = type == "FILTER" ? 10 : this.pageSize
+    if (this.range.controls['start'].value) {
+      let date = this.range.controls['start'].value;
+      const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+      const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+      startDate = date.getFullYear() + '-' + month + '-' + day;
+    }
+    if (this.range.controls['end'].value) {
+      let date = this.range.controls['end'].value;
+      const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+      const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+      endDate = date.getFullYear() + '-' + month + '-' + day;
+    }
+    let request = {
+      filterObj: {
+        searchValue: this.search ? this.search : '',
+        userStatus: this.userStatus && this.userStatus != 'ALL' ? this.userStatus : '',
+        userRole: this.userRole && this.userRole != 'ALL' ? this.userRole : '',
+        startDate: this.range.controls['start'].value ? startDate : '',
+        endDate: this.range.controls['end'].value ? endDate : ''
+      },
       page: this.pageIndex + 1,
       limit: this.pageSize
-    })
-  }
-
-  filter() {
-    if (this.userRole || this.userStatus || this.search || this.range.controls['start'].value || this.range.controls['end'].value) {
-      let startDate = ''
-      let endDate = ''
-      if (this.range.controls['start'].value) {
-        let date = this.range.controls['start'].value;
-        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
-        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
-        startDate = date.getFullYear() + '-' + month + '-' + day;
-      }
-      if (this.range.controls['end'].value) {
-        let date = this.range.controls['end'].value;
-        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
-        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
-        endDate = date.getFullYear() + '-' + month + '-' + day;
-      }
-      let request = {
-        filterObj: {
-          searchValue: this.search ? this.search : '',
-          userStatus: this.userStatus ? this.userStatus : '',
-          userRole: this.userRole ? this.userRole : '',
-          startDate: this.range.controls['start'].value ? startDate : '',
-          endDate: this.range.controls['end'].value ? endDate : ''
-        },
-        page: this.pageIndex + 1,
-        limit: this.pageSize
-      }
-      this.getUserList(request)
     }
+    this.getUserList(request)
   }
 
   reject(userId: any) {
@@ -190,10 +185,7 @@ export class UserListComponent implements OnInit {
             })
           }
         );
-
       }
     });
   }
-
-
 }

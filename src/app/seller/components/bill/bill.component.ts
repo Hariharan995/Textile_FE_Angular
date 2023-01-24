@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { DialogComponent } from 'src/app/admin/components/dialog/dialog.component';
 import { CartService } from 'src/app/core/services/cart.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { NotificationType } from 'src/app/utils/notification-messages';
@@ -16,11 +18,12 @@ export class BillComponent implements OnInit {
   cartCount = 0
   subTotal = 0
   totalAmount = 0
-  auth = localStorage.getItem('auth')
-  user = this.auth ? JSON.parse(this.auth) : null;
+  user = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;  
   barcodeId: any = ''
 
-  constructor(private cartService: CartService, private notificationService: NotificationService, public router: Router) {
+  constructor(private cartService: CartService, private notificationService: NotificationService, public router: Router,
+    public dialog: MatDialog,
+  ) {
   }
 
   ngOnInit() {
@@ -123,20 +126,34 @@ export class BillComponent implements OnInit {
   }
 
   orderPlace() {
-    this.cartService.orderPlaced({ userId: this.user._id }).subscribe(
-      (res: any) => {
-        this.notificationService.sendMessage({
-          message: res.message,
-          type: NotificationType.success
-        })
-        this.getAllCarts()
-      },
-      (err: any) => {
-        this.notificationService.sendMessage({
-          message: err.error.message,
-          type: NotificationType.error
-        })
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '600px',
+      height: '200px',
+      data: {
+        content: 'Are you sure want to place this order?',
+        btnValue: 'Yes Pay'
       }
-    );
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.status) {
+        this.cartService.orderPlaced({ sellerId: this.user._id }).subscribe(
+          (res: any) => {
+            this.notificationService.sendMessage({
+              message: res.message,
+              type: NotificationType.success
+            });
+            this.getAllCarts()
+          },
+          (err: any) => {
+            this.notificationService.sendMessage({
+              message: err.error.message,
+              type: NotificationType.error
+            })
+          }
+        );
+      }
+    });
   }
+
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
@@ -9,10 +9,7 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
 
   apiUrl = environment.apiUrl;
-
   constructor(private http: HttpClient, private router: Router) { }
-
-  headers = new HttpHeaders();
 
   params = new HttpParams();
   login(loginCredentials: any) {

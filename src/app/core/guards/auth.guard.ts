@@ -28,7 +28,6 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     state: RouterStateSnapshot
   ): boolean {
     return this.isLoggedIn();
-
   }
 
   canLoad(route: Route, segments: UrlSegment[]): boolean {
@@ -36,14 +35,12 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   protected isLoggedIn(): boolean {
-    let auth = JSON.parse(localStorage.getItem('auth') || "no data");
-    if (auth && typeof auth != 'string' && (auth.token !== "" || auth.token !== null)) {
+    let auth = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;
+    if (auth &&  (auth.token !== "" || auth.token !== null)) {
       return true
     } else {
       this.router.navigate(['/login']);
       return false;
     }
   }
-
-
 }
