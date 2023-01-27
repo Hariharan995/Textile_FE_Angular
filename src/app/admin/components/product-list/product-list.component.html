@@ -1,26 +1,27 @@
 <div class="product-con">
-    <div class="add-product">
-        <button mat-raised-button (click)="addProduct()" class="add-prd-btn">Add Product</button>
-    </div>
-    <div >
-       <div class="filter-con">
-        <mat-form-field appearance="outline" class="date-search-filter">
-            <!-- <mat-label>Created Date</mat-label> -->
-            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-                <input matStartDate formControlName="start" placeholder="Start date" (dateChange)="filter('FILTER')">
-                <input matEndDate formControlName="end" placeholder="End date" (dateChange)="filter('FILTER')">
-            </mat-date-range-input>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
+    <div>
+        <div class="filter-con">
+            <mat-form-field appearance="outline" class="date-search-filter">
+                <!-- <mat-label>Created Date</mat-label> -->
+                <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="Start date"
+                        (dateChange)="filter('FILTER')">
+                    <input matEndDate formControlName="end" placeholder="End date" (dateChange)="filter('FILTER')">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
 
-            <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="date-search-filter">
-            <!-- <mat-label>Search</mat-label> -->
-            <input matInput type="text" [(ngModel)]="search" placeholder="Search.." (input)="filter('FILTER')">
-        </mat-form-field>
-       </div>
+                <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="date-search-filter">
+                <!-- <mat-label>Search</mat-label> -->
+                <input matInput type="text" [(ngModel)]="search" placeholder="Search.." (input)="filter('FILTER')">
+            </mat-form-field>
+            <div class="add-product">
+                <button mat-raised-button (click)="addProduct()" class="add-prd-btn">Add Product</button>
+            </div>
+        </div>
 
         <table mat-table [dataSource]="productList" class="mat-elevation-z8">
 
@@ -39,12 +40,13 @@
                     <span *ngIf="column =='Action'">
                         <div class="act-btn">
                             <button mat-stroked-button class="edit-btn" (click)="edit(element)">edit</button>
-                            <button mat-stroked-button class="delete-btn" (click)="delete(element['Id'])">delete</button>
+                            <button mat-stroked-button class="delete-btn"
+                                (click)="delete(element['Id'])">delete</button>
                         </div>
                     </span>
                 </td>
             </ng-container>
-            
+
             <tr mat-header-row *matHeaderRowDef="productDetails"></tr>
             <tr mat-row *matRowDef="let row; columns: productDetails;"></tr>
         </table>
@@ -58,5 +60,5 @@
             [pageIndex]="pageIndex" aria-label="Select page">
         </mat-paginator>
     </div>
-    
+
 </div>

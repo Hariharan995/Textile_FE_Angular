@@ -1,9 +1,8 @@
 .add-product {
-  float: right;
-  margin-bottom: 5px;
+  margin-left: auto;
 
   .add-prd-btn {
-    color: #4CAF50;
+    color: #4caf50;
   }
 }
 
@@ -33,12 +32,12 @@
   .edit-btn {
     height: 30px;
     background: #4caf54c2;
-    color: #FFFF;
+    color: #ffff;
   }
 
   .delete-btn {
     height: 30px;
-    color: #FFFF;
+    color: #ffff;
     background: #ff00008a;
   }
 }
@@ -70,7 +69,8 @@
 }
 
 .filter-con {
-  margin-bottom: 15px;
+  padding: 15px;
+  display: flex;
 
   ::ng-deep.date-search-filter {
     height: 35px;

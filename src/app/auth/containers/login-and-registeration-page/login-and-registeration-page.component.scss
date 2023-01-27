@@ -1,81 +1,121 @@
-
 .sub-main {
-    margin: 4%;
-    background: #FCFBFD;
-    box-shadow: rgb(38 57 77 / 20%) 11px 20px 30px -9px;
-    border-radius: 15px;
-    overflow: hidden;
-    // padding-top: 2%;
-    // border: ridge;
-    // height: 80vh;
-    .box-lay{
-        height: 71vh;
-    }
+  background: #fcfbfd;
+  box-shadow: rgb(38 57 77 / 20%) 11px 20px 30px -9px;
+  border-radius: 15px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1200px;
+  .box-lay {
+    height: 71vh;
+  }
+}
+.main {
+  min-height: 100vh;
+  width: 100vw;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .title {
-    display: flex;
-    align-items: center;
-    padding-bottom: 2%;
-    padding-left: 2%;
+  display: flex;
+  align-items: center;
+  padding-bottom: 2%;
+  padding-left: 2%;
 }
 
 .logo {
-    padding-right: 2%;
-    width: 12%;
-    height: 60px;
+  padding-right: 2%;
+  width: 12%;
+  height: 60px;
 }
 
 .container {
-    display: flex;
-    // flex-direction: row;
-    // justify-content: space-around;
-    // border: solid;
-    // margin: 0% 2% 0% 2%;
-    // padding: 3% 0px 3% 0px;
-    padding: 0;
-    margin: 0;
-    max-width: 100%;
-    height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  // flex-direction: row;
+  // justify-content: space-around;
+  // border: solid;
+  // margin: 0% 2% 0% 2%;
+  // padding: 3% 0px 3% 0px;
+  padding: 0;
+  margin: 0;
+  max-width: 100%;
+  height: 100%;
 }
-.sub-container1{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 50%;
-    background-size: 100% 100%;
-    // background-image: url(https://wallpaperaccess.com/full/5927911.gif);
-    background-image: url(https://i.pinimg.com/originals/b8/2f/28/b82f28a7e9c8fcb3868d3d94652c107c.gif);
+.sub-container1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-size: cover;
+  background-position: bottom;
+  // background-image: url(https://wallpaperaccess.com/full/5927911.gif);
+  background-image: url(https://i.pinimg.com/originals/b8/2f/28/b82f28a7e9c8fcb3868d3d94652c107c.gif);
 }
-.sub-container2{
-    width: 50%;
-    box-shadow: rgb(204 219 232) 3px 3px 6px 0px inset, rgb(255 255 255 / 50%) -3px -3px 6px 1px inset;
-    ::ng-deep.mat-mdc-tab-group{
-        .mat-mdc-tab-body-wrapper{
-            margin: 20px;
-            padding-top: 10px;
-            .mat-mdc-tab-body{
-                .mat-mdc-tab-body-content{
-                    overflow: hidden;
-                }
-            }
+::ng-deep {
+  .sub-container2 {
+    box-shadow: rgb(204 219 232) 3px 3px 6px 0px inset,
+      rgb(255 255 255 / 50%) -3px -3px 6px 1px inset;
+    .mat-mdc-tab-group {
+      height: 100%;
+      .mdc-tab--active {
+        background-color: #82aae3;
+        .mdc-tab__text-label {
+          color: #fcfbfd;
+          font-size: 16px;
         }
+      }
+      .mat-mdc-tab-body-wrapper {
+        height: 100%;
+        .mat-mdc-tab-body {
+          .mat-mdc-tab-body-content {
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            & > * {
+              width: 100%;
+              max-width: 300px;
+            }
+            .mat-mdc-form-field {
+              width: 100%;
+            }
+            .mdc-button {
+              width: 100%;
+              background-color: #82aae3;
+              color: #fff;
+              font-weight: 600;
+              padding: 22px 10px;
+              font-size: 16px;
+              box-shadow: 2px 4px 15px #82aae37f;
+              .mat-icon {
+                display: none;
+              }
+            }
+          }
+        }
+      }
     }
+  }
 }
 
 .footer {
-    display: flex;
-    justify-content: space-between;
-    padding: 2%;
-    align-items: center;
-    background: #ECECEC;
-    p{
-        font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #82aae3;
+  color: #fff;
+  padding: 15px 20px;
+  p {
+    font-size: 16px;
+    margin: 0;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    i {
+      font-size: 18px;
     }
-    ul{
-        i{
-            font-size: 18px;
-        }
-    }
-    
+  }
 }

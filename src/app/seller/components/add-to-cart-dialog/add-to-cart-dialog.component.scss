@@ -2,17 +2,23 @@
   width: 100px;
   height: 100px;
 }
-
-.addProduct-container {
+::ng-deep {
+  .mat-mdc-dialog-container {
+    &:has(.addToCart-container) {
+      height: fit-content;
+    }
+  }
+}
+.addToCart-container {
   .dialog-header {
     border-bottom: 1px solid #ff000022;
     display: flex;
     justify-content: space-between;
     padding: 12px 20px;
-
+    background-color: #82aae3;
     h2 {
       margin: 0;
-      color: #333;
+      color: #fff;
       font-family: cursive;
     }
 
@@ -22,19 +28,22 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      .mat-icon {
+        color: #fff;
+      }
     }
   }
 
   .action {
     margin: 25px;
 
-    .addproductForm {
+    .addToCartForm {
       .addinpt-field {
         display: flex;
         gap: 30px;
 
         .mat-mdc-form-field {
-          width: 50%;
+          width: 100%;
         }
       }
 
@@ -61,12 +70,14 @@
 }
 
 .btn-field {
-  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 ::ng-deep {
   .mat-dialog-container {
-    &:has(.addProduct-container) {
+    &:has(.addToCart-container) {
       height: fit-content;
       padding: 0;
       box-shadow: 2px 4px 20px rgb(255 0 0 / 10%);
@@ -84,12 +95,11 @@
   }
 }
 
-.addProduct-btn {
+.addToCart-btn {
   background: #4caf50;
   white-space: nowrap;
 }
-.imgSelect {
+imgSelect {
   width: 100px;
   overflow: hidden;
-  margin-left: 10px;
 }
