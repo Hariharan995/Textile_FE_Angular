@@ -18,12 +18,13 @@ export class ProductListComponent implements OnInit {
   collectionSize = 0;
   pageSize = 10;
   pageIndex = 0;
+  loginRole =""
   pageSizeOptions = [10, 25, 50, 100];
   showPageSizeOptions = true;
   showFirstLastButtons = true;
 
   productList: any = []
-  productDetails = ["Created Date", "ProductImage", "ProductName", "MRP", "Price", "Quantity", "Action"]
+  productDetails = ["Created Date", "BarcodeId", "ProductImage", "ProductName", "MRP", "Price", "Quantity", "Action"]
   search = ""
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -105,6 +106,8 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit() {
+    let auth = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;
+    this.loginRole = auth ? auth.userRole[0] : null;
     this.getProductList({
       page: this.pageIndex + 1,
       limit: this.pageSize

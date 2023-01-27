@@ -20,7 +20,7 @@ export class UserListComponent implements OnInit {
   pageSizeOptions = [10, 25, 50, 100];
   showPageSizeOptions = true;
   showFirstLastButtons = true;
-
+  loginRole =''
   userList: any = [];
   userDetails = ["Created Date", "Name", "Mobile", "UserRole", "UserStatus", "Action"]
   userRole = ""
@@ -48,6 +48,8 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit() {
+    let auth = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;
+    this.loginRole = auth ? auth.userRole[0] : null;
     this.getUserList({
       page: this.pageIndex + 1,
       limit: this.pageSize

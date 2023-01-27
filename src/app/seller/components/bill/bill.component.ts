@@ -148,7 +148,7 @@ export class BillComponent implements OnInit {
       height: '200px',
       data: {
         content: 'Are you sure want to place this order?',
-        btnValue: 'Yes Pay',
+        btnValue: 'Yes to pay',
       },
     });
 

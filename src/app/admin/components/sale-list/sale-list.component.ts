@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { AdminService } from 'src/app/core/services/admin.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { NotificationType } from 'src/app/utils/notification-messages';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-sale-list',
@@ -18,7 +20,7 @@ export class SaleListComponent {
   pageSizeOptions = [10, 25, 50, 100];
   showPageSizeOptions = true;
   showFirstLastButtons = true;
-
+  loginRole = ""
   saleList: any = []
   saleDetails = ["Created Date", "OrderNo", "Seller Name", "Items", "MRP Amount", "Price Amount", "SubTotal", "Total Amount", "Action"]
   search = ""
@@ -26,7 +28,7 @@ export class SaleListComponent {
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   })
-  constructor(private adminSerice: AdminService, private notificationService: NotificationService) {
+  constructor(private adminSerice: AdminService, private notificationService: NotificationService, public dialog: MatDialog,) {
   }
 
   pageEvent!: PageEvent;
@@ -69,6 +71,7 @@ export class SaleListComponent {
     }
     this.getSaleList(request)
   }
+
   getSaleList(request: any) {
     this.adminSerice.getAllSales(request).subscribe(
       (res: any) => {
@@ -97,7 +100,43 @@ export class SaleListComponent {
     );
   }
 
+  delete(orderId: any) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '600px',
+      height: '200px',
+      data: {
+        content: 'Are you sure want to delete this sale?',
+        btnValue: 'Yes Delete',
+        productId: orderId
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.status) {
+        this.adminSerice.deleteSale({ orderId: result.productId }).subscribe(
+          (res: any) => {
+            this.notificationService.sendMessage({
+              message: res.message,
+              type: NotificationType.success
+            })
+            this.getSaleList({
+              page: this.pageIndex + 1,
+              limit: this.pageSize
+            })
+          },
+          (err: any) => {
+            this.notificationService.sendMessage({
+              message: err.error.message,
+              type: NotificationType.error
+            })
+          }
+        );
+      }
+    });
+  }
+
   ngOnInit() {
+    let auth = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;
+    this.loginRole = auth ? auth.userRole[0] : null;
     this.getSaleList({
       page: this.pageIndex + 1,
       limit: this.pageSize

@@ -27,7 +27,12 @@ export class AdminService {
 
     getAllSales(request: any) {
         let url = this.apiUrl + '/getAllSales';
-        return this.http.post(url, request, );
+        return this.http.post(url, request );
+    }
+
+    deleteSale(request: any) {
+        let url = this.apiUrl + '/deleteSale';
+        return this.http.post(url, request);
     }
 
     userApproval(request: any) {
@@ -37,22 +42,22 @@ export class AdminService {
 
     addProduct(request: any) {
         let url = this.apiUrl + '/addProduct';
-        return this.http.post(url, request, );
+        return this.http.post(url, request );
     }
 
     updateProduct(request: any) {
         let url = this.apiUrl + '/updateProduct';
-        return this.http.post(url, request, );
+        return this.http.post(url, request );
     }
     
     deleteProduct(request: any) {
         let url = this.apiUrl + '/deleteProduct';
-        return this.http.post(url, request, );
+        return this.http.post(url, request );
     }
 
     getProductById(request: any) {
         let url = this.apiUrl + '/getProductById';
-        return this.http.post(url, request, );
+        return this.http.post(url, request );
     }
 }
 

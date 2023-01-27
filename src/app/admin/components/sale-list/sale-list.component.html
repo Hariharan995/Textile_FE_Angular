@@ -34,7 +34,7 @@
                 <span *ngIf="column =='Action'">
                     <div class="act-btn">
                         <button mat-stroked-button class="edit-btn">View</button>
-                        <button mat-stroked-button class="delete-btn">delete</button>
+                        <button *ngIf="loginRole=='ADMIN'" mat-stroked-button class="delete-btn" (click)="delete(element['Id'])">delete</button>
                     </div>
                 </span>
             </td>

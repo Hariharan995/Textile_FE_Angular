@@ -40,7 +40,7 @@
                     <span *ngIf="column =='Action'">
                         <div class="act-btn">
                             <button mat-stroked-button class="edit-btn" (click)="edit(element)">edit</button>
-                            <button mat-stroked-button class="delete-btn"
+                            <button mat-stroked-button class="delete-btn"  *ngIf="loginRole=='ADMIN'"
                                 (click)="delete(element['Id'])">delete</button>
                         </div>
                     </span>

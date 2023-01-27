@@ -1,15 +1,14 @@
 {
   "name": "textile",
   "version": "0.0.0",
-  "main" : "app.js",
+  "main": "electron.main",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently \"ng serve\" \" npm run electron\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    “electron”: “ng build && electron .”
-
+    "electron": "electron ./src/electron.main"
   },
   "private": true,
   "dependencies": {
@@ -35,6 +34,7 @@
     "@angular/cli": "~15.1.1",
     "@angular/compiler-cli": "^15.1.0",
     "@types/jasmine": "~4.3.0",
+    "concurrently": "^7.6.0",
     "electron": "^22.1.0",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
