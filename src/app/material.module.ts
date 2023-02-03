@@ -82,7 +82,7 @@ const materialModules = [
     MatIconModule,
     MatListModule,
     MatDialogModule,
-    MatNativeDateModule
+    MatNativeDateModule    
 ];
 @NgModule({
     imports: [

@@ -1,0 +1,20 @@
+table {
+    width: 100%;
+}
+
+.act-btn {
+    display: flex;
+    gap: 10px;
+
+    .approve-btn {
+        height: 30px;
+        background: #4caf54c2;
+        color: #ffff;
+    }
+
+    .reject-btn {
+        height: 30px;
+        color: #ffff;
+        background: #ff00008a;
+    }
+}

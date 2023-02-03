@@ -34,16 +34,31 @@
                 <button mat-raised-button (click)="addtoCart()" class="add-cart-btn">Manual Entry to Cart</button>
             </div>
             <div class="payment-card">
+                <div class="add-cart">
+                    <button mat-raised-button (click)="addtoBuyer()" class="add-cart-btn">Buyer Details</button>
+                </div>
+                <div class="item" *ngIf="buyerMobile!=''">
+                    <span>Buyer Name</span>
+                    <h6>{{buyerDetails?.name}}</h6>
+                </div>
+                <div class="item" *ngIf="buyerMobile!=''">
+                    <span>Buyer Mobile </span>
+                    <h6>+91-{{buyerDetails?.mobile}}</h6>
+                </div>
                 <div class="item">
                     <span>Sub-Total</span>
-                    <h6>${{subTotal}}</h6>
+                    <h6>$ {{subTotal}}</h6>
                 </div>
                 <div class="item">
                     <span>Grand-Total</span>
-                    <h6>${{totalAmount}}</h6>
+                    <h6>$ {{totalAmount}}</h6>
                 </div>
+                <mat-radio-group class="item" [(ngModel)]="paymentType">
+                    <mat-radio-button value="ONLINEPAYMENT">Online Payment</mat-radio-button>
+                    <mat-radio-button value="COD">Cash on Delivery</mat-radio-button>
+                </mat-radio-group>
                 <div class="sub-btn">
-                    <button class="submit-btn" [disabled]="cartCount==0" (click)="orderPlace()">Pay</button>
+                    <button class="submit-btn" [disabled]="cartCount===0 || buyerMobile==''" (click)="orderPlace()">Pay</button>
                 </div>
             </div>
         </div>

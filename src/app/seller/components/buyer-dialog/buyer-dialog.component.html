@@ -1,0 +1,33 @@
+<div class="buyer-container">
+    <div class="dialog-header">
+        <h2>{{this.data.content}}</h2>
+        <button mat-icon-button class="close-button" (click)="cancel()">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+    </div>
+    <div class="action">
+        <div class="buyerForm">
+            <form [formGroup]="buyerForm">
+                <div class="addinpt-field">
+                    <div>
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Buyer Name</mat-label>
+                            <input matInput formControlName="buyerName" minlength="3" name="buyerName" required
+                                placeholder="Buyer Name">
+                        </mat-form-field>                  
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Buyer Number</mat-label>
+                            <input matInput formControlName="buyerMobile" minlength="10" maxlength="10" (keypress)="numberOnly($event)" name="buyerMobile" required
+                                placeholder="Buyer Number">
+                        </mat-form-field>   
+                    </div>               
+                </div>
+            </form>
+        </div>
+        <div class="btn-field">
+            <button mat-stroked-button class="cancel-btn" (click)="cancel()">No</button>
+            <button mat-stroked-button (click)="buyer()" [disabled]="!buyerForm.valid"
+                class="buyer-btn">{{this.data.btnValue}}</button>
+        </div>
+    </div>
+</div>

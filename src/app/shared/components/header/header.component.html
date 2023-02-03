@@ -12,27 +12,33 @@
         <mat-icon mat-list-icon>shopify</mat-icon>
         <span class="title" mat-line>Dashboard</span>
       </a> -->
-      <a mat-list-item class="sidenav-link" *ngIf="userRole =='ADMIN'" [routerLink]="['/admin/product-list']"
-        (click)="sidenav.toggle()"
+      <a mat-list-item class="sidenav-link" [routerLink]="['/admin/sale-list']" (click)="sidenav.toggle()"
         routerLinkActive="active">
-        <mat-icon mat-list-icon>shopify</mat-icon>
-        <span class="title" mat-line>Product List</span>
-      </a>
-      <a mat-list-item class="sidenav-link" [routerLink]="['/admin/sale-list']" 
-      (click)="sidenav.toggle()"
-      routerLinkActive="active">
         <mat-icon mat-list-icon>business_center</mat-icon>
         <span class="title" mat-line>Sale List</span>
       </a>
-      <a mat-list-item class="sidenav-link" *ngIf="userRole =='ADMIN'" [routerLink]="['/admin/user-list']"
-        (click)="sidenav.toggle()"
-        routerLinkActive="active">
+      <a mat-list-item class="sidenav-link" *ngIf="userRole =='ADMIN'" [routerLink]="['/admin/product-list']"
+        (click)="sidenav.toggle()" routerLinkActive="active">
+        <mat-icon mat-list-icon>shopify</mat-icon>
+        <span class="title" mat-line>Product List</span>
+      </a>
+      <a mat-list-item class="sidenav-link" *ngIf="userRole =='ADMIN'" [routerLink]="['/admin/buyer-list']"
+        (click)="sidenav.toggle()" routerLinkActive="active">
         <mat-icon mat-list-icon>account_box</mat-icon>
-        <span class="title" mat-line>User List</span>
+        <span class="title" mat-line>Buyer List</span>
+      </a>
+      <a mat-list-item class="sidenav-link" *ngIf="userRole =='ADMIN'" [routerLink]="['/admin/credit-point']"
+        (click)="sidenav.toggle()" routerLinkActive="active">
+        <mat-icon mat-list-icon>business_center</mat-icon>
+        <span class="title" mat-line>Credit Point</span>
+      </a>
+      <a mat-list-item class="sidenav-link" *ngIf="userRole =='ADMIN'" [routerLink]="['/admin/user-list']"
+        (click)="sidenav.toggle()" routerLinkActive="active">
+        <mat-icon mat-list-icon>account_box</mat-icon>
+        <span class="title" mat-line>Seller List</span>
       </a>
       <a mat-list-item class="sidenav-link" *ngIf="userRole =='SELLER'" [routerLink]="['/seller/bill']"
-        (click)="sidenav.toggle()"
-        routerLinkActive="active">
+        (click)="sidenav.toggle()" routerLinkActive="active">
         <mat-icon mat-list-icon>shopping_cart</mat-icon>
         <span class="title" mat-line>Billing</span>
       </a>
@@ -49,7 +55,7 @@
     <span class="toolbar-filler"></span>
     <h1 class="profile-title">
       <p class="title-link">{{auth.name}}</p>
-    </h1>    
+    </h1>
     <button id="button-logout" class="lgt-btn" mat-button (click)="logOut()">Log Out</button>
   </mat-toolbar>
 </div>

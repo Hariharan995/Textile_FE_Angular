@@ -7,10 +7,11 @@ import { SharedModule } from '../shared/shared.module';
 import { AdminModule } from '../admin/admin.module';
 import { AddToCartDialogComponent } from './components/add-to-cart-dialog/add-to-cart-dialog.component';
 import { MaterialModule } from '../material.module';
+import { BuyerDialogComponent } from './components/buyer-dialog/buyer-dialog.component';
 
 
 @NgModule({
-  declarations: [BillComponent, AddToCartDialogComponent],
+  declarations: [BillComponent, AddToCartDialogComponent, BuyerDialogComponent],
   imports: [
     CommonModule,
     SellerRoutingModule,

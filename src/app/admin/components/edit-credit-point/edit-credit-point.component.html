@@ -1,0 +1,33 @@
+<div class="buyer-container">
+    <div class="dialog-header">
+        <h2>{{this.data.content}}</h2>
+        <button mat-icon-button class="close-button" (click)="cancel()">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+    </div>
+    <div class="action">
+        <div class="creditForm">
+            <form [formGroup]="creditForm">
+                <div class="addinpt-field">
+                    <div>
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Points</mat-label>
+                            <input matInput formControlName="point"   (keypress)="numberOnly($event)" name="point" required
+                                placeholder="Points">
+                        </mat-form-field>                  
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Amount</mat-label>
+                            <input matInput formControlName="amount" (keypress)="numberOnly($event)" name="amount" required
+                                placeholder="Amount">
+                        </mat-form-field>   
+                    </div>               
+                </div>
+            </form>
+        </div>
+        <div class="btn-field">
+            <button mat-stroked-button class="cancel-btn" (click)="cancel()">No</button>
+            <button mat-stroked-button (click)="creditPoints()" [disabled]="!creditForm.valid"
+                class="buyer-btn">{{this.data.btnValue}}</button>
+        </div>
+    </div>
+</div>

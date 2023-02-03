@@ -1,0 +1,20 @@
+<div>
+    <table mat-table [dataSource]="creditPointList" class="mat-elevation-z8">
+        <ng-container *ngFor="let column of creditPointDetails; let i = index" [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef><span>{{column}}</span></th>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="column !='Action'">
+                    {{element[column]}}
+                </span>
+                <span *ngIf="column =='Action'">
+                    <div class="act-btn">
+                        <div *ngIf="element['UserStatus']!=='APPROVED'"><button mat-stroked-button class="approve-btn"
+                                (click)="pointUpdate(element)">update</button></div>
+                    </div>
+                </span>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="creditPointDetails"></tr>
+        <tr mat-row *matRowDef="let row; columns: creditPointDetails;"></tr>
+    </table>
+</div>

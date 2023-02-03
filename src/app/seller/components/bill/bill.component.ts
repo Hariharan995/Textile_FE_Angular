@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DialogComponent } from 'src/app/admin/components/dialog/dialog.component';
@@ -7,6 +6,7 @@ import { CartService } from 'src/app/core/services/cart.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { NotificationType } from 'src/app/utils/notification-messages';
 import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dialog.component';
+import { BuyerDialogComponent } from '../buyer-dialog/buyer-dialog.component';
 
 @Component({
   selector: 'app-bill',
@@ -16,6 +16,9 @@ import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dial
 export class BillComponent implements OnInit {
   cartList: any = [];
   paymentDetails = {};
+  paymentType = "ONLINEPAYMENT";
+  buyerDetails: any = {};
+  buyerMobile = ''
   cartCount = 0;
   subTotal = 0;
   totalAmount = 0;
@@ -29,7 +32,7 @@ export class BillComponent implements OnInit {
     private notificationService: NotificationService,
     public router: Router,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getAllCarts();
@@ -95,6 +98,37 @@ export class BillComponent implements OnInit {
     });
   }
 
+  addtoBuyer() {
+    const dialogRef = this.dialog.open(BuyerDialogComponent, {
+      width: '400px',
+      height: '300px',
+      data: {
+        content: 'Buyer Details',
+        btnValue: 'Submit',
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.status) {
+        let request = {
+          buyerName: result.data.buyerName,
+          buyerMobile: result.data.buyerMobile,
+        };
+        this.cartService.getBuyerDetails(request).subscribe(
+          (res: any) => {
+            this.buyerDetails = res.data
+            this.buyerMobile = this.buyerDetails?.buyerMobile
+          },
+          (err: any) => {
+            this.notificationService.sendMessage({
+              message: err.error.message,
+              type: NotificationType.error,
+            });
+          }
+        );
+      };
+    });
+  }
+
   quantityChanges(type: string, barcodeIds: any) {
     let request = {
       userId: this.user._id,
@@ -154,12 +188,19 @@ export class BillComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result.status) {
-        this.cartService.orderPlaced({ sellerId: this.user._id }).subscribe(
+        let data = {
+          sellerId: this.user._id,
+          paymentType: this.paymentType,
+          buyerId: this.buyerDetails._id
+        }
+        this.cartService.orderPlaced(data).subscribe(
           (res: any) => {
             this.notificationService.sendMessage({
               message: res.message,
               type: NotificationType.success,
             });
+            this.buyerDetails = {}
+            this.buyerMobile = ''
             this.getAllCarts();
           },
           (err: any) => {

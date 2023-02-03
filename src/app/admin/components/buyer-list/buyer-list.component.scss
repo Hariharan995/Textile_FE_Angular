@@ -1,0 +1,66 @@
+table {
+    width: 100%;
+  }
+  
+  .no-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .act-btn {
+    display: flex;
+    gap: 10px;
+    .approve-btn {
+      height: 30px;
+      background: #4caf54c2;
+      color: #ffff;
+    }
+    .reject-btn {
+      height: 30px;
+      color: #ffff;
+      background: #ff00008a;
+    }
+  }
+  
+  ::ng-deep.mat-mdc-paginator {
+    .mat-mdc-paginator-outer-container {
+      .mat-mdc-paginator-container {
+        .mat-mdc-paginator-page-size {
+          position: absolute;
+          left: 40%;
+          .mat-mdc-form-field-flex {
+            height: 30px;
+            .mat-mdc-form-field-infix {
+              padding-top: 1px !important;
+            }
+          }
+        }
+        .mat-mdc-paginator-range-actions {
+          .mat-mdc-paginator-range-label {
+            position: absolute;
+            left: 2%;
+          }
+        }
+      }
+    }
+  }
+  
+  .filter-con {
+    padding: 15px;
+    ::ng-deep.date-search-filter {
+      height: 35px;
+      margin-right: 10px;
+      .mat-mdc-text-field-wrapper {
+        height: 35px;
+        .mat-mdc-form-field-flex {
+          height: 35px;
+          .mat-mdc-form-field-infix {
+            margin-top: -10px !important;
+          }
+        }
+      }
+    }
+  }
+  

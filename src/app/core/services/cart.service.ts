@@ -34,8 +34,13 @@ export class CartService {
         return this.http.post(url, request,);
     }
 
+    getBuyerDetails(request: any) {
+        let url = this.apiUrl + '/getBuyerDetails';
+        return this.http.post(url, request);
+    }
+
     orderPlaced(request: any) {
         let url = this.apiUrl + '/orderPlaced';
-        return this.http.post(url, request,);
+        return this.http.post(url, request);
     }
 }

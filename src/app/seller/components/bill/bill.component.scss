@@ -404,4 +404,7 @@
 button {
   cursor: pointer;
 }
-/*# sourceMappingURL=style.css.map */
+.mat-mdc-radio-button ~ .mat-mdc-radio-button {
+  margin-left: 16px;
+  color: #008000;
+}

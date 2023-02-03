@@ -1,6 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AdminService } from 'src/app/core/services/admin.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { NotificationType } from 'src/app/utils/notification-messages';
 
 @Component({
   selector: 'app-add-product-dialog',
@@ -23,8 +26,9 @@ export class AddProductDialogComponent implements OnInit {
     taxPercent: new FormControl(''),
   });
   genderList = ['MALE', "FEMALE", "CHILD"]
+  images: any;
   constructor(
-    public dialogRef: MatDialogRef<AddProductDialogComponent>,
+    public dialogRef: MatDialogRef<AddProductDialogComponent>, public adminSerice: AdminService, public notificationService: NotificationService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
@@ -75,6 +79,44 @@ export class AddProductDialogComponent implements OnInit {
     }
     return true;
   }
+  selectImage(event: any) {
+    if (!event.target.files[0] || event.target.files[0].length == 0) {
+      this.msg = 'You must select an image';
+      return;
+    }
+    var mimeType = event.target.files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      this.msg = "Only images are supported";
+      return;
+    }
+
+    var reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+
+    reader.onload = (event) => {
+      reader.result
+      this.url = reader.result;
+    }
+    this.images = event.target.files[0]
+    const formData = new FormData()
+    formData.append('file', this.images)
+    this.adminSerice.imageUpload(formData).subscribe(
+      (res: any) => {
+        this.productForm.controls['productImage'].patchValue(event.target.files[0].name);
+        this.notificationService.sendMessage({
+          message: "Image uploaded successfully",
+          type: NotificationType.success,
+        });
+      },
+      (err: any) => {
+        this.notificationService.sendMessage({
+          message: err.error.message,
+          type: NotificationType.error,
+        });
+      }
+    );
+  }
+
   selectFile(event: any) {
     this.url = ''
     if (!event.target.files[0] || event.target.files[0].length == 0) {
@@ -87,14 +129,20 @@ export class AddProductDialogComponent implements OnInit {
       this.msg = "Only images are supported";
       return;
     }
+    console.log("event", event.target)
 
+    const file: File = event.target.files[0];
+    let fileName = ''
+    let formData = new FormData();
+    if (file) {
+      fileName = file.name;
+      formData.append("file", file);
+    }
     var reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
 
-    reader.onload = (_event) => {
-      this.msg = ""; reader.result
+    reader.onload = (event) => {
       this.url = reader.result;
-      this.productForm.controls['productImage'].patchValue(this.url);
     }
   }
 }

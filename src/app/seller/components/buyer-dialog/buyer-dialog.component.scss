@@ -1,0 +1,106 @@
+.images {
+    width: 100px;
+    height: 100px;
+  }
+  ::ng-deep {
+    .mat-mdc-dialog-container {
+      &:has(.buyer-container) {
+        height: fit-content;
+      }
+    }
+  }
+  .buyer-container {
+    .dialog-header {
+      border-bottom: 1px solid #ff000022;
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background-color: #82aae3;
+      h2 {
+        margin: 0;
+        color: #fff;
+        font-family: cursive;
+      }
+  
+      button {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .mat-icon {
+          color: #fff;
+        }
+      }
+    }
+  
+    .action {
+      margin: 25px;
+  
+      .buyerForm {
+        .addinpt-field {
+          display: flex;
+          gap: 30px;
+  
+          .mat-mdc-form-field {
+            width: 100%;
+          }
+        }
+  
+        .image-field {
+          border: 1px solid grey;
+          border-radius: 5px;
+          margin-bottom: 15px;
+        }
+      }
+  
+      button {
+        width: 120px;
+      }
+  
+      .cancel-btn {
+        margin-right: 15px;
+      }
+  
+      .danger-btn {
+        background-color: #d13147;
+        color: #fff;
+      }
+    }
+  }
+  
+  .btn-field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  ::ng-deep {
+    .mat-dialog-container {
+      &:has(.buyer-container) {
+        height: fit-content;
+        padding: 0;
+        box-shadow: 2px 4px 20px rgb(255 0 0 / 10%);
+      }
+    }
+  
+    .cdk-overlay-backdrop {
+      opacity: 0.4 !important;
+    }
+  }
+  
+  .close-button {
+    .close-icon {
+      overflow: visible !important;
+    }
+  }
+  
+  .buyer-btn {
+    background: #4caf50;
+    white-space: nowrap;
+  }
+  imgSelect {
+    width: 100px;
+    overflow: hidden;
+  }
+  

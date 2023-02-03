@@ -24,7 +24,7 @@ export class ProductListComponent implements OnInit {
   showFirstLastButtons = true;
 
   productList: any = []
-  productDetails = ["Created Date", "BarcodeId", "ProductImage", "ProductName", "MRP", "Price", "Quantity", "Action"]
+  productDetails = ["Created Date", "BarcodeId", "ProductImage", "ProductName", "MRP", "Price", "TaxPercent", "Quantity","SalesCount", "Action"]
   search = ""
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -83,16 +83,18 @@ export class ProductListComponent implements OnInit {
           this.productList[i].Id = ele._id;
           this.productList[i]['Created Date'] = ele.createdAt;
           this.productList[i].ProductImage = ele.productImage;
+         // this.productList[i].ProductImageData = ele.productImage;
           this.productList[i].ProductName = ele.productName;
           this.productList[i].MRP = ele.mrp;
           this.productList[i].Price = ele.price;
           this.productList[i].Quantity = ele.quantity;
+          this.productList[i].TaxPercent = ele.taxPercent;
           this.productList[i].BarcodeId = ele.barcodeId;
           this.productList[i].Gender = ele.gender;
           this.productList[i].TaxPercent = ele.taxPercent;
           this.productList[i].Brand = ele.brand;
           this.productList[i].Description = ele.description;
-          // this.productList.push(tempUserList)
+          this.productList[i].SalesCount = ele.salesCount;
         })
         this.collectionSize = res.count
       },

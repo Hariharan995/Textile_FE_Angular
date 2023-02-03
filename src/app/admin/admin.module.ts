@@ -9,6 +9,9 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { SaleListComponent } from './components/sale-list/sale-list.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { AddProductDialogComponent } from './components/add-product-dialog/add-product-dialog.component';
+import { CreditPointComponent } from './components/credit-point/credit-point.component';
+import { EditCreditPointComponent } from './components/edit-credit-point/edit-credit-point.component';
+import { BuyerListComponent } from './components/buyer-list/buyer-list.component';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { AddProductDialogComponent } from './components/add-product-dialog/add-p
     ProductListComponent,
     SaleListComponent,
     DialogComponent,
-    AddProductDialogComponent
+    AddProductDialogComponent,
+    CreditPointComponent,
+    EditCreditPointComponent,
+    BuyerListComponent
   ],
   imports: [
     CommonModule,

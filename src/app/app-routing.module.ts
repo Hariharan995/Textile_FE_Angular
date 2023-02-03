@@ -18,11 +18,6 @@ const routes: Routes = [
    // canLoad: [AdminGuard],
     loadChildren: () => import('./seller/seller.module').then((m) => m.SellerModule),
   },
-  // {
-  //   path: 'seller',
-  //   canLoad: [SellerGuard],
-  //   loadChildren: () => import('./seller/adsellermin.module').then((m) => m.SellerModule),
-  // },
 ];
 
 @NgModule({
