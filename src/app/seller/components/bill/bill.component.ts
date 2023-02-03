@@ -18,8 +18,13 @@ export class BillComponent implements OnInit {
   paymentDetails = {};
   paymentType = "ONLINEPAYMENT";
   buyerDetails: any = {};
+  creditDetails: any = {};
   buyerMobile = ''
   cartCount = 0;
+  creditApply = false;
+  discountAmount = 0;
+  creditPoint = 0;
+  creditAmount = 0;
   subTotal = 0;
   totalAmount = 0;
   user = localStorage.getItem('auth')
@@ -73,6 +78,7 @@ export class BillComponent implements OnInit {
       height: '300px',
       data: {
         content: 'Add To Cart',
+        btnName: 'Barcode Number',
         btnValue: 'Add Cart',
       },
     });
@@ -115,8 +121,11 @@ export class BillComponent implements OnInit {
         };
         this.cartService.getBuyerDetails(request).subscribe(
           (res: any) => {
-            this.buyerDetails = res.data
+            this.buyerDetails = res.data.buyer
+            this.creditDetails = res.data.creditPointList
             this.buyerMobile = this.buyerDetails?.buyerMobile
+            this.creditAmount = this.buyerDetails.creditPoints * this.creditDetails.creditAmount
+            this.creditAmount = this.totalAmount > (this.creditAmount / (100 / this.creditDetails.applyPercent)) ? this.creditAmount / (100 / this.creditDetails.applyPercent) : this.totalAmount / (100 / this.creditDetails.applyPercent)
           },
           (err: any) => {
             this.notificationService.sendMessage({
@@ -127,6 +136,45 @@ export class BillComponent implements OnInit {
         );
       };
     });
+  }
+
+  applyDiscount() {
+    const dialogRef = this.dialog.open(AddToCartDialogComponent, {
+      width: '400px',
+      height: '300px',
+      data: {
+        content: 'Discount',
+        btnName: 'Discount Amount',
+        btnValue: 'Apply',
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.status) {
+        this.discountAmount = Number(this.totalAmount) > Number(result.data.discountAmount) ? Number(result.data.discountAmount) : 0
+        this.subTotal = this.subTotal - this.discountAmount
+        this.totalAmount = this.totalAmount - this.discountAmount
+      }
+    });
+  }
+  
+  removeDiscount() {
+    this.subTotal = this.subTotal + this.discountAmount
+    this.totalAmount = this.totalAmount + this.discountAmount
+    this.discountAmount = 0
+  }
+
+  creditPointApply() {
+    if (this.creditApply) {
+      this.creditAmount = this.buyerDetails.creditPoints * this.creditDetails.creditAmount
+      this.creditAmount = this.totalAmount > (this.creditAmount / (100 / this.creditDetails.applyPercent)) ? this.creditAmount / (100 / this.creditDetails.applyPercent) : this.totalAmount / (100 / this.creditDetails.applyPercent)
+      this.creditPoint = this.creditAmount / this.creditDetails.creditPoint
+      this.subTotal = this.subTotal - this.creditAmount
+      this.totalAmount = this.totalAmount - this.creditAmount
+    }
+    else {
+      this.subTotal = this.subTotal + this.creditAmount
+      this.totalAmount = this.totalAmount + this.creditAmount
+    }
   }
 
   quantityChanges(type: string, barcodeIds: any) {
@@ -188,12 +236,19 @@ export class BillComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result.status) {
+        let request = {}
         let data = {
           sellerId: this.user._id,
           paymentType: this.paymentType,
           buyerId: this.buyerDetails._id
         }
-        this.cartService.orderPlaced(data).subscribe(
+        if (this.discountAmount > 0) {
+          request = { ...data, discountAmount: this.discountAmount.toString() }
+        }
+        if (this.creditApply) {
+          request = { ...data, isCreditApply: this.creditApply }
+        }
+        this.cartService.orderPlaced(request).subscribe(
           (res: any) => {
             this.notificationService.sendMessage({
               message: res.message,

@@ -10,9 +10,9 @@
             <form [formGroup]="addToCartForm">
                 <div class="addinpt-field">
                     <mat-form-field class="example-full-width" appearance="outline">
-                        <mat-label>Barcode Number</mat-label>
-                        <input matInput formControlName="barcodeId" (keypress)="numberOnly($event)" name="barcodeId" required
-                            placeholder="Barcode Number">
+                        <mat-label>{{data.btnName}}</mat-label>
+                        <input matInput formControlName="barcodeId" (keypress)="numberOnly($event)" name="{{data.btnName}}" required
+                            placeholder="{{data.btnName}}">
                     </mat-form-field>                  
                 </div>
             </form>

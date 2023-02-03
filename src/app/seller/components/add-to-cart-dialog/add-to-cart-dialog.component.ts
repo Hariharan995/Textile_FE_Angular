@@ -14,17 +14,25 @@ export class AddToCartDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<AddToCartDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   addToCart() {
     if (this.addToCartForm.valid) {
-      let request = {
-        barcodeId: this.addToCartForm.controls['barcodeId'].value,
-      };
-      this.dialogRef.close({ status: true, data: request });
+      if (this.data.btnName == 'Barcode Number') {
+        let request = {
+          barcodeId: this.addToCartForm.controls['barcodeId'].value,
+        };
+        this.dialogRef.close({ status: true, data: request });
+      }
+      else {
+        let request = {
+          discountAmount: this.addToCartForm.controls['barcodeId'].value,
+        };
+        this.dialogRef.close({ status: true, data: request });
+      }
     }
   }
-  
+
   cancel() {
     this.dialogRef.close({ status: false });
   }

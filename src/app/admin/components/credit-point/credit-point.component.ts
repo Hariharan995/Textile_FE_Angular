@@ -16,7 +16,7 @@ import { EditCreditPointComponent } from '../edit-credit-point/edit-credit-point
 })
 export class CreditPointComponent {
   creditPointList: any = [];
-  creditPointDetails = ["Points", "Amount", "Action"]
+  creditPointDetails = ["Points", "Amount","Apply Percent", "Action"]
   loginRole = ''
 
   constructor(private adminSerice: AdminService, private notificationService: NotificationService, private router: Router,
@@ -39,6 +39,7 @@ export class CreditPointComponent {
           this.creditPointList[i].Id = ele._id;
           this.creditPointList[i].Points = ele.point;
           this.creditPointList[i].Amount = ele.amount;
+          this.creditPointList[i]['Apply Percent'] = ele.applyPercent;
         })
       },
       (err: any) => {
@@ -68,6 +69,7 @@ export class CreditPointComponent {
         let request = {
           point: result.data.point,
           amount: result.data.amount,
+          applyPercent: result.data.applyPercent,
           creditPointId: result.data.creditPointId
         };
         this.adminSerice.updateCreditPoints(request).subscribe(

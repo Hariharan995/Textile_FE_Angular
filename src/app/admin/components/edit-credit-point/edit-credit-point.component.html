@@ -20,6 +20,11 @@
                             <input matInput formControlName="amount" (keypress)="numberOnly($event)" name="amount" required
                                 placeholder="Amount">
                         </mat-form-field>   
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Apply Percent</mat-label>
+                            <input matInput formControlName="applyPercent" (keypress)="numberOnly($event)" name="applyPercent" required
+                                placeholder="Apply Percent">
+                        </mat-form-field>   
                     </div>               
                 </div>
             </form>

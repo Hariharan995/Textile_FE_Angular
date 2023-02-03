@@ -11,6 +11,7 @@ export class EditCreditPointComponent {
   creditForm = new FormGroup({
     point: new FormControl('', [Validators.required]),
     amount: new FormControl('', [Validators.required]),
+    applyPercent: new FormControl('', [Validators.required]),
   });
   constructor(
     public dialogRef: MatDialogRef<EditCreditPointComponent>,
@@ -21,6 +22,7 @@ export class EditCreditPointComponent {
     if (this.data.creditPointDetails) {
       this.creditForm.controls['point'].patchValue(this.data.creditPointDetails.Points);
       this.creditForm.controls['amount'].patchValue(this.data.creditPointDetails.Amount);
+      this.creditForm.controls['applyPercent'].patchValue(this.data.creditPointDetails['Apply Percent']);
     }
   }
 
@@ -29,6 +31,7 @@ export class EditCreditPointComponent {
       let request = {
         point: this.creditForm.controls['point'].value,
         amount: this.creditForm.controls['amount'].value,
+        applyPercent: this.creditForm.controls['applyPercent'].value,
         creditPointId: this.data.creditPointDetails.Id
       };
       this.dialogRef.close({ status: true, data: request });
