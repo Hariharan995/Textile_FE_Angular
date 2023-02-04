@@ -60,16 +60,16 @@
                 </div>
                 <div class="item">
                     <span>Sub-Total</span>
-                    <h6>$ {{ subTotal |number:'.2'}} <span class="discount" *ngIf="discountAmount">${{(subTotal
-                            +discountAmount).toFixed(2)}}</span>
-                        <span class="discount" *ngIf="creditApply">$ {{(subTotal +creditAmount).toFixed(2)}}</span>
+                    <h6>$ {{ subTotal |number:'.2'}} <span class="discount"
+                            *ngIf="discountAmount">${{subTotalDiscountAmount|number:'.2'}}</span>
+                        <span class="discount" *ngIf="creditApply">$ {{subTotalCreditAmount|number:'.2'}}</span>
                     </h6>
                 </div>
                 <div class="item">
                     <span>Grand-Total</span>
-                    <h6>$ {{totalAmount |number:'.2'}} <span class="discount" *ngIf="discountAmount">${{(totalAmount+
-                            discountAmount).toFixed(2)}}</span>
-                        <span class="discount" *ngIf="creditApply">$ {{(totalAmount+creditAmount).toFixed(2)}}</span>
+                    <h6>$ {{totalAmount |number:'.2'}} <span class="discount"
+                            *ngIf="discountAmount">${{totalAmountDiscountAmount|number:'.2'}}</span>
+                        <span class="discount" *ngIf="creditApply">$ {{totalAmountCreditAmount|number:'.2'}}</span>
                     </h6>
                 </div>
                 <mat-radio-group class="item" [(ngModel)]="paymentType">
@@ -85,6 +85,10 @@
                     <button class="submit-btn" [disabled]="cartCount===0 || buyerMobile==''"
                         (click)="orderPlace()">Pay</button>
                 </div>
+                <div class="sub-btn">
+                    <button (click)="printMe()"> Print </button>
+                </div>
+
             </div>
         </div>
     </div>

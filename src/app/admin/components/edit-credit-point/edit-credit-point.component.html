@@ -9,7 +9,7 @@
         <div class="creditForm">
             <form [formGroup]="creditForm">
                 <div class="addinpt-field">
-                    <div>
+                    <div style="display: grid;">
                         <mat-form-field class="example-full-width" appearance="outline">
                             <mat-label>Points</mat-label>
                             <input matInput formControlName="point"   (keypress)="numberOnly($event)" name="point" required

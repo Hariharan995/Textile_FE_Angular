@@ -100,7 +100,7 @@ export class ProductListComponent implements OnInit {
       },
       (err: any) => {
         this.notificationService.sendMessage({
-          message: err.error.message,
+          message: err,
           type: NotificationType.error
         })
       }
@@ -127,7 +127,7 @@ export class ProductListComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result.status) {
+      if (result && result.status) {
         this.adminSerice.deleteProduct({ productId: result.productId }).subscribe(
           (res: any) => {
             this.notificationService.sendMessage({
@@ -141,7 +141,7 @@ export class ProductListComponent implements OnInit {
           },
           (err: any) => {
             this.notificationService.sendMessage({
-              message: err.error.message,
+              message: err,
               type: NotificationType.error
             })
           }
@@ -161,7 +161,7 @@ export class ProductListComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result.status) {
+      if (result && result.status) {
         result.data.sellerId = this.user._id
         this.adminSerice.updateProduct(result.data).subscribe(
           (res: any) => {
@@ -195,7 +195,7 @@ export class ProductListComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result.status) {
+      if (result && result.status) {
         result.data.sellerId = this.user._id
         this.adminSerice.addProduct(result.data).subscribe(
           (res: any) => {

@@ -8,10 +8,11 @@ import { AdminModule } from '../admin/admin.module';
 import { AddToCartDialogComponent } from './components/add-to-cart-dialog/add-to-cart-dialog.component';
 import { MaterialModule } from '../material.module';
 import { BuyerDialogComponent } from './components/buyer-dialog/buyer-dialog.component';
+import { PrintBillComponent } from './components/print-bill/print-bill.component';
 
 
 @NgModule({
-  declarations: [BillComponent, AddToCartDialogComponent, BuyerDialogComponent],
+  declarations: [BillComponent, AddToCartDialogComponent, BuyerDialogComponent, PrintBillComponent],
   imports: [
     CommonModule,
     SellerRoutingModule,

@@ -73,7 +73,7 @@ export class BuyerListComponent {
           this.router.navigate(['/login']);
         }
         this.notificationService.sendMessage({
-          message: err.error.message,
+          message: err,
           type: NotificationType.error
         })
       }

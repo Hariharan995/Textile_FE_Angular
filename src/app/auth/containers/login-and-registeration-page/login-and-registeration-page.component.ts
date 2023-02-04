@@ -59,7 +59,7 @@ export class LoginAndRegisterationPageComponent implements OnInit {
       },
       (err: any) => {
         this.notificationService.sendMessage({
-          message: err.error.message,
+          message: err,
           type: NotificationType.error
         })
       }
@@ -77,7 +77,7 @@ export class LoginAndRegisterationPageComponent implements OnInit {
       },
       (err: any) => {
         this.notificationService.sendMessage({
-          message: err.error.message,
+          message: err,
           type: NotificationType.error
         })
       }

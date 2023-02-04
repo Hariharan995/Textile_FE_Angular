@@ -13,6 +13,15 @@
             <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="date-search-filter">
+            <!-- <mat-label>UserStatus</mat-label> -->
+            <mat-select [(ngModel)]="paymentType" name="paymentType" placeholder="PaymentType"
+                (selectionChange)="filter('FILTER')">
+                <mat-option *ngFor="let payment of paymentTypeList" [value]="payment">
+                    {{payment}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="date-search-filter">
             <!-- <mat-label>Search</mat-label> -->
             <input matInput type="text" [(ngModel)]="search" placeholder="Search.." (input)="filter('FILTER')">
         </mat-form-field>

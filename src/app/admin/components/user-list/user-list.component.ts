@@ -20,7 +20,7 @@ export class UserListComponent implements OnInit {
   pageSizeOptions = [10, 25, 50, 100];
   showPageSizeOptions = true;
   showFirstLastButtons = true;
-  loginRole =''
+  loginRole = ''
   userList: any = [];
   userDetails = ["Created Date", "Name", "Mobile", "UserRole", "UserStatus", "Action"]
   userRole = ""
@@ -76,7 +76,7 @@ export class UserListComponent implements OnInit {
           this.router.navigate(['/login']);
         }
         this.notificationService.sendMessage({
-          message: err.error.message,
+          message: err,
           type: NotificationType.error
         })
       }
@@ -125,7 +125,7 @@ export class UserListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result.status) {
+      if (result && result.status) {
         let request = {
           userId: result.userId,
           userStatus: 'REJECTED'
@@ -143,7 +143,7 @@ export class UserListComponent implements OnInit {
           },
           (err: any) => {
             this.notificationService.sendMessage({
-              message: err.error.message,
+              message: err,
               type: NotificationType.error
             })
           }
@@ -164,7 +164,7 @@ export class UserListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result.status) {
+      if (result && result.status) {
         let request = {
           userId: result.userId,
           userStatus: 'APPROVED'
@@ -182,7 +182,7 @@ export class UserListComponent implements OnInit {
           },
           (err: any) => {
             this.notificationService.sendMessage({
-              message: err.error.message,
+              message: err,
               type: NotificationType.error
             })
           }

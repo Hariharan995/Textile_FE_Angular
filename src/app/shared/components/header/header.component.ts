@@ -32,7 +32,7 @@ export class HeaderComponent {
       },
       (err: any) => {
         this.notificationService.sendMessage({
-          message: err.error.message,
+          message: err,
           type: NotificationType.error
         })
       }

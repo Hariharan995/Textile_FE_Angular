@@ -47,7 +47,7 @@ export class CreditPointComponent {
           this.router.navigate(['/login']);
         }
         this.notificationService.sendMessage({
-          message: err.error.message,
+          message: err,
           type: NotificationType.error
         })
       }
@@ -65,7 +65,7 @@ export class CreditPointComponent {
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if (result.status) {
+      if (result && result.status) {
         let request = {
           point: result.data.point,
           amount: result.data.amount,
@@ -78,7 +78,7 @@ export class CreditPointComponent {
           },
           (err: any) => {
             this.notificationService.sendMessage({
-              message: err.error.message,
+              message: err,
               type: NotificationType.error,
             });
           }

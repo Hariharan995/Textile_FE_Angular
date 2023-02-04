@@ -110,7 +110,7 @@ export class AddProductDialogComponent implements OnInit {
       },
       (err: any) => {
         this.notificationService.sendMessage({
-          message: err.error.message,
+          message: err,
           type: NotificationType.error,
         });
       }

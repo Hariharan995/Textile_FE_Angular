@@ -23,6 +23,8 @@ export class SaleListComponent {
   loginRole = ""
   saleList: any = []
   saleDetails = ["Created Date", "OrderNo", "Buyer Name", "Payment Type","Credit Point Amount",  "Discount Amount", "SubTotal", "Total Amount", "Action"]
+  paymentTypeList = ["ALL","ONLINEPAYMENT", "COD"]
+  paymentType = ""
   search = ""
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -37,10 +39,11 @@ export class SaleListComponent {
     this.collectionSize = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
-    this.getSaleList({
-      page: this.pageIndex + 1,
-      limit: this.pageSize
-    })
+    this.filter('PAGINATION')
+    // this.getSaleList({
+    //   page: this.pageIndex + 1,
+    //   limit: this.pageSize
+    // })
   }
 
   filter(type: any) {
@@ -64,7 +67,8 @@ export class SaleListComponent {
       filterObj: {
         searchValue: this.search ? this.search : '',
         startDate: this.range.controls['start'].value ? startDate : '',
-        endDate: this.range.controls['end'].value ? endDate : ''
+        endDate: this.range.controls['end'].value ? endDate : '',
+        paymentType: this.paymentType && this.paymentType != 'ALL' ? this.paymentType : '',
       },
       page: this.pageIndex + 1,
       limit: this.pageSize
@@ -93,7 +97,7 @@ export class SaleListComponent {
       },
       (err: any) => {
         this.notificationService.sendMessage({
-          message: err.error.message,
+          message: err,
           type: NotificationType.error
         })
       }
@@ -111,7 +115,7 @@ export class SaleListComponent {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result.status) {
+      if (result && result.status) {
         this.adminSerice.deleteSale({ orderId: result.productId }).subscribe(
           (res: any) => {
             this.notificationService.sendMessage({
@@ -125,7 +129,7 @@ export class SaleListComponent {
           },
           (err: any) => {
             this.notificationService.sendMessage({
-              message: err.error.message,
+              message: err,
               type: NotificationType.error
             })
           }
