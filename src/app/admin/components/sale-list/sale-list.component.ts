@@ -22,7 +22,7 @@ export class SaleListComponent {
   showFirstLastButtons = true;
   loginRole = ""
   saleList: any = []
-  saleDetails = ["Created Date", "OrderNo", "Seller Name", "Buyer Name", "Payment Type", "Discount Amount", "SubTotal", "Total Amount", "Action"]
+  saleDetails = ["Created Date", "OrderNo", "Buyer Name", "Payment Type","Credit Point Amount",  "Discount Amount", "SubTotal", "Total Amount", "Action"]
   search = ""
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
@@ -81,18 +81,14 @@ export class SaleListComponent {
           this.saleList[i].Id = ele._id;
           this.saleList[i]['Created Date'] = ele.createdAt;
           this.saleList[i].OrderNo = ele.orderNo;
-          this.saleList[i]['Seller Name'] = ele.sellerDetails?.name;
           this.saleList[i]['Buyer Name'] = ele.buyerDetails?.name;
           this.saleList[i]['Payment Type'] = ele.paymentType;
-          this.saleList[i].Items = ele.itemCount;
-          this.saleList[i]['MRP Amount'] = ele.mrpTotal;
-          this.saleList[i]['Price Amount'] = ele.priceTotal;
+          this.saleList[i]['Credit Point Amount'] = ele.creditAmount;
           this.saleList[i]['Discount Amount'] = ele.discountAmount;
           this.saleList[i]['SubTotal'] = ele.subTotal;
           this.saleList[i]['Total Amount'] = ele.totalAmount;
           this.saleList[i].ProductList = ele.productList;
         })
-        console.log(res.count)
         this.collectionSize = res.count
       },
       (err: any) => {

@@ -9,13 +9,14 @@
                     <div class="item-details">
                         <h2>{{cart?.productDetails.productName}}</h2>
                         <p class="brand" *ngIf="cart.productDetails.brandName">{{cart.brandName}}</p>
-                        <p class="price">${{cart.productDetails.price}} <span
-                                *ngIf="(cart.productDetails.price)<(cart.productDetails.mrp)">${{cart.productDetails.mrp}}</span>
+                        <p class="price">${{cart.productDetails.price |number:'.2'}} <span
+                                *ngIf="(cart.productDetails.price)<(cart.productDetails.mrp)">${{cart.productDetails.mrp
+                                |number:'.2'}}</span>
                         </p>
                     </div>
                     <div class="quantity-con">
                         <div class="total-price">
-                            <p>${{cart.productDetails.price *cart.quantity}}</p>
+                            <p>${{cart.productDetails.price *cart.quantity |number:'.2'}}</p>
                         </div>
                         <div class="quantity">
                             <button class="sub" (click)="quantityChanges('DECREASE', cart.productDetails.barcodeId)"
@@ -55,21 +56,20 @@
                 </div>
                 <div class="item" *ngIf="discountAmount">
                     <span>Discount Amount</span>
-                    <h6>$ {{discountAmount}}</h6>
+                    <h6>$ {{discountAmount |number:'.2'}}</h6>
                 </div>
                 <div class="item">
                     <span>Sub-Total</span>
-                    <h6>$ {{ subTotal}} <span class="discount" *ngIf="discountAmount">${{subTotal
-                            +discountAmount}}</span>
-                        <span class="discount" *ngIf="creditApply">${{subTotal +creditAmount}}</span>
+                    <h6>$ {{ subTotal |number:'.2'}} <span class="discount" *ngIf="discountAmount">${{(subTotal
+                            +discountAmount).toFixed(2)}}</span>
+                        <span class="discount" *ngIf="creditApply">$ {{(subTotal +creditAmount).toFixed(2)}}</span>
                     </h6>
                 </div>
                 <div class="item">
                     <span>Grand-Total</span>
-                    <h6>$ {{totalAmount}} <span class="discount" *ngIf="discountAmount">${{totalAmount+
-                            discountAmount}}</span>
-                        <span class="discount" *ngIf="creditApply">${{totalAmount+
-                            creditAmount}}</span>
+                    <h6>$ {{totalAmount |number:'.2'}} <span class="discount" *ngIf="discountAmount">${{(totalAmount+
+                            discountAmount).toFixed(2)}}</span>
+                        <span class="discount" *ngIf="creditApply">$ {{(totalAmount+creditAmount).toFixed(2)}}</span>
                     </h6>
                 </div>
                 <mat-radio-group class="item" [(ngModel)]="paymentType">
@@ -79,7 +79,7 @@
                 <div *ngIf="buyerMobile!='' && buyerDetails.creditPoints>200 && discountAmount==0">
                     <mat-checkbox [(ngModel)]="creditApply" (click)="creditPointApply()" class="example-margin">Apply
                         credit point : $
-                        {{creditAmount}}</mat-checkbox>
+                        {{creditAmount |number:'.2'}}</mat-checkbox>
                 </div>
                 <div class="sub-btn">
                     <button class="submit-btn" [disabled]="cartCount===0 || buyerMobile==''"

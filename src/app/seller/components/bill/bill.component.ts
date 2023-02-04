@@ -124,7 +124,7 @@ export class BillComponent implements OnInit {
             this.buyerDetails = res.data.buyer
             this.creditDetails = res.data.creditPointList
             this.buyerMobile = this.buyerDetails?.buyerMobile
-            this.creditAmount = this.buyerDetails.creditPoints * this.creditDetails.creditAmount
+            this.creditAmount = this.buyerDetails.creditPoints * this.creditDetails.amount
             this.creditAmount = this.totalAmount > (this.creditAmount / (100 / this.creditDetails.applyPercent)) ? this.creditAmount / (100 / this.creditDetails.applyPercent) : this.totalAmount / (100 / this.creditDetails.applyPercent)
           },
           (err: any) => {
@@ -156,7 +156,7 @@ export class BillComponent implements OnInit {
       }
     });
   }
-  
+
   removeDiscount() {
     this.subTotal = this.subTotal + this.discountAmount
     this.totalAmount = this.totalAmount + this.discountAmount
@@ -165,9 +165,9 @@ export class BillComponent implements OnInit {
 
   creditPointApply() {
     if (this.creditApply) {
-      this.creditAmount = this.buyerDetails.creditPoints * this.creditDetails.creditAmount
+      this.creditAmount = this.buyerDetails.creditPoints * this.creditDetails.amount
       this.creditAmount = this.totalAmount > (this.creditAmount / (100 / this.creditDetails.applyPercent)) ? this.creditAmount / (100 / this.creditDetails.applyPercent) : this.totalAmount / (100 / this.creditDetails.applyPercent)
-      this.creditPoint = this.creditAmount / this.creditDetails.creditPoint
+      this.creditPoint = this.creditAmount / this.creditDetails.point
       this.subTotal = this.subTotal - this.creditAmount
       this.totalAmount = this.totalAmount - this.creditAmount
     }
@@ -257,6 +257,11 @@ export class BillComponent implements OnInit {
             this.buyerDetails = {}
             this.buyerMobile = ''
             this.getAllCarts();
+            this.discountAmount = 0;
+            this.creditPoint = 0;
+            this.creditAmount = 0;
+            this.subTotal = 0;
+            this.totalAmount = 0;
           },
           (err: any) => {
             this.notificationService.sendMessage({
