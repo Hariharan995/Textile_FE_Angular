@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AdminService } from 'src/app/core/services/admin.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { NotificationType } from 'src/app/utils/notification-messages';
@@ -15,22 +16,23 @@ import { DialogComponent } from '../dialog/dialog.component';
 })
 export class ProductListComponent implements OnInit {
   user = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;
+  imagess: any= []  
   collectionSize = 0;
   pageSize = 10;
   pageIndex = 0;
-  loginRole =""
+  loginRole = ""
   pageSizeOptions = [10, 25, 50, 100];
   showPageSizeOptions = true;
   showFirstLastButtons = true;
 
   productList: any = []
-  productDetails = ["Created Date", "BarcodeId", "ProductImage", "ProductName", "MRP", "Price", "TaxPercent", "Quantity","SalesCount", "Action"]
+  productDetails = ["Created Date", "BarcodeId", "ProductImage", "ProductName", "MRP", "Price", "TaxPercent", "Quantity", "SalesCount", "Action"]
   search = ""
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   })
-  constructor(private adminSerice: AdminService, private notificationService: NotificationService, public dialog: MatDialog,) {
+  constructor(private adminSerice: AdminService, private notificationService: NotificationService, public dialog: MatDialog, private sanitizer: DomSanitizer) {
   }
 
   pageEvent!: PageEvent;
@@ -83,7 +85,7 @@ export class ProductListComponent implements OnInit {
           this.productList[i].Id = ele._id;
           this.productList[i]['Created Date'] = ele.createdAt;
           this.productList[i].ProductImage = ele.productImage;
-         // this.productList[i].ProductImageData = ele.productImage;
+          this.productList[i].ProductImageData = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${ele.productImageData}`);
           this.productList[i].ProductName = ele.productName;
           this.productList[i].MRP = ele.mrp;
           this.productList[i].Price = ele.price;
@@ -95,6 +97,7 @@ export class ProductListComponent implements OnInit {
           this.productList[i].Brand = ele.brand;
           this.productList[i].Description = ele.description;
           this.productList[i].SalesCount = ele.salesCount;
+          this.imagess.push(this.productList[i].ProductImageData)
         })
         this.collectionSize = res.count
       },

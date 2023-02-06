@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { DialogComponent } from 'src/app/admin/components/dialog/dialog.component';
 import { CartService } from 'src/app/core/services/cart.service';
@@ -52,6 +53,7 @@ export class BillComponent implements OnInit {
     }
   }
   cartList: any = [];
+  images: any = [];
   paymentDetails = {};
   paymentType = "ONLINEPAYMENT";
   buyerDetails: any = {};
@@ -78,7 +80,8 @@ export class BillComponent implements OnInit {
     private cartService: CartService,
     private notificationService: NotificationService,
     public router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -99,7 +102,11 @@ export class BillComponent implements OnInit {
           this.subTotal = Number(res.data.payment.subTotal);
           this.totalAmount = Number(res.data.payment.totalAmount);
           this.cartCount = Number(res.data.cartCount);
+          this.cartList.forEach((ele:any) => {
+            this.images.push(this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${ele.productDetails.productImageData}`))
+          });
         }
+       
       },
       (err: any) => {
         this.notificationService.sendMessage({

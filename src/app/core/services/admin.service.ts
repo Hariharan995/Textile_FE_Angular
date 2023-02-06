@@ -40,6 +40,11 @@ export class AdminService {
         return this.http.post(url, request);
     }
 
+    getSaleById(request:any) {
+        let url = this.apiUrl + '/getSaleById';
+        return this.http.post(url, request);
+    }
+
     deleteSale(request: any) {
         let url = this.apiUrl + '/deleteSale';
         return this.http.post(url, request);
@@ -78,6 +83,6 @@ export class AdminService {
     imageUpload(request: any) {
         let url = this.apiUrl + '/imageUpload';
         return this.http.post(url, request);
-    }
+    }    
 }
 

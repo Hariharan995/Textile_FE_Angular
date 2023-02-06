@@ -5,6 +5,7 @@ import { CreditPointComponent } from './components/credit-point/credit-point.com
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { SaleListComponent } from './components/sale-list/sale-list.component';
 import { UserListComponent } from './components/user-list/user-list.component';
+import { ViewSaleComponent } from './components/view-sale/view-sale.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: 'credit-point',
     component: CreditPointComponent,
+  },
+  {
+    path: 'sale-view/:saleId',
+    component: ViewSaleComponent,
   },
 ];
 

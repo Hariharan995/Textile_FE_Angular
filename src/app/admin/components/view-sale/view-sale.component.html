@@ -1,0 +1,58 @@
+<div class="main">
+    <div class="title">
+        <h4> Ordered on </h4>
+        <p> {{orderDetils.createdAt | date:"dd MMMM YYYY"}}</p>
+        <!-- <span>|</span> -->
+        <h4> Order </h4>
+        <p>#{{orderDetils.orderNo}}</p>
+    </div>
+    <div class="payment">
+        <div>
+            <p>Buyer Details</p>
+            <p>{{orderDetils.buyerDetails?.name}}</p>
+            <p>{{orderDetils.buyerDetails?.mobile}}</p>
+        </div>
+        <div>
+            <p>Payment Method</p>
+            <p>{{orderDetils.paymentType}}</p>
+        </div>
+        <div>
+            <p>Order Summary</p>
+            <div class="summay" *ngIf="orderDetils.discountAmount">
+                <p style="padding-right: 10px;">Discount Amount:</p>
+                <p>₹ {{orderDetils.discountAmount}}</p>
+            </div>
+            <div class="summay" *ngIf="orderDetils.creditAmount">
+                <p style="padding-right: 10px;">Credit Amount:</p>
+                <p>₹ {{orderDetils.creditAmount}}</p>
+            </div>
+            <div class="summay">
+                <p style="padding-right: 10px;">Item(s) Total:</p>
+                <p>₹ {{orderDetils.subTotal}}</p>
+            </div>
+            <div class="summay">
+                <p style="padding-right: 10px;">Grand Total:</p>
+                <p>₹ {{orderDetils.totalAmount}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="product-items">
+        <div *ngFor="let product of orderDetils.productList; index as i">
+            <div class="product">
+                <div class="img">
+                    <img [src]="images[i]" alt="">
+                </div>
+                <div class="item-details">
+                    <p>{{product?.productName}}</p>
+                    <p>Quantity: {{product?.quantity}}</p>
+                    <p class="brand" *ngIf="product.brandName">{{product.brandName}}</p>
+                    <p class="price">₹ {{product.price * product?.quantity|number:'.2'}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex;flex-direction: row-reverse;margin-right: 5%;">
+        <button class="sub-btn" [routerLink]="['/admin/sale-list']">Back</button>
+    </div>
+</div>

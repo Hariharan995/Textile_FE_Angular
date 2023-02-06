@@ -33,7 +33,7 @@ export class AddProductDialogComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data.productDetails) {
-      this.url = this.data.productDetails.ProductImage
+      this.url = this.data.productDetails.ProductImageData
       this.productForm.controls['productName'].patchValue(this.data.productDetails.ProductName);
       this.productForm.controls['productImage'].patchValue(this.data.productDetails.ProductImage);
       this.productForm.controls['barcodeId'].patchValue(this.data.productDetails.BarcodeId);
@@ -61,9 +61,6 @@ export class AddProductDialogComponent implements OnInit {
         quantity: this.productForm.controls['quantity'].value,
         taxPercent: this.productForm.controls['taxPercent'].value,
       };
-      // if (this.data.content == 'Edit Product') {
-      //   request.productId = this.data.productDetails.Id 
-      // }
       this.dialogRef.close({ status: true, data: request });
     }
   }

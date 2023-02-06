@@ -38,13 +38,17 @@ th.price {
 
 .ticket {
     width: 155px;
-    max-width: 155px;
+    max-width: 155px
 }
 
 img {
     max-width: inherit;
     width: inherit;
 }
+ .print-bill{
+
+    display: none;
+ }
 
 @media print {
     .hidden-print,

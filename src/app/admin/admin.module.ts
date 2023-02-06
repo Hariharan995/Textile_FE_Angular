@@ -12,6 +12,7 @@ import { AddProductDialogComponent } from './components/add-product-dialog/add-p
 import { CreditPointComponent } from './components/credit-point/credit-point.component';
 import { EditCreditPointComponent } from './components/edit-credit-point/edit-credit-point.component';
 import { BuyerListComponent } from './components/buyer-list/buyer-list.component';
+import { ViewSaleComponent } from './components/view-sale/view-sale.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { BuyerListComponent } from './components/buyer-list/buyer-list.component
     AddProductDialogComponent,
     CreditPointComponent,
     EditCreditPointComponent,
-    BuyerListComponent
+    BuyerListComponent,
+    ViewSaleComponent
   ],
   imports: [
     CommonModule,
