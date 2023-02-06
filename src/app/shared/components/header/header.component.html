@@ -1,7 +1,9 @@
 <div class="header-con">
   <mat-sidenav #sidenav mode="push" class="app-sidenav">
     <mat-toolbar color="primary" class="header">
-      <span class="toolbar-filler"></span>
+      <span class="toolbar-filler">
+        <img style="width: 100px;" src="../../../../assets/test.jpg">
+      </span>
       <button mat-icon-button (click)="sidenav.toggle()" class="mat-icon-button sidenav-toggle-button"
         [hidden]="!sidenav.opened">
         <mat-icon aria-label="Menu" class="material-icons">close</mat-icon>

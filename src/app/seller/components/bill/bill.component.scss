@@ -184,7 +184,7 @@
 }
 
 .payment-cart .cart-container .item-entry-payment .payment-card .sub-btn button {
-  padding: 7px 20px;
+  padding: 7px 40px;
   border-radius: 6px;
   outline: none;
   font-weight: 500;
@@ -378,4 +378,68 @@ button {
   text-decoration: line-through;
   color: var(--danger-clr);
   font-size: 12px;
+}
+
+.btn{
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+
+@media print {
+  .payment-cart {
+    display: none !important;
+  }
+  .header-con {
+    display: none !important;
+  }
+}
+
+* {
+  font-size: 12px;
+  font-family: 'Times New Roman';
+}
+
+td,
+th,
+tr,
+table {
+  border-top: 1px dashed black;
+  border-collapse: collapse;
+}
+
+td.description,
+th.description {
+  width: 75px;
+  max-width: 75px;
+}
+
+td.quantity,
+th.quantity {
+  width: 40px;
+  max-width: 40px;
+  word-break: break-all;
+}
+
+td.price,
+th.price {
+  width: 40px;
+  max-width: 40px;
+  word-break: break-all;
+}
+
+.centered {
+  text-align: center;
+  align-content: center;
+}
+
+.ticket {
+  width: 155px;
+  max-width: 155px
+}
+
+img {
+  max-width: inherit;
+  width: inherit;
 }

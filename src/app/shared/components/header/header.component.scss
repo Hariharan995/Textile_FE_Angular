@@ -47,3 +47,9 @@
     margin: 0;
    }
 }
+
+@media print {
+  .header-con {
+    display: none !important;
+  }
+}

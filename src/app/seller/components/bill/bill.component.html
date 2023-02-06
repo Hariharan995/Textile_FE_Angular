@@ -86,10 +86,45 @@
                         (click)="orderPlace()">Pay</button>
                 </div>
                 <div class="sub-btn">
-                  <app-print-bill></app-print-bill>
+                    <button class="submit-btn" (click)="printReceipt()">Print</button>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
+
+<!-- <div id="print-bill" class="print-bill">
+    <div class="ticket">
+        <img src="../../../../assets/test.jpg" alt="Logo">
+        <p class="centered">RECEIPT EXAMPLE
+            <br>Address line 1
+            <br>Address line 2
+            <br>Address line 2
+            <br>Address line 2
+            <br>Phone: 123456789/ 9876543210
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th class="description">Item</th>
+                    <th class="quantity">Quantity</th>
+                    <th class="price">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cart of cartList; index as i">
+                    <th class="description">{{cart.productDetails.productName}}</th>
+                    <td class="quantity">{{cart.quantity}}</td>
+                    <td class="price">₹ {{cart.productDetails.price}}</td>
+                </tr>
+                <tr>
+                    <td class="quantity"></td>
+                    <td class="description">TOTAL</td>
+                    <td class="price">₹ {{totalAmount}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="centered">Thanks for your purchase!
+        </p>
+    </div>
+</div>  -->

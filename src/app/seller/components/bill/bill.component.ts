@@ -57,6 +57,7 @@ export class BillComponent implements OnInit {
   paymentDetails = {};
   paymentType = "ONLINEPAYMENT";
   buyerDetails: any = {};
+  orderDetails: any = {};
   creditDetails: any = {};
   buyerMobile = ''
   cartCount = 0;
@@ -102,11 +103,11 @@ export class BillComponent implements OnInit {
           this.subTotal = Number(res.data.payment.subTotal);
           this.totalAmount = Number(res.data.payment.totalAmount);
           this.cartCount = Number(res.data.cartCount);
-          this.cartList.forEach((ele:any) => {
+          this.cartList.forEach((ele: any) => {
             this.images.push(this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${ele.productDetails.productImageData}`))
           });
         }
-       
+
       },
       (err: any) => {
         this.notificationService.sendMessage({
@@ -314,6 +315,7 @@ export class BillComponent implements OnInit {
               message: res.message,
               type: NotificationType.success,
             });
+            this.orderDetails = res.data
             this.buyerDetails = {}
             this.buyerMobile = ''
             this.getAllCarts();
@@ -338,7 +340,114 @@ export class BillComponent implements OnInit {
       }
     });
   }
-  printMe() {
-    window.print();
+
+  printReceipt() {
+    const receiptData = this.generateReceipt();
+    const popup = window.open();
+    if (popup) {
+      popup.document.write(receiptData);
+      popup.print();
+      popup.close();
+    } else {
+      console.error('Failed to open a new window for the receipt.');
+    }
+  }
+
+  generateReceipt() {
+    const order = this.cartList;
+    return `
+      <html>
+        <head>
+        <style>
+        * {
+        font-size: 12px;
+        font-family: 'Times New Roman';
+      }
+      
+      td,
+      th,
+      tr,
+      table {
+        border-top: 1px dashed black;
+        border-collapse: collapse;
+      }
+      
+      td.description,
+      th.description {
+        text-align: center;
+        align-content: center;
+        width: 75px;
+        max-width: 75px;
+      }
+      
+      td.quantity,
+      th.quantity {
+        text-align: center;
+        align-content: center;
+        width: 50px;
+        max-width: 50px;
+        word-break: break-all;
+      }
+      
+      td.price,
+      th.price {
+        text-align: center;
+        align-content: center;
+        width: 20px;
+        max-width: 20px;
+        word-break: break-all;
+      }
+      
+      .centered {
+        text-align: center;
+        align-content: center;
+      }
+      
+      .ticket {
+        width: 180px;
+        max-width: 180px
+      }
+      
+      img {
+        max-width: inherit;
+        width: inherit;
+      }
+      </style>
+          <title>Receipt</title>
+        </head>
+        <body>
+        <div class="ticket">
+        <img src="../../../../assets/test.jpg" alt="Logo">
+        <p class="centered">RECEIPT EXAMPLE
+        <br>Address line 1
+        <br>Address line 2
+        <br>Address line 2
+        <br>Address line 2
+        <br>Phone: 123456789/ 9876543210
+        </p>
+          <table>
+            <tr>
+              <th class="description">Item</th>
+              <th class="quantity">Quanty</th>
+              <th class="price">Price</th>
+            </tr>
+            ${order.map((item: any) => `
+              <tr>
+                <td class="description">${item.productDetails.productName}</td>
+                <td class="quantity">${item.quantity}</td>
+                <td class="price">₹ ${item.productDetails.price}</td>
+              </tr>
+            `).join('')}
+            <tr>
+              <td colspan="2">Total</td>
+              <td>₹ ${order.totalAmount}</td>
+            </tr>
+          </table>
+          <p class="centered">Thanks for your purchase!
+        </p>
+        </div>
+        </body>
+      </html>
+    `;
   }
 }

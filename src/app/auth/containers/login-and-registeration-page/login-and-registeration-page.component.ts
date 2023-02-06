@@ -32,7 +32,7 @@ export class LoginAndRegisterationPageComponent implements OnInit {
   ngOnInit() {
     let auth = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;
     if (auth && auth.userRole[0] == 'ADMIN') {
-      this.router.navigate(['/admin/user-list']);
+      this.router.navigate(['/admin/sale-list']);
     }
     else if (auth && auth.userRole[0] == 'SELLER') {
       this.router.navigate(['/seller/bill']);
@@ -51,7 +51,7 @@ export class LoginAndRegisterationPageComponent implements OnInit {
         localStorage.setItem('auth', JSON.stringify(userDetails));
         this.adminService.isToken = true;
         if (res.data.userRole.includes(UserTypes.ADMIN)) {
-          this.router.navigate(['/admin/user-list']);
+          this.router.navigate(['/admin/sale-list']);
         }
         else {
           this.router.navigate(['/seller/bill']);
