@@ -8,11 +8,13 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { NotificationType } from 'src/app/utils/notification-messages';
 import { AddToCartDialogComponent } from '../add-to-cart-dialog/add-to-cart-dialog.component';
 import { BuyerDialogComponent } from '../buyer-dialog/buyer-dialog.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-bill',
   templateUrl: './bill.component.html',
   styleUrls: ['./bill.component.scss'],
+  providers: [DatePipe]
 })
 export class BillComponent implements OnInit {
   combinedCode: any
@@ -59,6 +61,8 @@ export class BillComponent implements OnInit {
   buyerDetails: any = {};
   orderDetails: any = {};
   creditDetails: any = {};
+  orderTime: any = {}
+  orderDate: any = {}
   buyerMobile = ''
   cartCount = 0;
   creditApply = false;
@@ -82,7 +86,8 @@ export class BillComponent implements OnInit {
     private notificationService: NotificationService,
     public router: Router,
     public dialog: MatDialog,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    protected datePipe: DatePipe,
   ) { }
 
   ngOnInit() {
@@ -203,8 +208,7 @@ export class BillComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.status) {
-        if(Number(this.totalAmount) < Number(result.data.discountAmount))
-        {
+        if (Number(this.totalAmount) < Number(result.data.discountAmount)) {
           this.notificationService.sendMessage({
             message: "Discount amount must less than total amount",
             type: NotificationType.error,
@@ -293,7 +297,7 @@ export class BillComponent implements OnInit {
     if (this.buyerMobile == '') {
       this.notificationService.sendMessage({
         message: "Please add buyer details",
-        type: NotificationType.error,
+        type: NotificationType.info,
       });
       this.addtoBuyer()
       return
@@ -331,6 +335,9 @@ export class BillComponent implements OnInit {
               type: NotificationType.success,
             });
             this.orderDetails = res.data
+            let date = this.orderDetails.createdAt
+            this.orderDate = this.datePipe.transform(date, "dd/MM/yyyy")
+            this.orderTime = this.datePipe.transform(date, "h:mm a")
             this.buyerDetails = {}
             this.buyerMobile = ''
             this.getAllCarts();
@@ -369,7 +376,7 @@ export class BillComponent implements OnInit {
   }
 
   generateReceipt() {
-    const order = this.cartList;
+    let order = this.orderDetails;
     return `
       <html>
         <head>
@@ -378,56 +385,49 @@ export class BillComponent implements OnInit {
         font-size: 12px;
         font-family: 'Times New Roman';
       }
-      
       td,
       th,
       tr,
-      table {
-        border-top: 1px dashed black;
-        border-collapse: collapse;
-      }
-      
+      table {           
+        width: 200px;
+        max-width: 200px
+      }      
       td.description,
       th.description {
         text-align: center;
         align-content: center;
-        width: 75px;
-        max-width: 75px;
-      }
-      
+      }      
       td.quantity,
       th.quantity {
         text-align: center;
         align-content: center;
-        width: 50px;
-        max-width: 50px;
         word-break: break-all;
-      }
-      
+      }      
       td.price,
       th.price {
         text-align: center;
-        align-content: center;
-        width: 20px;
-        max-width: 20px;
+        align-content: center;       
         word-break: break-all;
-      }
-      
+      }      
       .centered {
         text-align: center;
         align-content: center;
-      }
-      
+      }      
       .ticket {
-        text-align: center;
-        align-content: center;
-        width: 180px;
-        max-width: 180px
-      }
-      
-      img {
+        width: 200px;
+        max-width: 200px
+      }      
+      .img {
         max-width: inherit;
         width: inherit;
+      }
+      .dateTime{
+        display: flex;
+        justify-content: space-around;
+      }
+      .end{
+        display: flex;
+        flex-direction: row-reverse;
       }
       </style>
           <title>Receipt</title>
@@ -435,9 +435,7 @@ export class BillComponent implements OnInit {
         <body>
         <div class="ticket">
         <p>    
-        <img class="centered" src="../../../../assets/test.jpg" alt="Mountain" style="width:100px">
         <img class="centered" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkTQ8DFOgujidIRil33r2QnSZ2Y_ZHahrUlw&usqp=CAU"  alt="Mountain" style="width:50px">
-
         </p>
         <p class="centered">RECEIPT EXAMPLE
         <br>Address line 1
@@ -446,32 +444,47 @@ export class BillComponent implements OnInit {
         <br>Address line 2
         <br>Phone: 123456789/ 9876543210
         </p>
-          <table>
-            <tr>
-              <th class="description">Item</th>
-              <th class="quantity">Quanty</th>
-              <th class="price">Price</th>
+        <p class="centered">OrderNo: #${order.orderNo}</p>
+        <div class="dateTime">
+        <p>DATE: ${this.orderDate} </p>
+        <p>TIME: ${this.orderTime} </p>
+        </div>
+        <table >
+            <tr class="centered">
+              <th class="description">Item Name</th>
+              <th class="description">Rate</th>
+              <th class="quantity">Qty</th>
+              <th class="price">Amt</th>
             </tr>
-            ${order.map((item: any) => `
-              <tr>
-                <td class="description">${item.productDetails.productName}</td>
+            ${order?.productList?.map((item: any) => `
+              <tr class="centered">
+                <td class="description">${item.productName}</td>
+                <td class="quantity">${item.price}</td>
                 <td class="quantity">${item.quantity}</td>
-                <td class="price">₹ ${item.productDetails.price}</td>
+                <td class="price">₹ ${item.price * item.quantity}</td>
               </tr>
             `).join('')}
-            <tr>
-              <td colspan="2">Total</td>
-              <td>₹ ${order.totalAmount}</td>
-            </tr>
-          </table>
+          </table>         
+          <div class="dateTime" >
+             <p>Items: ₹ ${order.itemCount} </p>
+             <p>SubTotal: ₹ ${order.subTotal}</p>
+          </div>
+          <div class="dateTime" >
+             <p></p>
+             <p class="end">Grand Total: ₹ ${order.totalAmount}</p>
+           </div>
           <p class="centered">Thanks for your purchase!
-          <img class="centered" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkTQ8DFOgujidIRil33r2QnSZ2Y_ZHahrUlw&usqp=CAU"  alt="Mountain" style="width:200px">
           </p>
-
         </div>
         </body>
       </html>
     `;
+    // <div class="end" *ngIf="${order.discountAmount}">
+    // <p>DiscountAmount: ₹ ${order.discountAmount}</p>
+    // </div>
+    // <div class="end" *ngIf="${order.creditAmount}">
+    // <p>DiscountAmount: ₹ ${order.creditAmount}</p>
+    // </div>
   }
 
   clearData() {
@@ -484,6 +497,7 @@ export class BillComponent implements OnInit {
           message: res.message,
           type: NotificationType.success,
         });
+        this.orderDetails = {}
         this.buyerDetails = {}
         this.buyerMobile = ''
         this.getAllCarts();

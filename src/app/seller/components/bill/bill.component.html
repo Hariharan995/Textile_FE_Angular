@@ -85,7 +85,7 @@
                     <button class="submit-btn" [disabled]="cartCount===0"
                         (click)="orderPlace()">PAY</button>
                 </div>
-                <div class="sub-btn">
+                <div class="sub-btn" *ngIf="(orderDetails | json) != '{}'">
                     <button class="submit-btn" (click)="printReceipt()">PRINT</button>
                 </div>
             </div>
