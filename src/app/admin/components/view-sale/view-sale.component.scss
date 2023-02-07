@@ -77,3 +77,10 @@
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
+
+.heads{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: baseline;
+}
