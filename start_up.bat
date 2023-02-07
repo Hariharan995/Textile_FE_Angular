@@ -1,5 +1,5 @@
 @echo off
-TIMEOUT 1
+TIMEOUT 30
 D:
 cd \Textile\Textile_FE
 npm run start
