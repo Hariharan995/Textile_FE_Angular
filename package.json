@@ -4,10 +4,10 @@
   "main": "electron.main",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently \"ng serve\" \" npm run electron\"",
     "build": "ng build",
-    "electron": "ng build --configuration=production && electron .",
-    "electron-build": "ng build --configuration=production && electron-builder"    
+    "electron": "electron ./src/electron.main",
+    "electron-build": "ng build --configuration=production && electron-builder"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^15.1.0",
     "@angular/router": "^15.1.0",
     "@ng-bootstrap/ng-bootstrap": "^14.0.1",
+    "app-builder-bin": "^4.1.2",
     "bootstrap": "^5.2.3",
     "ngx-toastr": "^16.0.2",
     "rxjs": "~7.8.0",
@@ -34,7 +35,7 @@
     "@angular/compiler-cli": "^15.1.0",
     "@types/jasmine": "~4.3.0",
     "concurrently": "^7.6.0",
-    "electron": "^22.2.0",
+    "electron": "^23.0.0",
     "electron-builder": "^23.6.0",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",

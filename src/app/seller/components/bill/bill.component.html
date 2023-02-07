@@ -82,12 +82,15 @@
                         {{creditAmount |number:'.2'}}</mat-checkbox>
                 </div>
                 <div class="sub-btn">
-                    <button class="submit-btn" [disabled]="cartCount===0 || buyerMobile==''"
-                        (click)="orderPlace()">Pay</button>
+                    <button class="submit-btn" [disabled]="cartCount===0"
+                        (click)="orderPlace()">PAY</button>
                 </div>
                 <div class="sub-btn">
-                    <button class="submit-btn" (click)="printReceipt()">Print</button>
+                    <button class="submit-btn" (click)="printReceipt()">PRINT</button>
                 </div>
+            </div>
+            <div class="clr-btn">
+                <button class="submit-btn" (click)="clearData()">CLEAR ALL</button>
             </div>
         </div>
     </div>

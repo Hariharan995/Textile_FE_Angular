@@ -1,7 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import { DialogComponent } from 'src/app/admin/components/dialog/dialog.component';
 import { CartService } from 'src/app/core/services/cart.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
@@ -203,6 +203,13 @@ export class BillComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.status) {
+        if(Number(this.totalAmount) < Number(result.data.discountAmount))
+        {
+          this.notificationService.sendMessage({
+            message: "Discount amount must less than total amount",
+            type: NotificationType.error,
+          });
+        }
         this.discountAmount = Number(this.totalAmount) > Number(result.data.discountAmount) ? Number(result.data.discountAmount) : 0
         this.subTotal = this.subTotal - this.discountAmount
         this.totalAmount = this.totalAmount - this.discountAmount
@@ -283,6 +290,14 @@ export class BillComponent implements OnInit {
   }
 
   orderPlace() {
+    if (this.buyerMobile == '') {
+      this.notificationService.sendMessage({
+        message: "Please add buyer details",
+        type: NotificationType.error,
+      });
+      this.addtoBuyer()
+      return
+    }
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '600px',
       height: '200px',
@@ -404,6 +419,8 @@ export class BillComponent implements OnInit {
       }
       
       .ticket {
+        text-align: center;
+        align-content: center;
         width: 180px;
         max-width: 180px
       }
@@ -417,7 +434,11 @@ export class BillComponent implements OnInit {
         </head>
         <body>
         <div class="ticket">
-        <img src="../../../../assets/test.jpg" alt="Logo">
+        <p>    
+        <img class="centered" src="../../../../assets/test.jpg" alt="Mountain" style="width:100px">
+        <img class="centered" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkTQ8DFOgujidIRil33r2QnSZ2Y_ZHahrUlw&usqp=CAU"  alt="Mountain" style="width:50px">
+
+        </p>
         <p class="centered">RECEIPT EXAMPLE
         <br>Address line 1
         <br>Address line 2
@@ -444,10 +465,45 @@ export class BillComponent implements OnInit {
             </tr>
           </table>
           <p class="centered">Thanks for your purchase!
-        </p>
+          <img class="centered" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkTQ8DFOgujidIRil33r2QnSZ2Y_ZHahrUlw&usqp=CAU"  alt="Mountain" style="width:200px">
+          </p>
+
         </div>
         </body>
       </html>
     `;
+  }
+
+  clearData() {
+    let request = {
+      userId: this.user._id
+    }
+    this.cartService.deleteAllCart(request).subscribe(
+      (res: any) => {
+        this.notificationService.sendMessage({
+          message: res.message,
+          type: NotificationType.success,
+        });
+        this.buyerDetails = {}
+        this.buyerMobile = ''
+        this.getAllCarts();
+        this.discountAmount = 0;
+        this.creditPoint = 0;
+        this.creditAmount = 0;
+        this.subTotal = 0;
+        this.totalAmount = 0;
+        this.subTotalCreditAmount = 0;
+        this.totalAmountCreditAmount = 0;
+        this.subTotalDiscountAmount = 0;
+        this.totalAmountDiscountAmount = 0;
+        this.creditApply = false
+      },
+      (err: any) => {
+        this.notificationService.sendMessage({
+          message: err,
+          type: NotificationType.error,
+        });
+      }
+    );
   }
 }
