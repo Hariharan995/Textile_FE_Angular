@@ -385,30 +385,10 @@ export class BillComponent implements OnInit {
         font-size: 12px;
         font-family: 'Times New Roman';
       }
-      td,
-      th,
-      tr,
       table {           
         width: 200px;
         max-width: 200px
-      }      
-      td.description,
-      th.description {
-        text-align: center;
-        align-content: center;
-      }      
-      td.quantity,
-      th.quantity {
-        text-align: center;
-        align-content: center;
-        word-break: break-all;
-      }      
-      td.price,
-      th.price {
-        text-align: center;
-        align-content: center;       
-        word-break: break-all;
-      }      
+      }     
       .centered {
         text-align: center;
         align-content: center;
@@ -423,19 +403,23 @@ export class BillComponent implements OnInit {
       }
       .dateTime{
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
+        padding: 0px;
+        margin: 0px;
       }
       .end{
         display: flex;
         flex-direction: row-reverse;
+        padding: 0px;
+        margin: 0px;
       }
       </style>
           <title>Receipt</title>
         </head>
         <body>
         <div class="ticket">
-        <p>    
-        <img class="centered" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkTQ8DFOgujidIRil33r2QnSZ2Y_ZHahrUlw&usqp=CAU"  alt="Mountain" style="width:50px">
+        <p class="centered">    
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkTQ8DFOgujidIRil33r2QnSZ2Y_ZHahrUlw&usqp=CAU"  alt="Mountain" style="width:50px">
         </p>
         <p class="centered">RECEIPT EXAMPLE
         <br>Address line 1
@@ -443,36 +427,37 @@ export class BillComponent implements OnInit {
         <br>Address line 2
         <br>Address line 2
         <br>Phone: 123456789/ 9876543210
+        <br><br>
+        OrderNo: #${order.orderNo}
         </p>
-        <p class="centered">OrderNo: #${order.orderNo}</p>
-        <div class="dateTime">
-        <p>DATE: ${this.orderDate} </p>
-        <p>TIME: ${this.orderTime} </p>
-        </div>
-        <table >
-            <tr class="centered">
-              <th class="description">Item Name</th>
-              <th class="description">Rate</th>
-              <th class="quantity">Qty</th>
-              <th class="price">Amt</th>
+        <div class="dateTime"><p>DATE: ${this.orderDate} </p><p>TIME: ${this.orderTime}</p></div>
+        <hr>
+        <table>
+            <tr>
+              <th>Item Name</th>
+              <th>Rate</th>
+              <th>Qty</th>
+              <th>Amt</th>
             </tr>
             ${order?.productList?.map((item: any) => `
-              <tr class="centered">
-                <td class="description">${item.productName}</td>
-                <td class="quantity">${item.price}</td>
-                <td class="quantity">${item.quantity}</td>
-                <td class="price">₹ ${item.price * item.quantity}</td>
-              </tr>
+            <tr>
+              <td>${item.productName}</td>
+              <td>${item.price}</td>
+              <td>${item.quantity}</td>
+              <td>₹ ${item.price * item.quantity}</td>
+            </tr>
             `).join('')}
-          </table>         
+          </table>     
+          <hr>    
           <div class="dateTime" >
-             <p>Items: ₹ ${order.itemCount} </p>
-             <p>SubTotal: ₹ ${order.subTotal}</p>
+            <p>Items: ${order.itemCount} </p>
+            <p>SubTotal: ₹ ${order.subTotal}</p>
           </div>
           <div class="dateTime" >
-             <p></p>
-             <p class="end">Grand Total: ₹ ${order.totalAmount}</p>
-           </div>
+            <p></p>
+            <p class="end">Grand Total: ₹ ${order.totalAmount}</p>
+          </div>
+          <hr>
           <p class="centered">Thanks for your purchase!
           </p>
         </div>
