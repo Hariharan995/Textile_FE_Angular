@@ -92,7 +92,6 @@ export class ProductListComponent implements OnInit {
           this.productList[i].Quantity = ele.quantity;
           this.productList[i].TaxPercent = ele.taxPercent;
           this.productList[i].BarcodeId = ele.barcodeId;
-          this.productList[i].Gender = ele.gender;
           this.productList[i].TaxPercent = ele.taxPercent;
           this.productList[i].Brand = ele.brand;
           this.productList[i].Description = ele.description;
