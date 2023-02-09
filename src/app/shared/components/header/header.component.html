@@ -4,9 +4,10 @@
       <span class="toolbar-filler">
         <img style="width: 100px;" src="../../../../assets/test.jpg">
       </span>
-      <button mat-icon-button (click)="sidenav.toggle()" class="mat-icon-button sidenav-toggle-button"
+      <button mat-icon (click)="sidenav.toggle()" class="mat-icon-button sidenav-toggle-button" style="border: none;"
         [hidden]="!sidenav.opened">
-        <mat-icon aria-label="Menu" class="material-icons">close</mat-icon>
+        <img style="max-width: 40px;    background-color: #82aae3;
+        max-height: 40px;" src="/assets/Icons/close.png" />
       </button>
     </mat-toolbar>
     <mat-nav-list class="menu-list">
@@ -16,32 +17,38 @@
       </a> -->
       <a mat-list-item class="sidenav-link" [routerLink]="['/admin/sale-list']" (click)="sidenav.toggle()"
         routerLinkActive="active">
-        <mat-icon mat-list-icon>business_center</mat-icon>
+        <img style=" max-width: 25px;" src="/assets/Icons/sale.png" />
         <span class="title" mat-line>Sale List</span>
+
       </a>
       <a mat-list-item class="sidenav-link" *ngIf="userRole =='ADMIN'" [routerLink]="['/admin/product-list']"
         (click)="sidenav.toggle()" routerLinkActive="active">
-        <mat-icon mat-list-icon>shopify</mat-icon>
+        <img style=" max-width: 25px;" src="/assets/Icons/product.png" />
+
         <span class="title" mat-line>Product List</span>
       </a>
       <a mat-list-item class="sidenav-link" *ngIf="userRole =='ADMIN'" [routerLink]="['/admin/buyer-list']"
         (click)="sidenav.toggle()" routerLinkActive="active">
-        <mat-icon mat-list-icon>account_box</mat-icon>
+        <img style=" max-width: 25px;" src="/assets/Icons/buyer.png" />
+
         <span class="title" mat-line>Buyer List</span>
       </a>
       <a mat-list-item class="sidenav-link" *ngIf="userRole =='ADMIN'" [routerLink]="['/admin/credit-point']"
         (click)="sidenav.toggle()" routerLinkActive="active">
-        <mat-icon mat-list-icon>business_center</mat-icon>
+        <img style=" max-width: 25px;" src="/assets/Icons/offer.png" />
+
         <span class="title" mat-line>Credit Point</span>
       </a>
       <a mat-list-item class="sidenav-link" *ngIf="userRole =='ADMIN'" [routerLink]="['/admin/user-list']"
         (click)="sidenav.toggle()" routerLinkActive="active">
-        <mat-icon mat-list-icon>account_box</mat-icon>
+        <img style=" max-width: 25px;" src="/assets/Icons/seller.png" />
+
         <span class="title" mat-line>Seller List</span>
       </a>
       <a mat-list-item class="sidenav-link" *ngIf="userRole =='SELLER'" [routerLink]="['/seller/bill']"
         (click)="sidenav.toggle()" routerLinkActive="active">
-        <mat-icon mat-list-icon>shopping_cart</mat-icon>
+        <img style=" max-width: 25px;" src="/assets/Icons/sale.png" />
+
         <span class="title" mat-line>Billing</span>
       </a>
     </mat-nav-list>
@@ -49,8 +56,7 @@
   <mat-toolbar id="appToolbar" color="primary" class="app-toolbar">
     <button mat-icon-button (click)="sidenav.toggle()" class="mat-icon-button sidenav-toggle-button"
       [hidden]="sidenav.opened">
-      <mat-icon aria-label="Menu" class="material-icons">menu</mat-icon>
-    </button>
+      <img style="margin-bottom: 10px;" src="/assets/Icons/menu.png" /> </button>
     <h1 class="component-title">
       <p class="title-link">Textile Shop</p>
     </h1>

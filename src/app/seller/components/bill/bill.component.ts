@@ -386,16 +386,16 @@ export class BillComponent implements OnInit {
         font-family: 'Times New Roman';
       }
       table {           
-        width: 200px;
-        max-width: 200px
+        width: 100%;
+        max-width:  100%;
       }     
       .centered {
         text-align: center;
         align-content: center;
       }      
       .ticket {
-        width: 200px;
-        max-width: 200px
+        width: 100%;
+        max-width:  100%;
       }      
       .img {
         max-width: inherit;
@@ -412,6 +412,9 @@ export class BillComponent implements OnInit {
         flex-direction: row-reverse;
         padding: 0px;
         margin: 0px;
+      }
+      th {
+        text-align: left;
       }
       </style>
           <title>Receipt</title>
