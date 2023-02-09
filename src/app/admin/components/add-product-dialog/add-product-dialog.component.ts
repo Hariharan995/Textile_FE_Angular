@@ -47,7 +47,7 @@ export class AddProductDialogComponent implements OnInit {
   addProduct() {
     if (this.productForm.valid) {
       let request = {
-        productId: this.data ? this.data.productDetails.Id : "",
+        productId: this.data && this.data.productDetails ? this.data.productDetails.Id : "",
         productName: this.productForm.controls['productName'].value,
         productImage: this.productForm.controls['productImage'].value,
         barcodeId: this.productForm.controls['barcodeId'].value,

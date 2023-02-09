@@ -68,8 +68,8 @@
                 <div class="item">
                     <span>Grand-Total</span>
                     <h6>₹ {{totalAmount |number:'.2'}} <span class="discount"
-                            *ngIf="discountAmount">₹{{totalAmountDiscountAmount|number:'.2'}}</span>
-                        <span class="discount" *ngIf="creditApply">₹ {{totalAmountCreditAmount|number:'.2'}}</span>
+                            *ngIf="discountAmount">₹{{totalDiscountAmount|number:'.2'}}</span>
+                        <span class="discount" *ngIf="creditApply">₹ {{totalCreditAmount|number:'.2'}}</span>
                     </h6>
                 </div>
                 <mat-radio-group class="item" [(ngModel)]="paymentType">
@@ -82,8 +82,7 @@
                         {{creditAmount |number:'.2'}}</mat-checkbox>
                 </div>
                 <div class="sub-btn">
-                    <button class="submit-btn" [disabled]="cartCount===0"
-                        (click)="orderPlace()">PAY</button>
+                    <button class="submit-btn" [disabled]="cartCount===0" (click)="orderPlace()">PAY</button>
                 </div>
                 <div class="sub-btn" *ngIf="(orderDetails | json) != '{}'">
                     <button class="submit-btn" (click)="printReceipt()">PRINT</button>
@@ -96,38 +95,58 @@
     </div>
 </div>
 
-<!-- <div id="print-bill" class="print-bill">
+<div class="receipt-container">
     <div class="ticket">
-        <img src="../../../../assets/test.jpg" alt="Logo">
-        <p class="centered">RECEIPT EXAMPLE
-            <br>Address line 1
-            <br>Address line 2
-            <br>Address line 2
-            <br>Address line 2
-            <br>Phone: 123456789/ 9876543210
+        <div class="centered">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkTQ8DFOgujidIRil33r2QnSZ2Y_ZHahrUlw&usqp=CAU"
+                alt="Mountain" style="width: 60px;" />
+        </div>
+        <p class="centered">
+            CLASSIC PATTERN <br />Shop No. 61, Ground Floor<br />Main Mall, (Near Food
+            Court)<br />
+            TEX VALLEY, Gangapuram, <br />
+            Chittode, ERODE - 638 102
+            <br />Phone: 9952365030/ 9876543210 <br /><br />
+            Order No: {{orderDetails.orderNo}}
         </p>
+        <div class="dateTime">
+            <p>DATE: {{orderDetails.createdAt | date:"dd/MM/yyyy"}}</p>
+            <p>TIME: {{orderDetails.createdAt | date:'shortTime'}}</p>
+        </div>
+        <hr />
         <table>
-            <thead>
-                <tr>
-                    <th class="description">Item</th>
-                    <th class="quantity">Quantity</th>
-                    <th class="price">Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let cart of cartList; index as i">
-                    <th class="description">{{cart.productDetails.productName}}</th>
-                    <td class="quantity">{{cart.quantity}}</td>
-                    <td class="price">₹ {{cart.productDetails.price}}</td>
-                </tr>
-                <tr>
-                    <td class="quantity"></td>
-                    <td class="description">TOTAL</td>
-                    <td class="price">₹ {{totalAmount}}</td>
-                </tr>
-            </tbody>
+            <tr>
+                <th>Item Name</th>
+                <th class="centered">Rate</th>
+                <th class="centered">Qty</th>
+                <th class="endtext">Amt</th>
+            </tr>
+            <tr *ngFor="let item of orderDetails?.productList; index as i">
+                <td>{{item.productName}}</td>
+                <td class="centered">{{item.price}}</td>
+                <td class="centered">{{item.quantity}}</td>
+                <td class="endtext">₹ {{item.price * item.quantity}}</td>
+            </tr>
         </table>
-        <p class="centered">Thanks for your purchase!
-        </p>
+        <hr />
+        <div class="dateTime" *ngIf="orderDetails.discountAmount">
+            <p></p>
+            <p class="end">Discount Amount: ₹ {{orderDetails.discountAmount}}</p>
+        </div>
+        <div class="dateTime" *ngIf="orderDetails.creditAmount">
+            <p></p>
+            <p class="end">Credit Point Amount: ₹ {{orderDetails.creditAmount}}</p>
+        </div>
+        <div class="dateTime">
+            <p>Items: {{orderDetails.itemCount}}</p>
+            <p>SubTotal: ₹ {{orderDetails.subTotal}}</p>
+        </div>
+        <div class="dateTime">
+            <p></p>
+            <p class="end">Grand Total: ₹ {{orderDetails.totalAmount}}</p>
+        </div>
+        <hr />
+        <p class="centered">Thank you..!! Visit Again..!!</p>
     </div>
-</div>  -->
+
+</div>

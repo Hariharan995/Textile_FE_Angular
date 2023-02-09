@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -73,9 +73,9 @@ export class BillComponent implements OnInit {
   subTotal = 0;
   totalAmount = 0;
   subTotalCreditAmount = 0;
-  totalAmountCreditAmount = 0;
+  totalCreditAmount = 0;
   subTotalDiscountAmount = 0;
-  totalAmountDiscountAmount = 0;
+  totalDiscountAmount = 0;
   user = localStorage.getItem('auth')
     ? JSON.parse(localStorage.getItem('auth') || 'no data')
     : null;
@@ -88,7 +88,8 @@ export class BillComponent implements OnInit {
     public dialog: MatDialog,
     private sanitizer: DomSanitizer,
     protected datePipe: DatePipe,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.getAllCarts();
@@ -182,7 +183,7 @@ export class BillComponent implements OnInit {
             this.applicableCreditAmount = this.totalAmount / (100 / this.creditDetails.applyPercent)
             this.creditAmount = this.buyerDetails.creditPoints > this.applicableCreditAmount ? this.applicableCreditAmount : this.buyerDetails.creditPoints
             this.subTotalCreditAmount = Number((this.subTotal + this.creditAmount));
-            this.totalAmountCreditAmount = Number((this.totalAmount + this.creditAmount));
+            this.totalCreditAmount = Number((this.totalAmount + this.creditAmount));
 
           },
           (err: any) => {
@@ -218,7 +219,7 @@ export class BillComponent implements OnInit {
         this.subTotal = this.subTotal - this.discountAmount
         this.totalAmount = this.totalAmount - this.discountAmount
         this.subTotalDiscountAmount = this.subTotal + this.discountAmount;
-        this.totalAmountDiscountAmount = this.totalAmount + this.discountAmount;
+        this.totalDiscountAmount = this.totalAmount + this.discountAmount;
       }
     });
   }
@@ -228,7 +229,7 @@ export class BillComponent implements OnInit {
     this.totalAmount = this.totalAmount + this.discountAmount
     this.discountAmount = 0
     this.subTotalDiscountAmount = 0;
-    this.totalAmountDiscountAmount = 0;
+    this.totalDiscountAmount = 0;
   }
 
   creditPointApply() {
@@ -236,13 +237,13 @@ export class BillComponent implements OnInit {
       this.subTotal = this.subTotal - this.creditAmount
       this.totalAmount = this.totalAmount - this.creditAmount
       this.subTotalCreditAmount = Number((this.subTotal + this.creditAmount));
-      this.totalAmountCreditAmount = Number((this.totalAmount + this.creditAmount));
+      this.totalCreditAmount = Number((this.totalAmount + this.creditAmount));
     }
     else {
       this.subTotal = this.subTotal + this.creditAmount
       this.totalAmount = this.totalAmount + this.creditAmount
       this.subTotalCreditAmount = 0;
-      this.totalAmountCreditAmount = 0;
+      this.totalCreditAmount = 0;
     }
   }
 
@@ -347,10 +348,11 @@ export class BillComponent implements OnInit {
             this.subTotal = 0;
             this.totalAmount = 0;
             this.subTotalCreditAmount = 0;
-            this.totalAmountCreditAmount = 0;
+            this.totalCreditAmount = 0;
             this.subTotalDiscountAmount = 0;
-            this.totalAmountDiscountAmount = 0;
+            this.totalDiscountAmount = 0;
             this.creditApply = false
+            this.printReceipt()
           },
           (err: any) => {
             this.notificationService.sendMessage({
@@ -364,115 +366,7 @@ export class BillComponent implements OnInit {
   }
 
   printReceipt() {
-    const receiptData = this.generateReceipt();
-    const popup = window.open();
-    if (popup) {
-      popup.document.write(receiptData);
-      popup.print();
-      popup.close();
-    } else {
-      console.error('Failed to open a new window for the receipt.');
-    }
-  }
-
-  generateReceipt() {
-    let order = this.orderDetails;
-    return `
-      <html>
-        <head>
-        <style>
-        * {
-        font-size: 12px;
-        font-family: 'Times New Roman';
-      }
-      table {           
-        width: 100%;
-        max-width:  100%;
-      }     
-      .centered {
-        text-align: center;
-        align-content: center;
-      }      
-      .ticket {
-        width: 100%;
-        max-width:  100%;
-      }      
-      .img {
-        max-width: inherit;
-        width: inherit;
-      }
-      .dateTime{
-        display: flex;
-        justify-content: space-between;
-        padding: 0px;
-        margin: 0px;
-      }
-      .end{
-        display: flex;
-        flex-direction: row-reverse;
-        padding: 0px;
-        margin: 0px;
-      }
-      th {
-        text-align: left;
-      }
-      </style>
-          <title>Receipt</title>
-        </head>
-        <body>
-        <div class="ticket">
-        <p class="centered">    
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkTQ8DFOgujidIRil33r2QnSZ2Y_ZHahrUlw&usqp=CAU"  alt="Mountain" style="width:50px">
-        </p>
-        <p class="centered">RECEIPT EXAMPLE
-        <br>Address line 1
-        <br>Address line 2
-        <br>Address line 2
-        <br>Address line 2
-        <br>Phone: 123456789/ 9876543210
-        <br><br>
-        OrderNo: #${order.orderNo}
-        </p>
-        <div class="dateTime"><p>DATE: ${this.orderDate} </p><p>TIME: ${this.orderTime}</p></div>
-        <hr>
-        <table>
-            <tr>
-              <th>Item Name</th>
-              <th>Rate</th>
-              <th>Qty</th>
-              <th>Amt</th>
-            </tr>
-            ${order?.productList?.map((item: any) => `
-            <tr>
-              <td>${item.productName}</td>
-              <td>${item.price}</td>
-              <td>${item.quantity}</td>
-              <td>₹ ${item.price * item.quantity}</td>
-            </tr>
-            `).join('')}
-          </table>     
-          <hr>    
-          <div class="dateTime" >
-            <p>Items: ${order.itemCount} </p>
-            <p>SubTotal: ₹ ${order.subTotal}</p>
-          </div>
-          <div class="dateTime" >
-            <p></p>
-            <p class="end">Grand Total: ₹ ${order.totalAmount}</p>
-          </div>
-          <hr>
-          <p class="centered">Thanks for your purchase!
-          </p>
-        </div>
-        </body>
-      </html>
-    `;
-    // <div class="end" *ngIf="${order.discountAmount}">
-    // <p>DiscountAmount: ₹ ${order.discountAmount}</p>
-    // </div>
-    // <div class="end" *ngIf="${order.creditAmount}">
-    // <p>DiscountAmount: ₹ ${order.creditAmount}</p>
-    // </div>
+    window.print();
   }
 
   clearData() {
@@ -495,9 +389,9 @@ export class BillComponent implements OnInit {
         this.subTotal = 0;
         this.totalAmount = 0;
         this.subTotalCreditAmount = 0;
-        this.totalAmountCreditAmount = 0;
+        this.totalCreditAmount = 0;
         this.subTotalDiscountAmount = 0;
-        this.totalAmountDiscountAmount = 0;
+        this.totalDiscountAmount = 0;
         this.creditApply = false
       },
       (err: any) => {
