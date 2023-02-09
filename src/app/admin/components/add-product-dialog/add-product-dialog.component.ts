@@ -19,11 +19,13 @@ export class AddProductDialogComponent implements OnInit {
     barcodeId: new FormControl('', [Validators.required, Validators.minLength(10)]),
     description: new FormControl(''),
     brand: new FormControl(''),
+    gender: new FormControl(''),
     mrp: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required]),
     quantity: new FormControl('', [Validators.required]),
     taxPercent: new FormControl(''),
   });
+  genderList = ['MALE', "FEMALE", "CHILD"]
   images: any;
   constructor(
     public dialogRef: MatDialogRef<AddProductDialogComponent>, public adminSerice: AdminService, public notificationService: NotificationService,
@@ -41,6 +43,7 @@ export class AddProductDialogComponent implements OnInit {
       this.productForm.controls['price'].patchValue(this.data.productDetails.Price);
       this.productForm.controls['quantity'].patchValue(this.data.productDetails.Quantity);
       this.productForm.controls['taxPercent'].patchValue(this.data.productDetails.TaxPercent);
+      this.productForm.controls['gender'].patchValue(this.data.productDetails.Gender);
     }
   }
 
@@ -52,6 +55,7 @@ export class AddProductDialogComponent implements OnInit {
         barcodeId: this.productForm.controls['barcodeId'].value,
         description: this.productForm.controls['description'].value,
         brand: this.productForm.controls['brand'].value,
+        gender: this.productForm.controls['gender'].value,
         mrp: this.productForm.controls['mrp'].value,
         price: this.productForm.controls['price'].value,
         quantity: this.productForm.controls['quantity'].value,
@@ -122,7 +126,8 @@ export class AddProductDialogComponent implements OnInit {
       this.msg = "Only images are supported";
       return;
     }
-    
+    console.log("event", event.target)
+
     const file: File = event.target.files[0];
     let fileName = ''
     let formData = new FormData();

@@ -4,6 +4,7 @@ import { AdminService } from 'src/app/core/services/admin.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { NotificationType } from 'src/app/utils/notification-messages';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -15,9 +16,7 @@ export class HeaderComponent {
   userRole =this.auth? this.auth.userRole[0]: null
   constructor(private authService: AuthService,
      public adminService:AdminService,
-     public router: Router, public route: Router, public activatedRoute: ActivatedRoute, private notificationService: NotificationService) {
-
-      }
+     public router: Router, public route: Router, public activatedRoute: ActivatedRoute, private notificationService: NotificationService) { }
 
   logOut() {
     let request = { token: this.auth?.token }

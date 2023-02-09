@@ -2,8 +2,7 @@
     <div class="dialog-header">
         <h2>{{this.data.content}}</h2>
         <button mat-icon-button class="close-button" (click)="cancel()">
-            <img style="max-width: 40px;    background-color: #82aae3;
-            max-height: 40px;" src="/assets/Icons/close.png" />
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
         </button>
     </div>
     <div class="action">
@@ -36,9 +35,12 @@
                         <mat-label>Brand</mat-label>
                         <input matInput formControlName="brand" name="brand" placeholder="Brand">
                     </mat-form-field>
-                    <mat-form-field class="example-full-width" appearance="outline">
-                        <mat-label>BarcodeId</mat-label>
-                        <input matInput formControlName="barcodeId" minlength="10" (keypress)="numberOnly($event)" name="barcodeId" placeholder="BarcodeId">
+                    <mat-form-field appearance="outline" class="date-search-filter">
+                        <mat-select formControlName="gender" name="gender" placeholder="Gender">
+                            <mat-option *ngFor="let gender of genderList" [value]="gender">
+                                {{gender}}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
                 </div>
                 <div class="addinpt-field">
@@ -66,7 +68,13 @@
                         <input matInput formControlName="quantity" name="quantity" required placeholder="Quantity">
                     </mat-form-field>
                 </div>
-                
+                <div class="addinpt-field">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>BarcodeId</mat-label>
+                        <input matInput formControlName="barcodeId" (keypress)="numberOnly($event)" name="barcodeId"
+                            placeholder="BarcodeId" minlength="10">
+                    </mat-form-field>
+                </div>
             </form>
         </div>
         <div class="btn-field">
