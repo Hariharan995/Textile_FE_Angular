@@ -1,6 +1,5 @@
 <div *ngIf="!adminService.isToken">
     <router-outlet></router-outlet>
-    <app-spinner></app-spinner>
 </div>
 
 <div class="app-layout" *ngIf="adminService.isToken">
@@ -11,6 +10,6 @@
                 <router-outlet></router-outlet>
             </div>
         </mat-sidenav-container>
-        <app-spinner></app-spinner>
     </div>
 </div>
+<app-spinner></app-spinner>
