@@ -21,7 +21,7 @@ export class NotificationService {
       else {
         switch (message?.type) {
           case NotificationType.success:
-            this.toastrService.success(message.message);
+            this.toastrService.success(message.message, null!, { timeOut: 2000 });
             break;
           case NotificationType.error:
             this.toastrService.error(message.message);

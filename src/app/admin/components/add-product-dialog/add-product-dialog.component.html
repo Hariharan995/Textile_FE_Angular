@@ -38,32 +38,32 @@
                     </mat-form-field>
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>BarcodeId</mat-label>
-                        <input matInput formControlName="barcodeId" minlength="10" (keypress)="numberOnly($event)" name="barcodeId" placeholder="BarcodeId">
+                        <input matInput formControlName="barcodeId" minlength="12" maxlength="12" (keypress)="numberOnly($event)" name="barcodeId" placeholder="BarcodeId">
                     </mat-form-field>
                 </div>
                 <div class="addinpt-field">
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>MRP</mat-label>
-                        <input matInput formControlName="mrp" (keypress)="numberOnly($event)" name="mrp" required
+                        <input matInput formControlName="mrp" minlength="1" (keypress)="numberOnly($event)" name="mrp" required
                             placeholder="MRP">
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Price</mat-label>
-                        <input matInput formControlName="price" (keypress)="numberOnly($event)" name="price" required
+                        <input matInput formControlName="price" minlength="1" (keypress)="numberOnly($event)" name="price" required
                             placeholder="Price">
                     </mat-form-field>
                 </div>
                 <div class="addinpt-field">
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Tax</mat-label>
-                        <input matInput formControlName="taxPercent" (keypress)="numberOnly($event)" name="taxPercent"
+                        <input matInput formControlName="taxPercent" minlength="0" (keypress)="numberOnly($event)" name="taxPercent"
                             placeholder="Tax">
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Quantity</mat-label>
-                        <input matInput formControlName="quantity" name="quantity" required placeholder="Quantity">
+                        <input matInput formControlName="quantity" minlength="1" name="quantity" required placeholder="Quantity">
                     </mat-form-field>
                 </div>
                 

@@ -16,7 +16,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 })
 export class ProductListComponent implements OnInit {
   user = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;
-  imagess: any= []  
+  images: any = []
   collectionSize = 0;
   pageSize = 10;
   pageIndex = 0;
@@ -77,15 +77,18 @@ export class ProductListComponent implements OnInit {
   }
 
   getProductList(request: any) {
+    this.images = []
     this.adminSerice.getAllProducts(request).subscribe(
       (res: any) => {
         this.productList = []
         res.data.map((ele: any, i: any) => {
           this.productList[i] = [];
           this.productList[i].Id = ele._id;
+          this.productList[i].Index = i;
           this.productList[i]['Created Date'] = ele.createdAt;
           this.productList[i].ProductImage = ele.productImage;
-          this.productList[i].ProductImageData = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${ele.productImageData}`);
+          const image = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${ele.productImageData}`);
+          this.productList[i].ProductImageData = image
           this.productList[i].ProductName = ele.productName;
           this.productList[i].MRP = ele.mrp;
           this.productList[i].Price = ele.price;
@@ -96,7 +99,7 @@ export class ProductListComponent implements OnInit {
           this.productList[i].Brand = ele.brand;
           this.productList[i].Description = ele.description;
           this.productList[i].SalesCount = ele.salesCount;
-          this.imagess.push(this.productList[i].ProductImageData)
+          this.images.push(image)
         })
         this.collectionSize = res.count
       },
@@ -158,7 +161,7 @@ export class ProductListComponent implements OnInit {
       height: '700px',
       data: {
         content: 'Edit Product',
-        btnValue: 'Edit Product',
+        btnValue: 'Edit',
         productDetails: product
       }
     });
@@ -193,7 +196,7 @@ export class ProductListComponent implements OnInit {
       height: '700px',
       data: {
         content: 'Add New Product',
-        btnValue: 'Add Product'
+        btnValue: 'Add'
       }
     });
     dialogRef.afterClosed().subscribe(result => {

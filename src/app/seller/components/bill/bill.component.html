@@ -46,6 +46,9 @@
                             class="add-cart-btn">{{discountAmount==0? 'Discount Apply': 'Remove Discount'}}</button>
                     </div>
                 </div>
+                <div class="summary">
+                    <span> <b>Order Summary</b></span>
+                </div>
                 <div class="item" *ngIf="buyerMobile!=''">
                     <span>Buyer Name</span>
                     <h6>{{buyerDetails?.name}}</h6>
@@ -59,15 +62,16 @@
                     <h6>₹ {{discountAmount |number:'.2'}}</h6>
                 </div>
                 <div class="item">
-                    <span>Sub-Total</span>
+                    <span>Item(s) total</span>
                     <h6>₹ {{ subTotal |number:'.2'}} <span class="discount"
                             *ngIf="discountAmount">₹{{subTotalDiscountAmount|number:'.2'}}</span>
                         <span class="discount" *ngIf="creditApply">₹ {{subTotalCreditAmount|number:'.2'}}</span>
                     </h6>
                 </div>
-                <div class="item">
-                    <span>Grand-Total</span>
-                    <h6>₹ {{totalAmount |number:'.2'}} <span class="discount"
+                <hr />
+                <div class="total-amt">
+                    <span> <b>Total ({{cartList.length}} items)</b></span>
+                    <h6> <b>₹ {{totalAmount |number:'.2'}} </b><span class="discount"
                             *ngIf="discountAmount">₹{{totalDiscountAmount|number:'.2'}}</span>
                         <span class="discount" *ngIf="creditApply">₹ {{totalCreditAmount|number:'.2'}}</span>
                     </h6>
@@ -106,7 +110,8 @@
             Court)<br />
             TEX VALLEY, Gangapuram, <br />
             Chittode, ERODE - 638 102
-            <br />Phone: 9952365030/ 9876543210 <br /><br />
+            <br />
+            Phone: 9952365030/ 9876543210 <br />
             Order No: {{orderDetails.orderNo}}
         </p>
         <div class="dateTime">
@@ -137,16 +142,16 @@
             <p></p>
             <p class="end">Credit Point Amount: ₹ {{orderDetails.creditAmount}}</p>
         </div>
-        <div class="dateTime">
+        <div class="sbt">
             <p>Items: {{orderDetails.itemCount}}</p>
             <p>SubTotal: ₹ {{orderDetails.subTotal}}</p>
         </div>
-        <div class="dateTime">
+        <div class="total">
             <p></p>
             <p class="end">Grand Total: ₹ {{orderDetails.totalAmount}}</p>
         </div>
         <hr />
-        <p class="centered">Thank you..!! Visit Again..!!</p>
+        <p class="footer">Thank you..!! Visit Again..!!</p>
     </div>
 
 </div>

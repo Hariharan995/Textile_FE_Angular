@@ -1,15 +1,16 @@
-
 <div *ngIf="!adminService.isToken">
-    <router-outlet ></router-outlet>
+    <router-outlet></router-outlet>
+    <app-spinner></app-spinner>
 </div>
 
-<div class="app-layout"  *ngIf="adminService.isToken">
-    <div class="header" >
+<div class="app-layout" *ngIf="adminService.isToken">
+    <div class="header">
         <mat-sidenav-container fullscreen>
             <app-header></app-header>
             <div class="content">
                 <router-outlet></router-outlet>
             </div>
         </mat-sidenav-container>
+        <app-spinner></app-spinner>
     </div>
 </div>

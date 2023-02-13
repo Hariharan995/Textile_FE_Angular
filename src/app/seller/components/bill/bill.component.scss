@@ -51,7 +51,6 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  gap: 20px;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
@@ -160,7 +159,23 @@
   display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+.summary{
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+.total-amt{
+  span, h6{
+    font-size: 15px;
+  }
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
@@ -252,7 +267,7 @@
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 150px 1fr 100px;
-  grid-template-columns: 150px 1fr 100px;
+  grid-template-columns:  110px 1fr 120px;
   padding: 15px;
   gap: 15px;
   border-bottom: 1px solid var(--primary-clr-dull);
@@ -426,8 +441,6 @@ button {
 }
 
 
-
-
 .receipt-container {
   display: none;
 }
@@ -468,6 +481,17 @@ table {
 }
 
 .dateTime {
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sbt {
+  display: flex;
+  justify-content: space-between;
+}
+
+.total {
   display: flex;
   justify-content: space-between;
 }
@@ -481,4 +505,14 @@ table {
 
 th {
   text-align: left;
+}
+
+.footer {
+  padding-top: 10px;
+  text-align: center;
+  align-content: center;
+}
+
+::ng-deep p {
+  margin: 0 !important
 }

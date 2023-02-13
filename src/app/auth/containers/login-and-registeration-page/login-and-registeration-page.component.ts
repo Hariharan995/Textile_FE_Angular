@@ -42,19 +42,29 @@ export class LoginAndRegisterationPageComponent implements OnInit {
   onSubmitLoginForm(loginCredentials: any) {
     this.authService.login(loginCredentials).subscribe(
       (res: any) => {
-        this.notificationService.sendMessage({
-          message: res.message,
-          type: NotificationType.success
-        })
+
         let userDetails = res.data
         userDetails.token = res.token
-        localStorage.setItem('auth', JSON.stringify(userDetails));
-        this.adminService.isToken = true;
-        if (res.data.userRole.includes(UserTypes.ADMIN)) {
-          this.router.navigate(['/admin/sale-list']);
+        if (userDetails.userStatus != 'APPROVED' && !userDetails.userRole.includes("ADMIN")) {
+          this.notificationService.sendMessage({
+            message: "Please get approval with admin",
+            type: NotificationType.warning
+          })
+          this.router.navigate(['/login']);
         }
         else {
-          this.router.navigate(['/seller/bill']);
+          this.notificationService.sendMessage({
+            message: res.message,
+            type: NotificationType.success
+          })
+          localStorage.setItem('auth', JSON.stringify(userDetails));
+          this.adminService.isToken = true;
+          if (res.data.userRole.includes(UserTypes.ADMIN)) {
+            this.router.navigate(['/admin/sale-list']);
+          }
+          else {
+            this.router.navigate(['/seller/bill']);
+          }
         }
       },
       (err: any) => {
@@ -70,8 +80,8 @@ export class LoginAndRegisterationPageComponent implements OnInit {
     this.authService.registerUser(registerDetails).subscribe(
       (res: any) => {
         this.notificationService.sendMessage({
-          message: res.message,
-          type: NotificationType.success
+          message: "Please get approval with admin",
+          type: NotificationType.info
         })
         this.router.navigate(['/login']);
       },

@@ -22,7 +22,7 @@ export class BillComponent implements OnInit {
   keyEvent(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       console.log(this.combinedCode);
-      if (this.combinedCode.toString().length > 10) {
+      if (this.combinedCode.toString().length === 12) {
         let request = {
           userId: this.user._id,
           barcodeId: this.combinedCode,
@@ -95,7 +95,8 @@ export class BillComponent implements OnInit {
     this.getAllCarts();
   }
 
-  getAllCarts() {
+  getAllCarts() {    
+    this.images =[]
     if (!this.user?._id) {
       this.router.navigate(['/login']);
     }
@@ -352,7 +353,9 @@ export class BillComponent implements OnInit {
             this.subTotalDiscountAmount = 0;
             this.totalDiscountAmount = 0;
             this.creditApply = false
-            this.printReceipt()
+            setTimeout( () => {
+              this.printReceipt()
+            }, 4000);
           },
           (err: any) => {
             this.notificationService.sendMessage({

@@ -11,7 +11,7 @@
 
             <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
             <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
-        </mat-form-field>              
+        </mat-form-field>
         <mat-form-field appearance="outline" class="date-search-filter">
             <!-- <mat-label>Search</mat-label> -->
             <input matInput type="text" [(ngModel)]="search" placeholder="Search.." (input)="filter('FILTER')">
@@ -24,19 +24,12 @@
                 <span *ngIf="column =='Created Date'">
                     {{element[column] | date:"dd/MM/yyyy"}}
                 </span>
-                <span *ngIf="column !='Action'&& column !='Created Date'">
+                <span *ngIf="column =='Credit Point'|| column =='Buy Count'|| column =='Buy Amount'">
+                    {{element[column] |number:'.2'}}
+                </span>
+                <span *ngIf="column =='Name' || column =='Mobile'">
                     {{element[column]}}
                 </span>
-                <!-- <span *ngIf="column =='Action' && loginRole=='ADMIN'">
-                    <div class="act-btn">
-                        <div *ngIf="element['UserStatus']!=='APPROVED'"><button mat-stroked-button class="approve-btn"
-                                (click)="approve(element['Id'])">approve</button></div>
-                        <div *ngIf="element['UserStatus']!=='REJECTED'">
-                            <button mat-stroked-button class="reject-btn"
-                                (click)="reject(element['Id'])">reject</button>
-                        </div>
-                    </div>
-                </span> -->
             </td>
         </ng-container>
 
