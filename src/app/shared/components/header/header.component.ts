@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AdminService } from 'src/app/core/services/admin.service';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -11,13 +12,15 @@ import { NotificationType } from 'src/app/utils/notification-messages';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  auth = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;
-  userRole =this.auth? this.auth.userRole[0]: null
-  constructor(private authService: AuthService,
-     public adminService:AdminService,
-     public router: Router, public route: Router, public activatedRoute: ActivatedRoute, private notificationService: NotificationService) {
+  @ViewChild('sidenav') sidenav!: MatSidenav;
 
-      }
+  auth = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth') || 'no data') : null;
+  userRole = this.auth ? this.auth.userRole[0] : null
+  constructor(private authService: AuthService,
+    public adminService: AdminService,
+    public router: Router, public route: Router, public activatedRoute: ActivatedRoute, private notificationService: NotificationService) {
+
+  }
 
   logOut() {
     let request = { token: this.auth?.token }
@@ -38,6 +41,10 @@ export class HeaderComponent {
         })
       }
     );
+  }
+
+  close() {
+    this.sidenav.close();
   }
 
   ngOnInit() {

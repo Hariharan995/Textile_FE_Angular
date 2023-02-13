@@ -35,32 +35,35 @@
             <input matInput type="text" [(ngModel)]="search" placeholder="Search.." (input)="filter('FILTER')">
         </mat-form-field>
     </div>
-    <table mat-table [dataSource]="userList" class="mat-elevation-z8">
-        <ng-container *ngFor="let column of userDetails; let i = index" [matColumnDef]="column">
-            <th mat-header-cell *matHeaderCellDef><span>{{column}}</span></th>
-            <td mat-cell *matCellDef="let element">
-                <span *ngIf="column =='Created Date'">
-                    {{element[column] | date:"dd/MM/yyyy"}}
-                </span>
-                <span *ngIf="column !='Action'&& column !='Created Date'">
-                    {{element[column]}}
-                </span>
-                <span *ngIf="column =='Action' && loginRole=='ADMIN'">
-                    <div class="act-btn">
-                        <div *ngIf="element['UserStatus']!=='APPROVED'"><button mat-stroked-button class="approve-btn"
-                                (click)="approve(element['Id'])">approve</button></div>
-                        <div *ngIf="element['UserStatus']!=='REJECTED'">
-                            <button mat-stroked-button class="reject-btn"
-                                (click)="reject(element['Id'])">reject</button>
+    <div class="table-scroll">
+        <table mat-table [dataSource]="userList" class="mat-elevation-z8">
+            <ng-container *ngFor="let column of userDetails; let i = index" [matColumnDef]="column">
+                <th mat-header-cell *matHeaderCellDef><span>{{column}}</span></th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="column =='Created Date'">
+                        {{element[column] | date:"dd/MM/yyyy"}}
+                    </span>
+                    <span *ngIf="column !='Action'&& column !='Created Date'">
+                        {{element[column]}}
+                    </span>
+                    <span *ngIf="column =='Action' && loginRole=='ADMIN'">
+                        <div class="act-btn">
+                            <div *ngIf="element['UserStatus']!=='APPROVED'"><button mat-stroked-button
+                                    class="approve-btn" (click)="approve(element['Id'])">approve</button></div>
+                            <div *ngIf="element['UserStatus']!=='REJECTED'">
+                                <button mat-stroked-button class="reject-btn"
+                                    (click)="reject(element['Id'])">reject</button>
+                            </div>
                         </div>
-                    </div>
-                </span>
-            </td>
-        </ng-container>
+                    </span>
+                </td>
+            </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="userDetails"></tr>
-        <tr mat-row *matRowDef="let row; columns: userDetails;"></tr>
-    </table>
+            <tr mat-header-row *matHeaderRowDef="userDetails"></tr>
+            <tr mat-row *matRowDef="let row; columns: userDetails;"></tr>
+        </table>
+    </div>
+
     <div *ngIf="!collectionSize">
         <div class="no-data">
             <p style="font-size: 25px">No Users</p>

@@ -96,7 +96,6 @@ export class BillComponent implements OnInit {
   }
 
   getAllCarts() {    
-    this.images =[]
     if (!this.user?._id) {
       this.router.navigate(['/login']);
     }
@@ -106,6 +105,7 @@ export class BillComponent implements OnInit {
     this.cartService.getAllCarts(request).subscribe(
       (res: any) => {
         if (res.data.length != 0) {
+          this.images =[]
           this.cartList = res.data.cartLists;
           this.subTotal = Number(res.data.payment.subTotal);
           this.totalAmount = Number(res.data.payment.totalAmount);

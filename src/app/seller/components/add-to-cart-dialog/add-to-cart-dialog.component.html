@@ -12,7 +12,7 @@
                 <div class="addinpt-field">
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>{{data.btnName}}</mat-label>
-                        <input matInput formControlName="barcodeId" minlength="12" maxlength="12" (keypress)="numberOnly($event)" name="{{data.btnName}}" required
+                        <input matInput formControlName="barcodeId" maxlength="12" (keypress)="numberOnly($event)" name="{{data.btnName}}" required
                             placeholder="{{data.btnName}}">
                     </mat-form-field>                  
                 </div>

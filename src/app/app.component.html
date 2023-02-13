@@ -2,11 +2,11 @@
     <router-outlet></router-outlet>
 </div>
 
-<div class="app-layout" *ngIf="adminService.isToken">
+<div class="app-layout" *ngIf="adminService.isToken" >
     <div class="header">
         <mat-sidenav-container fullscreen>
             <app-header></app-header>
-            <div class="content">
+            <div class="content" (click)="backdropClick()">
                 <router-outlet></router-outlet>
             </div>
         </mat-sidenav-container>

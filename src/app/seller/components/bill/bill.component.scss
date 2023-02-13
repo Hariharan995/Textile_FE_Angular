@@ -163,14 +163,19 @@
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
-.summary{
+
+.summary {
   margin-bottom: 5px;
   font-size: 18px;
 }
-.total-amt{
-  span, h6{
+
+.total-amt {
+
+  span,
+  h6 {
     font-size: 15px;
   }
+
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -256,6 +261,8 @@
 }
 
 .payment-cart .cart-container .cart-items {
+  height: calc(100vh - 145px);
+  overflow: auto;
   border: 1px solid var(--primary-clr-dull);
   border-radius: 10px;
   padding: 20px;
@@ -267,7 +274,7 @@
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 150px 1fr 100px;
-  grid-template-columns:  110px 1fr 120px;
+  grid-template-columns: 110px 1fr 120px;
   padding: 15px;
   gap: 15px;
   border-bottom: 1px solid var(--primary-clr-dull);

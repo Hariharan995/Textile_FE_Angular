@@ -1,4 +1,4 @@
-<div>
+<div class="table-scroll">
     <table mat-table [dataSource]="creditPointList" class="mat-elevation-z8">
         <ng-container *ngFor="let column of creditPointDetails; let i = index" [matColumnDef]="column">
             <th mat-header-cell *matHeaderCellDef><span>{{column}}</span></th>
