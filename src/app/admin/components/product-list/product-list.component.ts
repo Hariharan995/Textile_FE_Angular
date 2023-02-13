@@ -77,10 +77,10 @@ export class ProductListComponent implements OnInit {
   }
 
   getProductList(request: any) {
-    this.images = []
     this.adminSerice.getAllProducts(request).subscribe(
       (res: any) => {
         this.productList = []
+        this.images = []
         res.data.map((ele: any, i: any) => {
           this.productList[i] = [];
           this.productList[i].Id = ele._id;
