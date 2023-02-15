@@ -1,0 +1,67 @@
+<div class="dashboard">
+    <div class="filterDate">
+        <p>Stats overview for</p>
+        <mat-form-field appearance="outline">
+            <mat-select [(ngModel)]="dateStatus" name="dateStatus" placeholder="Today"
+                (selectionChange)="dateFilter(dateStatus)">
+                <mat-option *ngFor="let dates of sortOption" [value]="dates.value">
+                    {{dates.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="sale">
+        <div class="item">
+            <p> Orders</p>
+            <p> {{revenueDetails?.orderCount || 0 |number:'.2'}}</p>
+        </div>
+        <div class="item">
+            <p> Sales</p>
+            <p>₹ {{revenueDetails?.saleRevenue|| 0 |number:'.2'}}</p>
+        </div>
+        <div class="item">
+            <p> Discount Amount Applied</p>
+            <p>₹ {{ revenueDetails?.discountRevenue|| 0 |number:'.2'}}</p>
+        </div>
+        <div class="item">
+            <p> Credit Amount Applied</p>
+            <p>₹ {{ revenueDetails?.creditRevenue||0 |number:'.2'}}</p>
+        </div>
+    </div>
+
+    <div class="table-scrolls">
+        <table mat-table [dataSource]="saleList" class="mat-elevation-z8">
+            <ng-container *ngFor="let column of saleDetails; let i = index" [matColumnDef]="column">
+                <th mat-header-cell *matHeaderCellDef><span>{{column}}</span></th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="column =='Created Date'">
+                        {{element[column] | date:"dd/MM/yyyy"}}
+                    </span>
+                    <span *ngIf="column !='Action' && column !='ProductImage' && column !='Created Date'">
+                        {{element[column]}}
+                    </span>
+                    <span *ngIf="column =='ProductImage'">
+                        <img class="images" src="{{element[column]}}" />
+                    </span>
+                    <span *ngIf="column =='Action'">
+                        <div class="act-btn">
+                            <button [routerLink]="['/admin/sale-view/'+element['Id']]" mat-stroked-button
+                                class="edit-btn">View</button>
+                        </div>
+                    </span>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="saleDetails"></tr>
+            <tr mat-row *matRowDef="let row; columns: saleDetails;"></tr>
+        </table>
+    </div>
+    <div *ngIf="!collectionSize">
+        <div class="no-data">
+            <p style="font-size: 25px">No Sales</p>
+        </div>
+    </div>
+    <mat-paginator #paginator (page)="handlePageEvent($event)" [length]="collectionSize"
+        [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+        [pageIndex]="pageIndex" aria-label="Select page">
+    </mat-paginator>
+</div>

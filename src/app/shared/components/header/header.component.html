@@ -1,5 +1,5 @@
 <div class="header-con">
-  <mat-sidenav #sidenav mode="push" class="app-sidenav"  (keydown.escape)="close()" disableClose>
+  <mat-sidenav #sidenav mode="push" class="app-sidenav" (keydown.escape)="close()" disableClose>
     <mat-toolbar color="primary" class="header">
       <span class="toolbar-filler">
         <img style="width: 100px;" src="../../../../assets/test.jpg">
@@ -11,10 +11,12 @@
       </button>
     </mat-toolbar>
     <mat-nav-list class="menu-list">
-      <!-- <a mat-list-item class="sidenav-link"  [routerLink]="['/admin/product-list']" (click)="sidenav.toggle()">
-        <mat-icon mat-list-icon>shopify</mat-icon>
+      <a mat-list-item class="sidenav-link" [routerLink]="['/admin/dashboard']" (click)="sidenav.toggle()"
+        routerLinkActive="active">
+        <img style=" max-width: 25px;" src="/assets/Icons/sale.png" />
         <span class="title" mat-line>Dashboard</span>
-      </a> -->
+
+      </a>
       <a mat-list-item class="sidenav-link" [routerLink]="['/admin/sale-list']" (click)="sidenav.toggle()"
         routerLinkActive="active">
         <img style=" max-width: 25px;" src="/assets/Icons/sale.png" />

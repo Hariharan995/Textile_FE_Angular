@@ -64,7 +64,7 @@
                 <div class="item">
                     <span>Item(s) total</span>
                     <h6>₹ {{ subTotal |number:'.2'}} <span class="discount"
-                            *ngIf="discountAmount">₹{{subTotalDiscountAmount|number:'.2'}}</span>
+                            *ngIf="discountAmount">₹ {{subTotalDiscountAmount|number:'.2'}}</span>
                         <span class="discount" *ngIf="creditApply">₹ {{subTotalCreditAmount|number:'.2'}}</span>
                     </h6>
                 </div>
@@ -72,7 +72,7 @@
                 <div class="total-amt">
                     <span> <b>Total ({{cartList.length}} items)</b></span>
                     <h6> <b>₹ {{totalAmount |number:'.2'}} </b><span class="discount"
-                            *ngIf="discountAmount">₹{{totalDiscountAmount|number:'.2'}}</span>
+                            *ngIf="discountAmount">₹ {{totalDiscountAmount|number:'.2'}}</span>
                         <span class="discount" *ngIf="creditApply">₹ {{totalCreditAmount|number:'.2'}}</span>
                     </h6>
                 </div>
@@ -82,7 +82,7 @@
                 </mat-radio-group>
                 <div *ngIf="buyerMobile!='' && buyerDetails.creditPoints>200 && discountAmount==0">
                     <mat-checkbox color="primary" [(ngModel)]="creditApply" (click)="creditPointApply()" class="example-margin">Apply
-                        credit point : $
+                        credit point : ₹
                         {{creditAmount |number:'.2'}}</mat-checkbox>
                 </div>
                 <div class="sub-btn">

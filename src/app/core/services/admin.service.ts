@@ -84,5 +84,10 @@ export class AdminService {
         let url = this.apiUrl + '/imageUpload';
         return this.http.post(url, request);
     }    
+
+    getDashboardDetails(request: any) {
+        let url = this.apiUrl + '/getDashboardDetails';
+        return this.http.post(url, request);
+    }    
 }
 
