@@ -16,6 +16,9 @@
             <!-- <mat-label>Search</mat-label> -->
             <input matInput type="text" [(ngModel)]="search" placeholder="Search.." (input)="filter('FILTER')">
         </mat-form-field>
+        <div class="totalCount">
+            <span>Total Buyers: {{collectionSize}}</span>
+        </div>
     </div>
     <div class="table-scroll">
         <table mat-table [dataSource]="buyerList" class="mat-elevation-z8">

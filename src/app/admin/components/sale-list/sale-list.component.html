@@ -1,67 +1,67 @@
-<div>
-    <div class="filter-con">
-        <mat-form-field appearance="outline" class="date-search-filter">
-            <!-- <mat-label>Created Date</mat-label> -->
-            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-                <input matStartDate formControlName="start" placeholder="Start date" (dateChange)="filter('FILTER')">
-                <input matEndDate formControlName="end" placeholder="End date" (dateChange)="filter('FILTER')">
-            </mat-date-range-input>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
+<div class="filter-con">
+    <mat-form-field appearance="outline" class="date-search-filter">
+        <!-- <mat-label>Created Date</mat-label> -->
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+            <input matStartDate formControlName="start" placeholder="Start date" (dateChange)="filter('FILTER')">
+            <input matEndDate formControlName="end" placeholder="End date" (dateChange)="filter('FILTER')">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
 
-            <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="date-search-filter">
-            <!-- <mat-label>UserStatus</mat-label> -->
-            <mat-select [(ngModel)]="paymentType" name="paymentType" placeholder="PaymentType"
-                (selectionChange)="filter('FILTER')">
-                <mat-option *ngFor="let payment of paymentTypeList" [value]="payment">
-                    {{payment}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="date-search-filter">
-            <!-- <mat-label>Search</mat-label> -->
-            <input matInput type="text" [(ngModel)]="search" placeholder="Search.." (input)="filter('FILTER')">
-        </mat-form-field>
+        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+        <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="date-search-filter">
+        <!-- <mat-label>UserStatus</mat-label> -->
+        <mat-select [(ngModel)]="paymentType" name="paymentType" placeholder="PaymentType"
+            (selectionChange)="filter('FILTER')">
+            <mat-option *ngFor="let payment of paymentTypeList" [value]="payment">
+                {{payment}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="date-search-filter">
+        <!-- <mat-label>Search</mat-label> -->
+        <input matInput type="text" [(ngModel)]="search" placeholder="Search.." (input)="filter('FILTER')">
+    </mat-form-field>
+    <div class="totalCount">
+        <span>Total Sales: {{collectionSize}}</span>
     </div>
-    <div class="table-scroll">
-        <table mat-table [dataSource]="saleList" matSort (matSortChange)="sortChange($event)" class="mat-elevation-z8">
-            <ng-container *ngFor="let column of saleDetails; let i = index" [matColumnDef]="column">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header ><span>{{column}}</span></th>
-                <td mat-cell *matCellDef="let element">
-                    <span *ngIf="column =='Created Date'">
-                        {{element[column] | date:"dd/MM/yyyy"}}
-                    </span>
-                    <span *ngIf="column !='Action' && column !='ProductImage' && column !='Created Date'">
-                        {{element[column]}}
-                    </span>
-                    <span *ngIf="column =='ProductImage'">
-                        <img class="images" src="{{element[column]}}" />
-                    </span>
-                    <span *ngIf="column =='Action'">
-                        <div class="act-btn">
-                            <button [routerLink]="['/admin/sale-view/'+element['Id']]" mat-stroked-button
-                                class="edit-btn">View</button>
-                            <button *ngIf="loginRole=='ADMIN'" mat-stroked-button class="delete-btn"
-                                (click)="delete(element['Id'])">delete</button>
-                        </div>
-                    </span>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="saleDetails"></tr>
-            <tr mat-row *matRowDef="let row; columns: saleDetails;"></tr>
-        </table>
-    </div>
-    <div *ngIf="!collectionSize">
-        <div class="no-data">
-            <p style="font-size: 25px">No Sales</p>
-        </div>
-    </div>
-    <mat-paginator #paginator (page)="handlePageEvent($event)" [length]="collectionSize"
-        [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
-        [pageIndex]="pageIndex" aria-label="Select page">
-    </mat-paginator>
-
 </div>
+<div class="table-scroll">
+    <table mat-table [dataSource]="saleList" matSort (matSortChange)="sortChange($event)" class="mat-elevation-z8">
+        <ng-container *ngFor="let column of saleDetails; let i = index" [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header><span>{{column}}</span></th>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="column =='Created Date'">
+                    {{element[column] | date:"dd/MM/yyyy"}}
+                </span>
+                <span *ngIf="column !='Action' && column !='ProductImage' && column !='Created Date'">
+                    {{element[column]}}
+                </span>
+                <span *ngIf="column =='ProductImage'">
+                    <img class="images" src="{{element[column]}}" />
+                </span>
+                <span *ngIf="column =='Action'">
+                    <div class="act-btn">
+                        <button [routerLink]="['/admin/sale-view/'+element['Id']]" mat-stroked-button
+                            class="edit-btn">View</button>
+                        <button *ngIf="loginRole=='ADMIN'" mat-stroked-button class="delete-btn"
+                            (click)="delete(element['Id'])">delete</button>
+                    </div>
+                </span>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="saleDetails"></tr>
+        <tr mat-row *matRowDef="let row; columns: saleDetails;"></tr>
+    </table>
+</div>
+<div *ngIf="!collectionSize">
+    <div class="no-data">
+        <p style="font-size: 25px">No Sales</p>
+    </div>
+</div>
+<mat-paginator #paginator (page)="handlePageEvent($event)" [length]="collectionSize"
+    [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+    [pageIndex]="pageIndex" aria-label="Select page">
+</mat-paginator>

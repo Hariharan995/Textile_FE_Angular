@@ -1,3 +1,11 @@
+.totalCount {
+  margin-left: auto;
+  margin-right: 20px;
+  display: flex;
+    align-items: center;
+    font-size: 18px;
+}
+
 .no-data {
   display: flex;
   flex-direction: column;
@@ -50,7 +58,7 @@
 
 .filter-con {
   padding: 15px;
-
+  display: flex;
   ::ng-deep.date-search-filter {
     height: 35px;
     margin-right: 10px;

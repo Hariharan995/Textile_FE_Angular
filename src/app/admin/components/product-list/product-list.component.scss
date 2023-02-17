@@ -1,5 +1,13 @@
 .add-product {
   margin-left: auto;
+  display: flex;
+  gap: 30px;
+
+  .totalCount {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+  }
 
   .add-prd-btn {
     color: #4caf50;

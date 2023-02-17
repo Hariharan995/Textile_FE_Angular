@@ -17,8 +17,11 @@
             <mat-form-field appearance="outline" class="date-search-filter">
                 <!-- <mat-label>Search</mat-label> -->
                 <input matInput type="text" [(ngModel)]="search" placeholder="Search.." (input)="filter('FILTER')">
-            </mat-form-field>
+            </mat-form-field>           
             <div class="add-product">
+                <div class="totalCount">
+                    <span>Total Products: {{collectionSize}}</span>
+                </div>
                 <button mat-raised-button (click)="addProduct()" class="add-prd-btn">Add Product</button>
             </div>
         </div>
