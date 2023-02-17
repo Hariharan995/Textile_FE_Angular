@@ -4,16 +4,18 @@
         <mat-form-field appearance="outline">
             <mat-select [(ngModel)]="dateStatus" name="dateStatus" placeholder="Today"
                 (selectionChange)="dateFilter(dateStatus)">
+               <div style="max-height: 140px;">
                 <mat-option *ngFor="let dates of sortOption" [value]="dates.value">
                     {{dates.name}}
                 </mat-option>
+               </div>
             </mat-select>
         </mat-form-field>
     </div>
     <div class="sale">
         <div class="item">
             <p> Orders</p>
-            <p> {{revenueDetails?.orderCount || 0 |number:'.2'}}</p>
+            <p> {{revenueDetails?.orderCount || 0}}</p>
         </div>
         <div class="item">
             <p> Sales</p>
@@ -31,8 +33,8 @@
 
     <div class="table-scrolls">
         <table mat-table [dataSource]="saleList" class="mat-elevation-z8">
-            <ng-container *ngFor="let column of saleDetails; let i = index" [matColumnDef]="column">
-                <th mat-header-cell *matHeaderCellDef><span>{{column}}</span></th>
+            <ng-container *ngFor="let column of saleDetails; let i = index" matSort (matSortChange)="sortChange($event)"  [matColumnDef]="column">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><span>{{column}}</span></th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="column =='Created Date'">
                         {{element[column] | date:"dd/MM/yyyy"}}

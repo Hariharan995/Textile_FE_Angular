@@ -19,13 +19,13 @@
     </div>
     <div class="table-scroll">
         <table mat-table [dataSource]="buyerList" class="mat-elevation-z8">
-            <ng-container *ngFor="let column of buyerDetails; let i = index" [matColumnDef]="column">
-                <th mat-header-cell *matHeaderCellDef><span>{{column}}</span></th>
+            <ng-container *ngFor="let column of buyerDetails; let i = index" matSort (matSortChange)="sortChange($event)" [matColumnDef]="column">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><span>{{column}}</span></th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="column =='Created Date'">
                         {{element[column] | date:"dd/MM/yyyy"}}
                     </span>
-                    <span *ngIf="column =='Credit Point'|| column =='Buy Count'|| column =='Buy Amount'">
+                    <span *ngIf="column =='Credit Points'|| column =='Buy Count'|| column =='Buy Amount'">
                         {{element[column] |number:'.2'}}
                     </span>
                     <span *ngIf="column =='Name' || column =='Mobile'">

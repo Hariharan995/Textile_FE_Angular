@@ -37,8 +37,8 @@
     </div>
     <div class="table-scroll">
         <table mat-table [dataSource]="userList" class="mat-elevation-z8">
-            <ng-container *ngFor="let column of userDetails; let i = index" [matColumnDef]="column">
-                <th mat-header-cell *matHeaderCellDef><span>{{column}}</span></th>
+            <ng-container *ngFor="let column of userDetails; let i = index" matSort (matSortChange)="sortChange($event)" [matColumnDef]="column">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><span>{{column}}</span></th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="column =='Created Date'">
                         {{element[column] | date:"dd/MM/yyyy"}}

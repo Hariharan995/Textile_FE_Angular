@@ -22,8 +22,8 @@ export class SaleListComponent {
   showFirstLastButtons = true;
   loginRole = ""
   saleList: any = []
-  saleDetails = ["Created Date", "OrderNo", "Buyer Name", "Payment Type","Credit Point Amount",  "Discount Amount", "SubTotal", "Total Amount", "Action"]
-  paymentTypeList = ["ALL","ONLINEPAYMENT", "COD"]
+  saleDetails = ["Created Date", "OrderNo", "Buyer Name", "Payment Type", "Credit Point Amount", "Discount Amount", "SubTotal", "Total Amount", "Action"]
+  paymentTypeList = ["ALL", "ONLINEPAYMENT", "COD"]
   paymentType = ""
   search = ""
   range = new FormGroup({
@@ -136,6 +136,47 @@ export class SaleListComponent {
         );
       }
     });
+  }
+
+  sortChange(field: any) {
+    if (field.direction != '' && field.active != 'Action' && field.active != 'Buyer Name') {
+      let sortObj = {}
+      let sortBy = ''
+      let sortType = field.direction === 'desc' ? 1 : -1
+      let startDate = ''
+      let endDate = ''
+      if (this.range.controls['start'].value) {
+        let date = this.range.controls['start'].value;
+        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+        startDate = date.getFullYear() + '-' + month + '-' + day;
+      }
+      if (this.range.controls['end'].value) {
+        let date = this.range.controls['end'].value;
+        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+        endDate = date.getFullYear() + '-' + month + '-' + day;
+      }
+      if (field.active === 'Created Date') {
+        Object.assign(sortObj, { createdAt: sortType })
+      }
+      else {
+        sortBy = field.active.replaceAll(" ", "")
+        sortBy = sortBy.replace(/\w\S*/g, (m: any) => m.charAt(0).toLowerCase() + m.substr(1))
+        Object.assign(sortObj, { [sortBy]: sortType })
+      }
+      this.getSaleList({
+        filterObj: {
+          searchValue: this.search ? this.search : '',
+          startDate: this.range.controls['start'].value ? startDate : '',
+          endDate: this.range.controls['end'].value ? endDate : '',
+          paymentType: this.paymentType && this.paymentType != 'ALL' ? this.paymentType : '',
+        },
+        sortObj: sortObj,
+        page: this.pageIndex + 1,
+        limit: this.pageSize
+      })
+    }
   }
 
   ngOnInit() {

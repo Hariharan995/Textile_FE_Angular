@@ -22,7 +22,7 @@ export class BuyerListComponent {
   showFirstLastButtons = true;
   loginRole = ''
   buyerList: any = [];
-  buyerDetails = ["Created Date", "Name", "Mobile", "Credit Point", "Buy Count", "Buy Amount"] 
+  buyerDetails = ["Created Date", "Name", "Mobile", "Credit Points", "Buy Count", "Buy Amount"] 
   search = ""
 
   range = new FormGroup({
@@ -52,6 +52,47 @@ export class BuyerListComponent {
     })
   }
 
+  sortChange(field: any) {
+    if (field.direction != '' && field.active != 'Action') {
+      let sortObj = {}
+      let sortBy = ''
+      let sortType = field.direction === 'desc' ? 1 : -1
+      let startDate = ''
+      let endDate = ''
+      if (this.range.controls['start'].value) {
+        let date = this.range.controls['start'].value;
+        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+        startDate = date.getFullYear() + '-' + month + '-' + day;
+      }
+      if (this.range.controls['end'].value) {
+        let date = this.range.controls['end'].value;
+        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+        endDate = date.getFullYear() + '-' + month + '-' + day;
+      }
+      if (field.active === 'Created Date') {
+        Object.assign(sortObj, { createdAt: sortType })
+      }
+      else if (field.active != 'Action') {
+        sortBy = field.active.replaceAll(" ", "")
+        sortBy = sortBy.replace(/\w\S*/g, (m: any) => m.charAt(0).toLowerCase() + m.substr(1))
+        Object.assign(sortObj, { [sortBy]: sortType })
+      }
+      console.log(field);
+      this.getbuyerList({
+        filterObj: {
+          searchValue: this.search ? this.search : '',
+          startDate: this.range.controls['start'].value ? startDate : '',
+          endDate: this.range.controls['end'].value ? endDate : ''
+        },
+        sortObj: sortObj,
+        page: this.pageIndex + 1,
+        limit: this.pageSize
+      })
+    }
+  }
+
   getbuyerList(request: any) {
     this.adminSerice.getAllBuyers(request).subscribe(
       (res: any) => {
@@ -62,7 +103,7 @@ export class BuyerListComponent {
           this.buyerList[i]['Created Date'] = ele.createdAt;
           this.buyerList[i].Name = ele.name;
           this.buyerList[i].Mobile = ele.mobile;
-          this.buyerList[i]['Credit Point'] = ele.creditPoints;
+          this.buyerList[i]['Credit Points'] = ele.creditPoints;
           this.buyerList[i]['Buy Count'] = ele.buyCount;
           this.buyerList[i]['Buy Amount'] = ele.buyAmount;
         })
@@ -79,6 +120,7 @@ export class BuyerListComponent {
       }
     );
   }
+
   filter(type: any) {
     let startDate = ''
     let endDate = ''

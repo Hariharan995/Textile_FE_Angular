@@ -76,6 +76,46 @@ export class ProductListComponent implements OnInit {
     this.getProductList(request)
   }
 
+  sortChange(field: any) {
+    if (field.direction != '' && field.active != 'Action') {
+      let sortObj = {}
+      let sortBy = ''
+      let sortType = field.direction === 'desc' ? 1 : -1
+      let startDate = ''
+      let endDate = ''
+      if (this.range.controls['start'].value) {
+        let date = this.range.controls['start'].value;
+        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+        startDate = date.getFullYear() + '-' + month + '-' + day;
+      }
+      if (this.range.controls['end'].value) {
+        let date = this.range.controls['end'].value;
+        const month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1);
+        const day = (date.getDate()) > 9 ? (date.getDate()) : '0' + (date.getDate());
+        endDate = date.getFullYear() + '-' + month + '-' + day;
+      }
+      if (field.active === 'Created Date') {
+        Object.assign(sortObj, { createdAt: sortType })
+      }
+      else {
+        sortBy = field.active.replaceAll(" ", "")
+        sortBy = sortBy.replace(/\w\S*/g, (m: any) => m.charAt(0).toLowerCase() + m.substr(1))
+        Object.assign(sortObj, { [sortBy]: sortType })
+      }
+      this.getProductList({
+        filterObj: {
+          searchValue: this.search ? this.search : '',
+          startDate: this.range.controls['start'].value ? startDate : '',
+          endDate: this.range.controls['end'].value ? endDate : ''
+        },
+        sortObj: sortObj,
+        page: this.pageIndex + 1,
+        limit: this.pageSize
+      })
+    }
+  }
+
   getProductList(request: any) {
     this.adminSerice.getAllProducts(request).subscribe(
       (res: any) => {

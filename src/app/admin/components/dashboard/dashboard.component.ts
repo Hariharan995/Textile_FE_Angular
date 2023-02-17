@@ -124,10 +124,35 @@ export class DashboardComponent {
     }
     this.getSaleList(request)
   }
+  
+  sortChange(field: any) {
+    if (field.direction != '' && field.active != 'Action' && field.active != 'Buyer Name') {
+      let sortObj = {}
+      let sortBy = ''
+      let sortType = field.direction === 'desc' ? 1 : -1
+      if (field.active === 'Created Date') {
+        Object.assign(sortObj, { createdAt: sortType })
+      }
+      else {
+        sortBy = field.active.replaceAll(" ", "")
+        sortBy = sortBy.replace(/\w\S*/g, (m: any) => m.charAt(0).toLowerCase() + m.substr(1))
+        Object.assign(sortObj, { [sortBy]: sortType })
+      }
+      this.getSaleList({
+        filterObj: {
+          startDate: this.startDate,
+          endDate: this.endDate,
+        },
+        sortObj: sortObj,
+        page: this.pageIndex + 1,
+        limit: this.pageSize
+      })
+    }
+  }
   getDashboardDetails(request: any) {
     this.adminSerice.getDashboardDetails(request).subscribe(
       (res: any) => {
-        this.revenueDetails = res.data ?  res.data : {}
+        this.revenueDetails = res.data ? res.data : {}
       },
       (err: any) => {
         this.notificationService.sendMessage({

@@ -47,7 +47,7 @@
 
         <span class="title" mat-line>Seller List</span>
       </a>
-      <a mat-list-item class="sidenav-link" *ngIf="userRole =='SELLER'" [routerLink]="['/seller/bill']"
+      <a mat-list-item class="sidenav-link" [routerLink]="['/seller/bill']"
         (click)="sidenav.toggle()" routerLinkActive="active">
         <img style=" max-width: 25px;" src="/assets/Icons/sale.png" />
 
